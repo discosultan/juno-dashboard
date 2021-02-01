@@ -8,8 +8,8 @@ type OptimizeInfo = {
 
 let optimizeInfoCache: OptimizeInfo | null = null;
 
-export default function useOptimizeInfo() {
-  const [optimizeInfo, setOptimizeInfo] = useState({});
+export default function useOptimizeInfo(): OptimizeInfo | null {
+  const [optimizeInfo, setOptimizeInfo] = useState<OptimizeInfo | null>(null);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -22,7 +22,7 @@ export default function useOptimizeInfo() {
 
 async function fetchOptimizeInfo(signal: AbortSignal): Promise<OptimizeInfo> {
   if (optimizeInfoCache === null) {
-    optimizeInfoCache = await fetchJson<OptimizeInfo>('GET', '/optimize', null, signal);
+    optimizeInfoCache = await fetchJson<OptimizeInfo>('GET', '/optimize', undefined, signal);
   }
   return optimizeInfoCache;
 }

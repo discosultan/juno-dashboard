@@ -6,8 +6,9 @@ import History, { HistoryItem } from 'components/History';
 import SplitPane from 'components/SplitPane';
 import TradingResult, { TradingResultValueProps } from 'components/TradingResult';
 import { fetchJson } from 'fetch';
-import Controls, { BacktestParams } from './Controls';
+import Controls from './Controls';
 import { Statistics } from 'models';
+import { BacktestParams } from './models';
 
 type BacktestResult = {
   symbolStats: { [symbol: string]: Statistics };

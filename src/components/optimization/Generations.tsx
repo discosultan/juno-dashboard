@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core';
+import { Generation, GenerationsInfo, IndividualStats } from './models';
 import { Statistics } from 'models';
 
 const useStyles = makeStyles((_theme) => ({
@@ -15,44 +16,9 @@ const useStyles = makeStyles((_theme) => ({
   },
 }));
 
-type Individual = {
-  chromosome: {
-    strategy: {},
-    stopLoss: {},
-    takeProfit: {},
-    trader: {
-      interval: string,
-      missedCandlePolicy: string,
-    },
-  };
-  fitness: number;
-};
-
-type IndividualStats = {
-  ind: Individual;
-  symbolStats: { [symbol: string]: Statistics };
-};
-
-type Generation = {
-  nr: number;
-  hallOfFame: IndividualStats[];
-};
-
-type EvolutionStats = {
-  generations: Generation[];
-  seed: number;
-};
-
 type GenerationsProps = {
-  value: {
-    args: {
-      trainingSymbols: string[],
-      validationSymbols: string[],
-      hallOfFameSize: number,
-    },
-    gens: Generation[],
-  };
-  onSelect: any;
+  value: GenerationsInfo;
+  onSelect: (value: GenerationsInfo, gen: Generation, ind: IndividualStats) => void;
 };
 
 export default function Generations({ value, onSelect }: GenerationsProps) {
@@ -118,11 +84,8 @@ export default function Generations({ value, onSelect }: GenerationsProps) {
   );
 }
 
-function getEvaluationStat(stats, evaluationStatistic) {
+function getEvaluationStat(stats: Statistics, evaluationStatistic: string): number {
   evaluationStatistic = evaluationStatistic.charAt(0).toLowerCase() + evaluationStatistic.slice(1);
-  let result = stats.core[evaluationStatistic];
-  if (result === undefined) {
-    result = stats.extended[evaluationStatistic];
-  }
-  return result;
+  // @ts-ignore
+  return stats.core[evaluationStatistic] ?? stats.extended[evaluationStatistic];
 }

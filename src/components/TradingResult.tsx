@@ -157,8 +157,8 @@ function fmtUnknown(value: any): string {
   if (typeof value === 'string') {
     return value;
   }
-  if (typeof value === 'number' && !Number.isInteger(value)) {
-    return value.toFixed(8);
+  if (typeof value === 'number') {
+    return Number.isInteger(value) ? value.toString() : value.toFixed(8);
   }
   throw new Error(`Not implemented for ${value}.`);
 }

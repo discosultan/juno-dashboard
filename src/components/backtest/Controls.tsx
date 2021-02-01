@@ -14,6 +14,7 @@ import {
   Symbols,
   TakeProfits,
 } from '../../info';
+import { BacktestParams } from './models';
 
 function useLocalStorageState<T>(
   key: string,
@@ -21,22 +22,6 @@ function useLocalStorageState<T>(
 ): [T, Dispatch<SetStateAction<T>>, boolean] {
   return useLocalStorageStateImpl(`backtest_controls_${key}`, defaultValue);
 }
-
-export type BacktestParams = {
-  missedCandlePolicy: string;
-  strategy: string;
-  strategyParams: object;
-  stopLoss: string;
-  stopLossParams: object;
-  takeProfit: string;
-  takeProfitParams: object;
-  exchange: string;
-  symbols: string[];
-  interval: string;
-  start: string;
-  end: string;
-  quote: number;
-};
 
 type ControlsProps = {
   onBacktest: (args: BacktestParams) => void;

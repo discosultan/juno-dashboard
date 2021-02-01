@@ -11,6 +11,7 @@ import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
 import { Intervals, MissedCandlePolicies, StopLosses, Strategies, Symbols, TakeProfits } from 'info';
 import useOptimizeInfo from 'hooks/useOptimizeInfo';
+import { OptimizeParams } from './models';
 
 function useLocalStorageState<T>(
   key: string,
@@ -27,32 +28,7 @@ const useStyles = makeStyles((_theme) => ({
 }));
 
 type ControlsProps = {
-  onOptimize: (args: {
-    strategy: string,
-    stopLoss: string,
-    takeProfit: string,
-    exchange: string,
-    trainingSymbols: string[],
-    validationSymbols: string[],
-    start: string,
-    end: string,
-    quote: number,
-    evaluationStatistic: string,
-    evaluationAggregation: string,
-    populationSize: number,
-    generations: number,
-    hallOfFameSize: number,
-    seed: number,
-    context: {
-      trader: {
-        intervals: string[],
-        missedCandlePolicies: string[],
-      },
-      strategy: object,
-      stopLoss: object,
-      takeProfit: object,
-    }
-  }) => void;
+  onOptimize: (args: OptimizeParams) => void;
 };
 
 export default function Controls({ onOptimize }: ControlsProps) {
@@ -256,7 +232,7 @@ export default function Controls({ onOptimize }: ControlsProps) {
       <DatePicker label="Start" value={start} onChange={(e: any) => setStart(e.target.value)} />
       <DatePicker label="End" value={end} onChange={(e: any) => setEnd(e.target.value)} />
 
-      {optimizeInfo.evaluationStatistics && (
+      {optimizeInfo?.evaluationStatistics && (
         <TextField
           id="evaluationStatistic"
           fullWidth
@@ -272,7 +248,7 @@ export default function Controls({ onOptimize }: ControlsProps) {
           ))}
         </TextField>
       )}
-      {optimizeInfo.evaluationAggregations && (
+      {optimizeInfo?.evaluationAggregations && (
         <TextField
           id="evaluationAggregation"
           fullWidth
@@ -296,7 +272,7 @@ export default function Controls({ onOptimize }: ControlsProps) {
         type="number"
         inputProps={{ min: 0 }}
         value={generations}
-        onChange={(e) => setGenerations(e.target.valueAsNumber)}
+        onChange={(e) => setGenerations(parseInt(e.target.value))}
       />
       <TextField
         id="populationSize"
@@ -305,7 +281,7 @@ export default function Controls({ onOptimize }: ControlsProps) {
         type="number"
         inputProps={{ min: 2 }}
         value={populationSize}
-        onChange={(e) => setPopulationSize(e.target.valueAsNumber)}
+        onChange={(e) => setPopulationSize(parseInt(e.target.value))}
       />
       <TextField
         id="hallOfFameSize"
@@ -314,7 +290,7 @@ export default function Controls({ onOptimize }: ControlsProps) {
         type="number"
         inputProps={{ min: 1 }}
         value={hallOfFameSize}
-        onChange={(e) => setHallOfFameSize(e.target.valueAsNumber)}
+        onChange={(e) => setHallOfFameSize(parseInt(e.target.value))}
       />
 
       <FormControlLabel
@@ -336,7 +312,7 @@ export default function Controls({ onOptimize }: ControlsProps) {
         type="number"
         inputProps={{ min: 0 }}
         value={seed}
-        onChange={(e) => setSeed(e.target.valueAsNumber)}
+        onChange={(e) => setSeed(parseInt(e.target.value))}
       />
 
       <br />

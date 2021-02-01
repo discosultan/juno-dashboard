@@ -2,25 +2,29 @@ import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import useLocalStorageState from 'use-local-storage-state';
-import History from 'components/History';
+import History, { HistoryItem } from 'components/History';
 import SplitPane from 'components/SplitPane';
-import TradingResult from 'components/TradingResult';
+import TradingResult, { TradingResultValueProps } from 'components/TradingResult';
 import { fetchJson } from 'fetch';
 import Controls from './Controls';
 import Generations from './Generations';
+import { EvolutionStats, GenerationsInfo, OptimizeParams } from './models';
 
 export default function Dashboard() {
-  const [gensInfo, setGensInfo] = useState(null);
-  const [selectedGenInfo, setSelectedGenInfo] = useState(null);
-  const [history, setHistory] = useLocalStorageState('optimization_dashboard_history', []);
+  const [gensInfo, setGensInfo] = useState<GenerationsInfo | null>(null);
+  const [selectedGenInfo, setSelectedGenInfo] = useState<TradingResultValueProps | null>(null);
+  const [history, setHistory] = useLocalStorageState<HistoryItem<GenerationsInfo>[]>(
+    'optimization_dashboard_history',
+    [],
+  );
 
-  function processGensInfo(gensInfo): void {
+  function processGensInfo(gensInfo: GenerationsInfo): void {
     setGensInfo(gensInfo);
     setSelectedGenInfo(null);
   }
 
-  async function optimize(args): Promise<void> {
-    const evolution = await fetchJson(
+  async function optimize(args: OptimizeParams): Promise<void> {
+    const evolution = await fetchJson<EvolutionStats>(
       'POST',
       `/optimize/${args.strategy}/${args.stopLoss}/${args.takeProfit}`,
       args,
@@ -56,8 +60,8 @@ export default function Dashboard() {
               label="Optimization History"
               value={gensInfo}
               history={history}
-              format={(gensInfo) => gensInfo.args.strategy}
-              onChange={(gensInfo) => processGensInfo(gensInfo)}
+              format={(gensInfo) => gensInfo?.args.strategy ?? ''}
+              onChange={(gensInfo) => gensInfo && processGensInfo(gensInfo)}
             />
           </Box>
           <Divider />

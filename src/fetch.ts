@@ -1,7 +1,7 @@
 export async function fetchJson<T>(
   method: string,
   url: string,
-  body?: any,
+  body?: {},
   signal?: AbortSignal,
 ): Promise<T> {
   const response = await fetch(url, {
