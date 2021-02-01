@@ -204,9 +204,8 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
     chart
       .addLineSeries({
         priceScaleId: 'left',
-        // TODO: test with 1.2
-        // lineWidth: 1.2,
-        lineWidth: 1,
+        // @ts-ignore
+        lineWidth: 1.2,
       })
       .setData(
         stats.positions.reduce(
@@ -235,6 +234,9 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
 
     return () => chart.unsubscribeCrosshairMove(onCrosshairMove);
   }, [symbol, candles, stats, palette]);
+
+  // TODO: Make it work.
+  // useHoldKeyToScroll(chartRef.current, 'ControlLeft');
 
   return (
     <Box my={1} style={{ position: 'relative' }}>

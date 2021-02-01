@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
 import { Intervals, MissedCandlePolicies, StopLosses, Strategies, Symbols, TakeProfits } from 'info';
-import useOptimizeInfo from 'hooks/useOptimizeInfo';
+import useOptimizeInfo from 'pages/optimization/useOptimizeInfo';
 import { OptimizeParams } from './models';
 
 function useLocalStorageState<T>(

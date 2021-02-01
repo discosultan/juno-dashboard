@@ -16,8 +16,8 @@ import {
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-const BacktestDashboard = lazy(() => import('components/backtest/Dashboard'));
-const OptimizationDashboard = lazy(() => import('components/optimization/Dashboard'));
+const BacktestDashboard = lazy(() => import('pages/backtest/index'));
+const OptimizationDashboard = lazy(() => import('pages/optimization/index'));
 
 const useStyles = makeStyles((theme) => ({
   appBarItem: {

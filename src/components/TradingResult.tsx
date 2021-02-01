@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import useSymbolCandles from 'hooks/useSymbolCandles';
+import useSymbolCandles from 'components/useSymbolCandles';
 import Chart from './Chart';
 import { CoreStatistics, ExtendedStatistics, Statistics } from 'models';
 
