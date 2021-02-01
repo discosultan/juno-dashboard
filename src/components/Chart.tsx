@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
@@ -51,7 +51,7 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
     },
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!containerRef.current) return;
 
     // Delete existing chart from container if any.
