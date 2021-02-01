@@ -1,18 +1,15 @@
 import { useEffect } from 'react';
 import { IChartApi } from 'lightweight-charts';
 
-export function useHoldKeyToScroll(chart: IChartApi | null, key: string): void {
+export default function useHoldKeyToScroll(chart: IChartApi | null, key: string): void {
   useEffect(() => {
     if (chart === null) return;
-
-    console.log('APPLIED');
 
     let isPressed = false;
     setMouseWheelEnabled(chart, false);
 
     function onKeyDown(event: KeyboardEvent): void {
       if (!isPressed && event.code === key) {
-        console.log('KEYDOWN');
         isPressed = true;
         setMouseWheelEnabled(chart!, true);
       }
@@ -20,7 +17,6 @@ export function useHoldKeyToScroll(chart: IChartApi | null, key: string): void {
 
     function onKeyUp(event: KeyboardEvent): void {
       if (event.code === key) {
-        console.log('KEYUP');
         isPressed = false;
         setMouseWheelEnabled(chart!, false);
       }

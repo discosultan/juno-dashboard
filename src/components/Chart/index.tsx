@@ -1,21 +1,17 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 import {
   PriceScaleMode,
   createChart,
   IChartApi,
-  MouseEventParams,
   HistogramData,
   LineData,
 } from 'lightweight-charts';
 import useResizeObserver from 'use-resize-observer';
 import { Candle, CoreStatistics } from 'models';
-
-function fmtPct(value: number): string {
-  return value.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 });
-}
+import MarkerTooltip from './MarkerTooltip';
+import useHoldKeyToScroll from './useHoldKeyToScroll';
 
 function timestamp(value: string): number {
   return new Date(value).getTime() / 1000;
@@ -29,35 +25,18 @@ type ChartProps = {
 
 export default function Chart({ symbol, candles, stats }: ChartProps) {
   const { palette } = useTheme();
-  const chartRef = useRef<IChartApi | null>(null);
+  const [chart, setChart] = useState<IChartApi | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
-
-  const [tooltipStyle, setTooltipStyle] = useState({
-    position: 'absolute' as 'absolute',
-    display: 'none',
-    padding: '8px',
-    zIndex: 1000,
-    border: '1px solid',
-    backgroundColor: palette.background.paper,
-    whiteSpace: 'pre-line' as 'pre-line',
-  });
-  const [tooltipText, setTooltipText] = useState('');
 
   useResizeObserver({
     ref: containerRef,
-    onResize: ({ width }) => {
-      chartRef.current && chartRef.current.applyOptions({ width });
-    },
+    onResize: ({ width }) => containerRef.current && chart?.applyOptions({ width }),
   });
 
   useLayoutEffect(() => {
     if (!containerRef.current) return;
 
-    // Delete existing chart from container if any.
-    chartRef.current && chartRef.current.remove();
-
-    const chart = createChart(containerRef.current, {
+    const newChart = createChart(containerRef.current, {
       width: containerRef.current.clientWidth,
       height: 360,
       layout: {
@@ -88,10 +67,9 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
         fontSize: 20,
       },
     });
-    chartRef.current = chart;
 
     // Candles.
-    const candleSeries = chart.addCandlestickSeries({
+    const candleSeries = newChart.addCandlestickSeries({
       // TODO: Calculate dynamically.
       priceFormat: {
         type: 'price',
@@ -134,7 +112,7 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
     );
 
     // Volume.
-    const volumeSeries = chart.addHistogramSeries({
+    const volumeSeries = newChart.addHistogramSeries({
       priceFormat: {
         type: 'volume',
       },
@@ -159,49 +137,8 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
       )[1],
     );
 
-    // Tooltip on markers.
-    function onCrosshairMove(event: MouseEventParams): void {
-      const { hoveredMarkerId, point } = event;
-      if (typeof hoveredMarkerId === 'number' && point) {
-        const yOffset = 5;
-        const x = Math.round(point.x);
-        const y = Math.round(point.y) + yOffset;
-
-        const newStyle = {
-          display: 'block',
-          left: `${x}px`,
-          top: `${y}px`,
-          borderColor: '#26a69a',
-        };
-        if (hoveredMarkerId < 0) {
-          // open
-          const pos = stats.positions[-hoveredMarkerId - 1];
-          setTooltipText(`time: ${pos.openTime}\ncost: ${pos.cost.toFixed(8)}`);
-        } else {
-          // close
-          const pos = stats.positions[hoveredMarkerId - 1];
-          if (pos.roi < 0) {
-            newStyle.borderColor = '#ef5350';
-          }
-          setTooltipText(
-            `time: ${pos.closeTime}\n` +
-              `gain: ${pos.gain.toFixed(8)}\n` +
-              `profit: ${pos.profit.toFixed(8)}\n` +
-              `duration: ${pos.duration}\n` +
-              `roi: ${fmtPct(pos.roi)}\n` +
-              `aroi: ${fmtPct(pos.annualizedRoi)}\n` +
-              `reason: ${pos.closeReason}`,
-          );
-        }
-        setTooltipStyle((style) => ({ ...style, ...newStyle }));
-      } else if (tooltipRef.current && tooltipRef.current.style.display !== 'none') {
-        setTooltipStyle((style) => ({ ...style, display: 'none' }));
-      }
-    }
-    chart.subscribeCrosshairMove(onCrosshairMove);
-
     // Line graph for running balance.
-    chart
+    newChart
       .addLineSeries({
         priceScaleId: 'left',
         // @ts-ignore
@@ -230,20 +167,19 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
       );
 
     // Fit everything into view.
-    chart.timeScale().fitContent();
+    newChart.timeScale().fitContent();
 
-    return () => chart.unsubscribeCrosshairMove(onCrosshairMove);
+    setChart(newChart);
+
+    return () => newChart.remove();
   }, [symbol, candles, stats, palette]);
 
-  // TODO: Make it work.
-  // useHoldKeyToScroll(chartRef.current, 'ControlLeft');
+  useHoldKeyToScroll(chart, 'ControlLeft');
 
   return (
     <Box my={1} style={{ position: 'relative' }}>
       <div ref={containerRef} style={{ width: '100%' }} />
-      <div ref={tooltipRef} style={tooltipStyle}>
-        <Typography variant="caption">{tooltipText}</Typography>
-      </div>
+      {chart && <MarkerTooltip chart={chart} positions={stats.positions} />}
     </Box>
   );
 }
