@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import { fetchJson } from 'fetch';
 import { Candle } from 'models';
 
@@ -17,11 +18,9 @@ type SymbolCandles = { [symbol: string]: Candle[] };
 export default function useSymbolCandles(args: SymbolCandleParams): SymbolCandles {
   const [symbolCandles, setSymbolCandles] = useState({});
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     const abortController = new AbortController();
-    (async () => {
-      setSymbolCandles(await fetchCandles(args, abortController.signal));
-    })();
+    (async () => setSymbolCandles(await fetchCandles(args, abortController.signal)))();
     return () => abortController.abort();
   }, [args]);
 

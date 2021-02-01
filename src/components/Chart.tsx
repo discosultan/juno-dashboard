@@ -109,7 +109,6 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
         volume: candle.volume,
       })),
     );
-    // const markers = ;
     candleSeries.setMarkers(
       stats.positions.flatMap((pos, i) => {
         const shape = pos.type === 'long' ? 'arrowUp' : 'arrowDown';
@@ -117,14 +116,14 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
         return [
           {
             // We keep the id 1-based to distinguish between open and pos (neg and pos).
-            id: (-id).toString(),
+            id: -id as any,
             time: timestamp(pos.openTime) as any,
             position: 'aboveBar',
             shape,
             color: palette.info[palette.type],
           },
           {
-            id: (+id).toString(),
+            id: +id as any,
             time: timestamp(pos.closeTime) as any,
             position: 'aboveBar',
             shape,
