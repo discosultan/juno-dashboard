@@ -49,7 +49,7 @@ export default function Controls({ onOptimize }: ControlsProps) {
   const [
     missedCandlePolicies,
     setMissedCandlePolicies,
-  ] = useLocalStorageState('missedCandlePolicies', ['ignore']);
+  ] = useLocalStorageState('missedCandlePolicies', [MissedCandlePolicies[0]]);
   const [start, setStart] = useLocalStorageState('start', '2018-01-01');
   const [end, setEnd] = useLocalStorageState('end', '2021-01-01');
   const [evaluationStatistic, setEvaluastionStatistic] = useLocalStorageState(

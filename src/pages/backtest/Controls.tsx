@@ -41,7 +41,7 @@ export default function Controls({ onBacktest }: ControlsProps) {
   const [end, setEnd] = useLocalStorageState('end', '2021-01-01');
   const [missedCandlePolicy, setMissedCandlePolicy] = useLocalStorageState(
     'missedCandlePolicy',
-    'ignore',
+    MissedCandlePolicies[0],
   );
   const [strategy, setStrategy] = useLocalStorageState('strategy', 'fourweekrule');
   const [strategyParams, setStrategyParams] = useLocalStorageState(
