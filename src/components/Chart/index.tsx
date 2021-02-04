@@ -36,6 +36,8 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
   useLayoutEffect(() => {
     if (!containerRef.current) return;
 
+    const nonEmptyCandles = candles.filter((candle) => candle.volume > 0);
+
     const newChart = createChart(containerRef.current, {
       width: containerRef.current.clientWidth,
       height: 360,
@@ -78,7 +80,7 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
       },
     });
     candleSeries.setData(
-      candles.map((candle) => ({
+      nonEmptyCandles.map((candle) => ({
         time: timestamp(candle.time) as any,
         open: candle.open,
         high: candle.high,
@@ -123,18 +125,19 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
       },
     });
     volumeSeries.setData(
-      candles.reduce(
-        ([prevClose, volume], candle) => {
-          const color = candle.close >= prevClose ? '#26a69a80' : '#ef535080';
-          volume.push({
-            time: timestamp(candle.time) as any,
-            value: candle.volume,
-            color,
-          });
-          return [candle.close, volume] as [number, HistogramData[]];
-        },
-        [0, []] as [number, HistogramData[]],
-      )[1],
+      nonEmptyCandles
+        .reduce(
+          ([prevClose, volume], candle) => {
+            const color = candle.close >= prevClose ? '#26a69a80' : '#ef535080';
+            volume.push({
+              time: timestamp(candle.time) as any,
+              value: candle.volume,
+              color,
+            });
+            return [candle.close, volume] as [number, HistogramData[]];
+          },
+          [0, []] as [number, HistogramData[]],
+        )[1],
     );
 
     // Line graph for running balance.
