@@ -1,3 +1,7 @@
+type ErrorResponse = {
+  message: string;
+};
+
 export async function fetchJson<T>(
   method: string,
   url: string,
@@ -13,7 +17,13 @@ export async function fetchJson<T>(
     signal,
   });
   const text = await response.text();
-  return JSON.parse(text, snakeToCamelReviver);
+  if (response.ok) {
+    const result: T = JSON.parse(text, snakeToCamelReviver);
+    return result;
+  } else {
+    const result: ErrorResponse = JSON.parse(text, snakeToCamelReviver);
+    throw new Error(result.message);
+  }
 }
 
 function camelToSnakeReplacer(_key: string, value: any): any {
