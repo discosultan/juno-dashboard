@@ -3,8 +3,12 @@ import { Statistics } from 'models';
 export type Individual = {
   chromosome: {
     strategy: {};
-    stopLoss: {};
-    takeProfit: {};
+    stopLoss: {
+      type: string;
+    };
+    takeProfit: {
+      type: string;
+    };
     trader: {
       interval: string;
       missedCandlePolicy: string;
@@ -30,8 +34,6 @@ export type EvolutionStats = {
 
 export type OptimizeParams = {
   strategy: string,
-  stopLoss: string,
-  takeProfit: string,
   exchange: string,
   trainingSymbols: string[],
   validationSymbols: string[],
@@ -50,8 +52,12 @@ export type OptimizeParams = {
       missedCandlePolicies: string[],
     },
     strategy: object,
-    stopLoss: object,
-    takeProfit: object,
+    stopLoss: {
+      type: string,
+    },
+    takeProfit: {
+      type: string,
+    },
   }
 };
 

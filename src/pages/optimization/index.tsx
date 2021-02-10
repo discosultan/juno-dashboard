@@ -29,7 +29,7 @@ export default function Dashboard() {
     try {
       const evolution = await fetchJson<EvolutionStats>(
         'POST',
-        `/optimize/${args.strategy}/${args.stopLoss}/${args.takeProfit}`,
+        `/optimize/${args.strategy}`,
         args,
       );
       const gensInfo = {
@@ -94,14 +94,8 @@ export default function Dashboard() {
                           type: gensInfo.args.strategy,
                           ...ind.ind.chromosome.strategy,
                         },
-                        stopLoss: {
-                          type: gensInfo.args.stopLoss,
-                          ...ind.ind.chromosome.stopLoss,
-                        },
-                        takeProfit: {
-                          type: gensInfo.args.takeProfit,
-                          ...ind.ind.chromosome.takeProfit,
-                        },
+                        stopLoss: ind.ind.chromosome.stopLoss,
+                        takeProfit: ind.ind.chromosome.takeProfit,
                       },
                       symbolStats: ind.symbolStats,
                       title: `gen ${gen.nr}`,

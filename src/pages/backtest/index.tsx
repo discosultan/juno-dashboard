@@ -27,7 +27,7 @@ export default function Dashboard() {
     try {
       const result = await fetchJson<BacktestResult>(
         'POST',
-        `/backtest/${args.strategy}/${args.stopLoss}/${args.takeProfit}`,
+        `/backtest/${args.strategy}`,
         args,
       );
 
@@ -44,14 +44,8 @@ export default function Dashboard() {
             type: args.strategy,
             ...args.strategyParams,
           },
-          stopLoss: {
-            type: args.stopLoss,
-            ...args.stopLossParams,
-          },
-          takeProfit: {
-            type: args.takeProfit,
-            ...args.takeProfitParams,
-          },
+          stopLoss: args.stopLoss,
+          takeProfit: args.takeProfit,
           trader: {
             interval: args.interval,
             missedCandlePolicy: args.missedCandlePolicy,

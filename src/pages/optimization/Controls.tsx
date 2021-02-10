@@ -3,13 +3,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
-import { Intervals, MissedCandlePolicies, StopLosses, Strategies, Symbols, TakeProfits } from 'info';
+import TextArea from 'components/TextArea';
+import { Intervals, MissedCandlePolicies, Strategies, Symbols } from 'info';
 import useOptimizeInfo from 'pages/optimization/useOptimizeInfo';
 import { OptimizeParams } from './models';
 
@@ -20,21 +19,12 @@ function useLocalStorageState<T>(
   return useLocalStorageStateImpl(`optimization_controls_${key}`, defaultValue);
 }
 
-const useStyles = makeStyles((_theme) => ({
-  textarea: {
-    resize: 'vertical',
-    width: '100%',
-  },
-}));
-
 type ControlsProps = {
   onOptimize: (args: OptimizeParams) => void;
 };
 
 export default function Controls({ onOptimize }: ControlsProps) {
   const [strategy, setStrategy] = useLocalStorageState('strategy', 'fourweekrule');
-  const [stopLoss, setStopLoss] = useLocalStorageState('stopLoss', 'noop');
-  const [takeProfit, setTakeProfit] = useLocalStorageState('takeProfit', 'noop');
   const [exchange, setExchange] = useLocalStorageState('exchange', 'binance');
   const [trainingSymbols, setTrainingSymbols] = useLocalStorageState('trainingSymbols', [
     'eth-btc',
@@ -70,7 +60,6 @@ export default function Controls({ onOptimize }: ControlsProps) {
   const [takeProfitContext, setTakeProfitContext] = useLocalStorageState('takeProfitContext', '{\n}');
 
   const optimizeInfo = useOptimizeInfo();
-  const classes = useStyles();
 
   return (
     <form noValidate autoComplete="off">
@@ -92,57 +81,20 @@ export default function Controls({ onOptimize }: ControlsProps) {
           </MenuItem>
         ))}
       </TextField>
-      <TextareaAutosize
-        id="strategyContext"
-        className={classes.textarea}
-        aria-label="strategy context"
-        rowsMin={3}
+      <TextArea
+        label="Strategy Context"
         value={strategyContext}
         onChange={(e) => setStrategyContext(e.target.value)}
       />
 
-      <TextField
-        id="stopLoss"
-        label="Stop Loss"
-        fullWidth
-        select
-        value={stopLoss}
-        onChange={(e) => setStopLoss(e.target.value)}
-      >
-        {StopLosses.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextareaAutosize
-        id="stopLossContext"
-        className={classes.textarea}
-        aria-label="stop loss context"
-        rowsMin={3}
+      <TextArea
+        label="Stop Loss Context"
         value={stopLossContext}
         onChange={(e) => setStopLossContext(e.target.value)}
       />
 
-      <TextField
-        id="takeProfit"
-        label="Take Profit"
-        fullWidth
-        select
-        value={takeProfit}
-        onChange={(e) => setTakeProfit(e.target.value)}
-      >
-        {TakeProfits.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextareaAutosize
-        id="takeProfitContext"
-        className={classes.textarea}
-        aria-label="take profit context"
-        rowsMin={3}
+      <TextArea
+        label="Take Profit Context"
         value={takeProfitContext}
         onChange={(e) => setTakeProfitContext(e.target.value)}
       />
@@ -323,8 +275,6 @@ export default function Controls({ onOptimize }: ControlsProps) {
         onClick={() =>
           onOptimize({
             strategy,
-            stopLoss,
-            takeProfit,
             exchange,
             trainingSymbols,
             validationSymbols,
@@ -343,8 +293,8 @@ export default function Controls({ onOptimize }: ControlsProps) {
                 missedCandlePolicies,
               },
               strategy: JSON.parse(strategyContext),
-              stopLoss: JSON.parse(stopLossContext),
-              takeProfit: JSON.parse(takeProfitContext),
+              stopLoss: stopLossContext.trim() === '' ? null : JSON.parse(stopLossContext),
+              takeProfit: takeProfitContext.trim() === '' ? null : JSON.parse(takeProfitContext),
             },
           })
         }
