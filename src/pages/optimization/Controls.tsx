@@ -57,7 +57,10 @@ export default function Controls({ onOptimize }: ControlsProps) {
   const [seed, setSeed] = useLocalStorageState('seed', 0);
   const [strategyContext, setStrategyContext] = useLocalStorageState('strategyContext', '{\n}');
   const [stopLossContext, setStopLossContext] = useLocalStorageState('stopLossContext', '{\n}');
-  const [takeProfitContext, setTakeProfitContext] = useLocalStorageState('takeProfitContext', '{\n}');
+  const [takeProfitContext, setTakeProfitContext] = useLocalStorageState(
+    'takeProfitContext',
+    '{\n}',
+  );
 
   const optimizeInfo = useOptimizeInfo();
 
@@ -293,8 +296,9 @@ export default function Controls({ onOptimize }: ControlsProps) {
                 missedCandlePolicies,
               },
               strategy: JSON.parse(strategyContext),
-              stopLoss: stopLossContext.trim() === '' ? null : JSON.parse(stopLossContext),
-              takeProfit: takeProfitContext.trim() === '' ? null : JSON.parse(takeProfitContext),
+              stopLoss: stopLossContext.trim() === '' ? undefined : JSON.parse(stopLossContext),
+              takeProfit:
+                takeProfitContext.trim() === '' ? undefined : JSON.parse(takeProfitContext),
             },
           })
         }
