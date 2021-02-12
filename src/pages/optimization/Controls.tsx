@@ -295,7 +295,7 @@ export default function Controls({ onOptimize }: ControlsProps) {
                 intervals,
                 missedCandlePolicies,
               },
-              strategy: JSON.parse(strategyContext),
+              strategy: strategyContext.trim() === '' ? undefined : JSON.parse(strategyContext),
               stopLoss: stopLossContext.trim() === '' ? undefined : JSON.parse(stopLossContext),
               takeProfit:
                 takeProfitContext.trim() === '' ? undefined : JSON.parse(takeProfitContext),
