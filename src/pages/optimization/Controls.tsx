@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
 import TextArea from 'components/TextArea';
-import { Intervals, MissedCandlePolicies, Strategies, Symbols } from 'info';
+import { Intervals, MissedCandlePolicies, Symbols } from 'info';
 import useOptimizeInfo from 'pages/optimization/useOptimizeInfo';
 import { OptimizeParams } from './models';
 
@@ -24,7 +24,6 @@ type ControlsProps = {
 };
 
 export default function Controls({ onOptimize }: ControlsProps) {
-  const [strategy, setStrategy] = useLocalStorageState('strategy', 'fourweekrule');
   const [exchange, setExchange] = useLocalStorageState('exchange', 'binance');
   const [trainingSymbols, setTrainingSymbols] = useLocalStorageState('trainingSymbols', [
     'eth-btc',
@@ -70,32 +69,16 @@ export default function Controls({ onOptimize }: ControlsProps) {
         Configure Optimization Args
       </Typography>
 
-      <TextField
-        id="strategy"
-        label="Strategy"
-        fullWidth
-        select
-        value={strategy}
-        onChange={(e) => setStrategy(e.target.value)}
-      >
-        {Strategies.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
       <TextArea
         label="Strategy Context"
         value={strategyContext}
         onChange={(e) => setStrategyContext(e.target.value)}
       />
-
       <TextArea
         label="Stop Loss Context"
         value={stopLossContext}
         onChange={(e) => setStopLossContext(e.target.value)}
       />
-
       <TextArea
         label="Take Profit Context"
         value={takeProfitContext}
@@ -277,7 +260,6 @@ export default function Controls({ onOptimize }: ControlsProps) {
         variant="contained"
         onClick={() =>
           onOptimize({
-            strategy,
             exchange,
             trainingSymbols,
             validationSymbols,

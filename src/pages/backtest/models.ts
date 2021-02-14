@@ -1,7 +1,8 @@
 export type BacktestParams = {
   missedCandlePolicy: string;
-  strategy: string;
-  strategyParams: object;
+  strategy: {
+    type: string;
+  };
   stopLoss: {
     type: string;
   };

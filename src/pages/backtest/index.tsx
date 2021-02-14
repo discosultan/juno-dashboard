@@ -25,11 +25,7 @@ export default function Dashboard() {
 
   async function backtest(args: BacktestParams): Promise<void> {
     try {
-      const result = await fetchJson<BacktestResult>(
-        'POST',
-        `/backtest/${args.strategy}`,
-        args,
-      );
+      const result = await fetchJson<BacktestResult>('POST', '/backtest', args);
 
       const tradingResult: TradingResultValueProps = {
         args: {
@@ -40,10 +36,7 @@ export default function Dashboard() {
           validationSymbols: [],
         },
         config: {
-          strategy: {
-            type: args.strategy,
-            ...args.strategyParams,
-          },
+          strategy: args.strategy,
           stopLoss: args.stopLoss,
           takeProfit: args.takeProfit,
           trader: {
@@ -52,7 +45,7 @@ export default function Dashboard() {
           },
         },
         symbolStats: result.symbolStats,
-        title: args.strategy,
+        title: args.strategy.type,
       };
 
       const historyItem = {

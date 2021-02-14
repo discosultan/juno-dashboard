@@ -2,7 +2,9 @@ import { Statistics } from 'models';
 
 export type Individual = {
   chromosome: {
-    strategy: {};
+    strategy: {
+      type: string;
+    };
     stopLoss: {
       type: string;
     };
@@ -33,32 +35,33 @@ export type EvolutionStats = {
 };
 
 export type OptimizeParams = {
-  strategy: string,
-  exchange: string,
-  trainingSymbols: string[],
-  validationSymbols: string[],
-  start: string,
-  end: string,
-  quote: number,
-  evaluationStatistic: string,
-  evaluationAggregation: string,
-  populationSize: number,
-  generations: number,
-  hallOfFameSize: number,
-  seed: number | null,
+  exchange: string;
+  trainingSymbols: string[];
+  validationSymbols: string[];
+  start: string;
+  end: string;
+  quote: number;
+  evaluationStatistic: string;
+  evaluationAggregation: string;
+  populationSize: number;
+  generations: number;
+  hallOfFameSize: number;
+  seed: number | null;
   context: {
     trader: {
-      intervals: string[],
-      missedCandlePolicies: string[],
-    },
-    strategy: object,
-    stopLoss: {
-      type: string,
-    },
-    takeProfit: {
-      type: string,
-    },
-  }
+      intervals: string[];
+      missedCandlePolicies: string[];
+    };
+    strategy?: {
+      type: string;
+    };
+    stopLoss?: {
+      type: string;
+    };
+    takeProfit?: {
+      type: string;
+    };
+  };
 };
 
 export type GenerationsInfo = {
