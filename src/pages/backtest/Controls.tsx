@@ -5,16 +5,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
-import DynamicParams from './DynamicParams';
-import {
-  Intervals,
-  MissedCandlePolicies,
-  Strategies,
-  StopLosses,
-  Symbols,
-  TakeProfits,
-} from '../../info';
+import { Intervals, MissedCandlePolicies, Symbols } from '../../info';
 import { BacktestParams } from './models';
+import TextArea from 'components/TextArea';
 
 function useLocalStorageState<T>(
   key: string,
@@ -43,20 +36,17 @@ export default function Controls({ onBacktest }: ControlsProps) {
     'missedCandlePolicy',
     MissedCandlePolicies[0],
   );
-  const [strategy, setStrategy] = useLocalStorageState('strategy', 'fourweekrule');
-  const [strategyParams, setStrategyParams] = useLocalStorageState(
+  const [strategy, setStrategy] = useLocalStorageState(
     'strategyParams',
-    '{\n  "period": 28,\n  "ma": "kama",\n  "maPeriod": 14\n}',
+    '{\n  "type": "FourWeekRule",\n  "period": 28,\n  "ma": "kama",\n  "maPeriod": 14\n}',
   );
-  const [stopLoss, setStopLoss] = useLocalStorageState('stopLoss', 'basic');
-  const [stopLossParams, setStopLossParams] = useLocalStorageState(
+  const [stopLoss, setStopLoss] = useLocalStorageState(
     'stopLossParams',
-    '{\n  "upThreshold": 0,\n  "downThreshold": 0\n}',
+    '{\n  "type": "Basic",\n  "upThreshold": 0.1,\n  "downThreshold": 0.1\n}',
   );
-  const [takeProfit, setTakeProfit] = useLocalStorageState('takeProfit', 'basic');
-  const [takeProfitParams, setTakeProfitParams] = useLocalStorageState(
+  const [takeProfit, setTakeProfit] = useLocalStorageState(
     'takeProfitParams',
-    '{\n  "upThreshold": 0,\n  "downThreshold": 0\n}',
+    '{\n  "type": "Basic",\n  "upThreshold": 0.1,\n  "downThreshold": 0.1\n}',
   );
 
   return (
@@ -65,31 +55,12 @@ export default function Controls({ onBacktest }: ControlsProps) {
         Configure Backtest Args
       </Typography>
 
-      <DynamicParams
-        label="Strategy"
-        options={Strategies}
-        value={strategy}
-        onChange={(e) => setStrategy(e.target.value)}
-        paramsValue={strategyParams}
-        paramsOnChange={(e) => setStrategyParams(e.target.value)}
-      />
-
-      <DynamicParams
-        label="Stop Loss"
-        options={StopLosses}
-        value={stopLoss}
-        onChange={(e) => setStopLoss(e.target.value)}
-        paramsValue={stopLossParams}
-        paramsOnChange={(e) => setStopLossParams(e.target.value)}
-      />
-
-      <DynamicParams
+      <TextArea label="Strategy" value={strategy} onChange={(e) => setStrategy(e.target.value)} />
+      <TextArea label="Stop Loss" value={stopLoss} onChange={(e) => setStopLoss(e.target.value)} />
+      <TextArea
         label="Take Profit"
-        options={TakeProfits}
         value={takeProfit}
         onChange={(e) => setTakeProfit(e.target.value)}
-        paramsValue={takeProfitParams}
-        paramsOnChange={(e) => setTakeProfitParams(e.target.value)}
       />
 
       <TextField
@@ -162,12 +133,9 @@ export default function Controls({ onBacktest }: ControlsProps) {
         onClick={() =>
           onBacktest({
             missedCandlePolicy,
-            strategy,
-            strategyParams: JSON.parse(strategyParams),
-            stopLoss,
-            stopLossParams: JSON.parse(stopLossParams),
-            takeProfit,
-            takeProfitParams: JSON.parse(takeProfitParams),
+            strategy: JSON.parse(strategy),
+            stopLoss: JSON.parse(stopLoss),
+            takeProfit: JSON.parse(takeProfit),
             exchange,
             symbols,
             interval,

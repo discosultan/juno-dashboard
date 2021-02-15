@@ -1,11 +1,14 @@
 export type BacktestParams = {
   missedCandlePolicy: string;
-  strategy: string;
-  strategyParams: object;
-  stopLoss: string;
-  stopLossParams: object;
-  takeProfit: string;
-  takeProfitParams: object;
+  strategy: {
+    type: string;
+  };
+  stopLoss: {
+    type: string;
+  };
+  takeProfit: {
+    type: string;
+  };
   exchange: string;
   symbols: string[];
   interval: string;

@@ -27,11 +27,7 @@ export default function Dashboard() {
 
   async function optimize(args: OptimizeParams): Promise<void> {
     try {
-      const evolution = await fetchJson<EvolutionStats>(
-        'POST',
-        `/optimize/${args.strategy}/${args.stopLoss}/${args.takeProfit}`,
-        args,
-      );
+      const evolution = await fetchJson<EvolutionStats>('POST', '/optimize', args);
       const gensInfo = {
         args: {
           ...args,
@@ -67,7 +63,7 @@ export default function Dashboard() {
                 label="Optimization History"
                 value={gensInfo}
                 history={history}
-                format={(gensInfo) => gensInfo?.args.strategy ?? ''}
+                format={(gensInfo) => gensInfo?.args.context.strategy?.type ?? 'Any'}
                 onChange={(gensInfo) => gensInfo && processGensInfo(gensInfo)}
               />
             </Box>
@@ -90,18 +86,9 @@ export default function Dashboard() {
                       args: gensInfo.args,
                       config: {
                         trader: ind.ind.chromosome.trader,
-                        strategy: {
-                          type: gensInfo.args.strategy,
-                          ...ind.ind.chromosome.strategy,
-                        },
-                        stopLoss: {
-                          type: gensInfo.args.stopLoss,
-                          ...ind.ind.chromosome.stopLoss,
-                        },
-                        takeProfit: {
-                          type: gensInfo.args.takeProfit,
-                          ...ind.ind.chromosome.takeProfit,
-                        },
+                        strategy: ind.ind.chromosome.strategy,
+                        stopLoss: ind.ind.chromosome.stopLoss,
+                        takeProfit: ind.ind.chromosome.takeProfit,
                       },
                       symbolStats: ind.symbolStats,
                       title: `gen ${gen.nr}`,
