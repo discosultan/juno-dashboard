@@ -137,6 +137,7 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
               symbol={symbol}
               candles={symbolCandles[symbol]}
               stats={symbolStats[symbol].core}
+              positions={symbolStats[symbol].positions}
             />
           ))
           .concat(
@@ -146,6 +147,7 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
                 symbol={`${symbol} (v)`}
                 candles={symbolCandles[symbol]}
                 stats={symbolStats[symbol].core}
+                positions={symbolStats[symbol].positions}
               />
             )),
           )}

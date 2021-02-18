@@ -8,7 +8,7 @@ export type Candle = {
 };
 
 export type PositionStatistics = {
-  type: 'long' | 'short';
+  type: 'Long' | 'Short';
   openTime: string;
   closeTime: string;
   cost: number;
@@ -39,8 +39,6 @@ export type CoreStatistics = {
   numPositionsInLoss: number;
   numStopLosses: number;
   numTakeProfits: number;
-
-  positions: PositionStatistics[];
 };
 
 export type ExtendedStatistics = {
@@ -53,4 +51,5 @@ export type ExtendedStatistics = {
 export type Statistics = {
   core: CoreStatistics;
   extended: ExtendedStatistics;
+  positions: PositionStatistics[];
 };

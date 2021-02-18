@@ -9,7 +9,7 @@ import {
   LineData,
 } from 'lightweight-charts';
 import useResizeObserver from 'use-resize-observer';
-import { Candle, CoreStatistics } from 'models';
+import { Candle, CoreStatistics, PositionStatistics } from 'models';
 import MarkerTooltip from './MarkerTooltip';
 import useHoldKeyToScroll from './useHoldKeyToScroll';
 
@@ -21,9 +21,10 @@ type ChartProps = {
   symbol: string;
   candles: Candle[];
   stats: CoreStatistics;
+  positions: PositionStatistics[];
 };
 
-export default function Chart({ symbol, candles, stats }: ChartProps) {
+export default function Chart({ symbol, candles, stats, positions }: ChartProps) {
   const { palette } = useTheme();
   const [chart, setChart] = useState<IChartApi | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -90,8 +91,8 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
       })),
     );
     candleSeries.setMarkers(
-      stats.positions.flatMap((pos, i) => {
-        const shape = pos.type === 'long' ? 'arrowUp' : 'arrowDown';
+      positions.flatMap((pos, i) => {
+        const shape = pos.type === 'Long' ? 'arrowUp' : 'arrowDown';
         const id = i + 1;
         return [
           {
@@ -148,7 +149,7 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
         lineWidth: 1.2,
       })
       .setData(
-        stats.positions.reduce(
+        positions.reduce(
           ([quote, points], pos) => {
             const newQuote = quote + pos.profit;
             points.push({
@@ -175,14 +176,14 @@ export default function Chart({ symbol, candles, stats }: ChartProps) {
     setChart(newChart);
 
     return () => newChart.remove();
-  }, [symbol, candles, stats, palette]);
+  }, [symbol, candles, stats, positions, palette]);
 
   useHoldKeyToScroll(chart, 'ControlLeft');
 
   return (
     <Box my={1} style={{ position: 'relative' }}>
       <div ref={containerRef} style={{ width: '100%' }} />
-      {chart && <MarkerTooltip chart={chart} positions={stats.positions} />}
+      {chart && <MarkerTooltip chart={chart} positions={positions} />}
     </Box>
   );
 }
