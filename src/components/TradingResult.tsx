@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import useSymbolCandles from 'components/useSymbolCandles';
 import Chart from './Chart';
+import Code from './Code';
 import { CoreStatistics, ExtendedStatistics, Statistics } from 'models';
 
 type FlattenedStatistics = CoreStatistics & ExtendedStatistics;
@@ -104,7 +105,7 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
       {onClose && <Button onClick={onClose}>&lt; Back</Button>}
 
       <Paper>
-        <pre>{JSON.stringify(config, null, 4)}</pre>
+        <Code code={JSON.stringify(config, null, 4)} />
       </Paper>
 
       <TableContainer component={Paper}>
@@ -129,19 +130,21 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
         </Table>
       </TableContainer>
 
-      {Object.keys(symbolCandles).length &&
-        args.trainingSymbols
-          .map((symbol) => (
-            <Chart
-              key={symbol}
-              symbol={symbol}
-              candles={symbolCandles[symbol]}
-              stats={symbolStats[symbol].core}
-              positions={symbolStats[symbol].positions}
-            />
-          ))
-          .concat(
-            args.validationSymbols.map((symbol) => (
+      {args.trainingSymbols
+        .filter((symbol) => symbol in symbolCandles)
+        .map((symbol) => (
+          <Chart
+            key={symbol}
+            symbol={symbol}
+            candles={symbolCandles[symbol]}
+            stats={symbolStats[symbol].core}
+            positions={symbolStats[symbol].positions}
+          />
+        ))
+        .concat(
+          args.validationSymbols
+            .filter((symbol) => symbol in symbolCandles)
+            .map((symbol) => (
               <Chart
                 key={symbol}
                 symbol={`${symbol} (v)`}
@@ -150,7 +153,7 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
                 positions={symbolStats[symbol].positions}
               />
             )),
-          )}
+        )}
     </>
   );
 }
