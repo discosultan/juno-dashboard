@@ -55,29 +55,6 @@ export default function Controls({ onBacktest }: ControlsProps) {
         Configure Backtest Args
       </Typography>
 
-      <TextArea label="Strategy" value={strategy} onChange={(e) => setStrategy(e.target.value)} />
-      <TextArea label="Stop Loss" value={stopLoss} onChange={(e) => setStopLoss(e.target.value)} />
-      <TextArea
-        label="Take Profit"
-        value={takeProfit}
-        onChange={(e) => setTakeProfit(e.target.value)}
-      />
-
-      <TextField
-        id="missedCandlePolicy"
-        fullWidth
-        select
-        label="Missed Candle Policy"
-        value={missedCandlePolicy}
-        onChange={(e) => setMissedCandlePolicy(e.target.value)}
-      >
-        {MissedCandlePolicies.map((policy) => (
-          <MenuItem key={policy} value={policy}>
-            {policy}
-          </MenuItem>
-        ))}
-      </TextField>
-
       <TextField
         id="exchange"
         fullWidth
@@ -107,6 +84,17 @@ export default function Controls({ onBacktest }: ControlsProps) {
         ))}
       </TextField>
 
+      <DatePicker label="Start" value={start} onChange={(e: any) => setStart(e.target.value)} />
+      <DatePicker label="End" value={end} onChange={(e: any) => setEnd(e.target.value)} />
+
+      <TextArea label="Strategy" value={strategy} onChange={(e) => setStrategy(e.target.value)} />
+      <TextArea label="Stop Loss" value={stopLoss} onChange={(e) => setStopLoss(e.target.value)} />
+      <TextArea
+        label="Take Profit"
+        value={takeProfit}
+        onChange={(e) => setTakeProfit(e.target.value)}
+      />
+
       <TextField
         id="interval"
         fullWidth
@@ -122,8 +110,20 @@ export default function Controls({ onBacktest }: ControlsProps) {
         ))}
       </TextField>
 
-      <DatePicker label="Start" value={start} onChange={(e: any) => setStart(e.target.value)} />
-      <DatePicker label="End" value={end} onChange={(e: any) => setEnd(e.target.value)} />
+      <TextField
+        id="missedCandlePolicy"
+        fullWidth
+        select
+        label="Missed Candle Policy"
+        value={missedCandlePolicy}
+        onChange={(e) => setMissedCandlePolicy(e.target.value)}
+      >
+        {MissedCandlePolicies.map((policy) => (
+          <MenuItem key={policy} value={policy}>
+            {policy}
+          </MenuItem>
+        ))}
+      </TextField>
 
       <br />
       <br />
@@ -132,13 +132,17 @@ export default function Controls({ onBacktest }: ControlsProps) {
         variant="contained"
         onClick={() =>
           onBacktest({
-            missedCandlePolicy,
-            strategy: JSON.parse(strategy),
-            stopLoss: JSON.parse(stopLoss),
-            takeProfit: JSON.parse(takeProfit),
+            trading: {
+              trader: {
+                interval,
+                missedCandlePolicy,
+              },
+              strategy: JSON.parse(strategy),
+              stopLoss: JSON.parse(stopLoss),
+              takeProfit: JSON.parse(takeProfit),
+            },
             exchange,
             symbols,
-            interval,
             start,
             end,
             quote: 1.0,

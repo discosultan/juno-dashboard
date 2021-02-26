@@ -35,17 +35,9 @@ export default function Dashboard() {
           trainingSymbols: args.symbols,
           validationSymbols: [],
         },
-        config: {
-          strategy: args.strategy,
-          stopLoss: args.stopLoss,
-          takeProfit: args.takeProfit,
-          trader: {
-            interval: args.interval,
-            missedCandlePolicy: args.missedCandlePolicy,
-          },
-        },
+        config: args.trading,
         symbolStats: result.symbolStats,
-        title: args.strategy.type,
+        title: args.trading.strategy.type,
       };
 
       const historyItem = {

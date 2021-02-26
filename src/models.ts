@@ -53,3 +53,19 @@ export type Statistics = {
   extended: ExtendedStatistics;
   positions: PositionStatistics[];
 };
+
+export type TradingParams = {
+  strategy: {
+    type: string;
+  };
+  stopLoss: {
+    type: string;
+  };
+  takeProfit: {
+    type: string;
+  };
+  trader: {
+    interval: string;
+    missedCandlePolicy: string;
+  };
+};

@@ -1,17 +1,9 @@
+import { TradingParams } from "models";
+
 export type BacktestParams = {
-  missedCandlePolicy: string;
-  strategy: {
-    type: string;
-  };
-  stopLoss: {
-    type: string;
-  };
-  takeProfit: {
-    type: string;
-  };
+  trading: TradingParams,
   exchange: string;
   symbols: string[];
-  interval: string;
   start: string;
   end: string;
   quote: number;

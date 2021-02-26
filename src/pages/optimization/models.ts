@@ -1,21 +1,7 @@
-import { Statistics } from 'models';
+import { Statistics, TradingParams } from 'models';
 
 export type Individual = {
-  chromosome: {
-    strategy: {
-      type: string;
-    };
-    stopLoss: {
-      type: string;
-    };
-    takeProfit: {
-      type: string;
-    };
-    trader: {
-      interval: string;
-      missedCandlePolicy: string;
-    };
-  };
+  chromosome: TradingParams;
   fitness: number;
 };
 
