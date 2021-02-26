@@ -85,10 +85,10 @@ export default function Dashboard() {
                     setSelectedGenInfo({
                       args: gensInfo.args,
                       config: {
-                        trader: ind.ind.chromosome.trader,
-                        strategy: ind.ind.chromosome.strategy,
-                        stopLoss: ind.ind.chromosome.stopLoss,
-                        takeProfit: ind.ind.chromosome.takeProfit,
+                        trader: ind.individual.chromosome.trader,
+                        strategy: ind.individual.chromosome.strategy,
+                        stopLoss: ind.individual.chromosome.stopLoss,
+                        takeProfit: ind.individual.chromosome.takeProfit,
                       },
                       symbolStats: ind.symbolStats,
                       title: `gen ${gen.nr}`,

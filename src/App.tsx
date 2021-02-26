@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useMemo } from 'react';
+import { Suspense, lazy, useMemo } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link as RouterLink } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
 import AppBar from '@material-ui/core/AppBar';

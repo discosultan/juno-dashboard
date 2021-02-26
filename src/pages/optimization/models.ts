@@ -20,7 +20,7 @@ export type Individual = {
 };
 
 export type IndividualStats = {
-  ind: Individual;
+  individual: Individual;
   symbolStats: { [symbol: string]: Statistics };
 };
 

@@ -1,12 +1,12 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
-import { Intervals, MissedCandlePolicies, Symbols } from '../../info';
-import { BacktestParams } from './models';
+import { Intervals, MissedCandlePolicies, Symbols } from 'info';
+import { BacktestParams } from '../models';
 import TextArea from 'components/TextArea';
 
 function useLocalStorageState<T>(

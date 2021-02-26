@@ -1,4 +1,3 @@
-import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -73,7 +72,7 @@ export default function Generations({ value, onSelect }: GenerationsProps) {
                         ).toFixed(8)}
                       </TableCell>
                     ))}
-                    <TableCell align="right">{ind.ind.fitness.toFixed(8)}</TableCell>
+                    <TableCell align="right">{ind.individual.fitness.toFixed(8)}</TableCell>
                   </TableRow>
                 )),
               )}
