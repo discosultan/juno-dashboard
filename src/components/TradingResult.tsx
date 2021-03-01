@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import useSymbolCandles from 'components/useSymbolCandles';
 import Chart from './Chart';
 import Code from './Code';
-import { CoreStatistics, ExtendedStatistics, Statistics } from 'models';
+import { CoreStatistics, ExtendedStatistics, Statistics, TradingParams } from 'models';
 
 type FlattenedStatistics = CoreStatistics & ExtendedStatistics;
 
@@ -20,23 +20,9 @@ export type TradingResultValueProps = {
     start: string;
     end: string;
     trainingSymbols: string[];
-    validationSymbols: string[];
+    validationSymbols?: string[];
   };
-  config: {
-    trader: {
-      interval: string;
-      missedCandlePolicy: string;
-    };
-    strategy: {
-      type: string;
-    };
-    stopLoss: {
-      type: string;
-    };
-    takeProfit: {
-      type: string;
-    };
-  };
+  config: TradingParams;
   symbolStats: {
     [symbol: string]: Statistics;
   };
@@ -61,12 +47,14 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
   }, {} as { [symbol: string]: FlattenedStatistics });
   const ignoreKeys = ['positions', 'gReturns'];
 
+  const symbols = args.trainingSymbols.concat(args.validationSymbols ?? []);
+
   const stats = Object.values(flatSymbolStats);
   const symbolCandles = useSymbolCandles({
     exchange: args.exchange,
     start: args.start,
     end: args.end,
-    symbols: args.trainingSymbols.concat(args.validationSymbols),
+    symbols: args.trainingSymbols,
     interval: config.trader.interval,
   });
 
@@ -76,8 +64,6 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
     const keys = Object.keys(stats[0]).filter(
       (key) => !ignoreKeys.includes(key),
     ) as (keyof FlattenedStatistics)[];
-    const symbols = args.trainingSymbols.concat(args.validationSymbols);
-
     const keyTotals = keys.map((key) =>
       symbols.reduce((acc, symbol) => {
         const value = flatSymbolStats[symbol][key];
@@ -104,9 +90,7 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
     <>
       {onClose && <Button onClick={onClose}>&lt; Back</Button>}
 
-      <Paper>
-        <Code code={JSON.stringify(config, null, 4)} />
-      </Paper>
+      <Code code={JSON.stringify(config, null, 4)} />
 
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
@@ -118,7 +102,7 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
                   {symbol}
                 </TableCell>
               ))}
-              {args.validationSymbols.map((symbol) => (
+              {(args.validationSymbols ?? []).map((symbol) => (
                 <TableCell key={symbol} align="right">
                   {symbol} (v)
                 </TableCell>
@@ -142,7 +126,7 @@ export default function TradingResult({ value, onClose }: TradingResultProps) {
           />
         ))
         .concat(
-          args.validationSymbols
+          (args.validationSymbols ?? [])
             .filter((symbol) => symbol in symbolCandles)
             .map((symbol) => (
               <Chart

@@ -4,7 +4,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
 import TextArea from 'components/TextArea';
@@ -65,10 +64,6 @@ export default function Controls({ onOptimize }: ControlsProps) {
 
   return (
     <form noValidate autoComplete="off">
-      <Typography variant="h6" gutterBottom>
-        Configure Optimization Args
-      </Typography>
-
       <TextArea
         label="Strategy Context"
         value={strategyContext}

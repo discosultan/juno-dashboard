@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 export type HistoryItem<T> = {
+  id: string;
   time: string;
   value: T;
 };

@@ -1,11 +1,13 @@
 import { CSSProperties } from 'react';
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 const styles: { [key: string]: CSSProperties } = {
   code: {
     position: 'relative',
     padding: '5px',
+    margin: 0,
   },
   copy: {
     position: 'absolute',
@@ -26,11 +28,13 @@ export default function Code({ code }: CodeProps) {
   }
 
   return (
-    <pre style={styles.code}>
-      {code}
-      <IconButton style={styles.copy} onClick={onClick}>
-        <FileCopyOutlinedIcon />
-      </IconButton>
-    </pre>
+    <Paper>
+      <pre style={styles.code}>
+        {code}
+        <IconButton style={styles.copy} onClick={onClick}>
+          <FileCopyOutlinedIcon />
+        </IconButton>
+      </pre>
+    </Paper>
   );
 }

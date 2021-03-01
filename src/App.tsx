@@ -1,45 +1,50 @@
 import { Suspense, lazy, useMemo } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link as RouterLink } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
-import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Link from '@material-ui/core/Link';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import {
   ThemeProvider,
-  makeStyles,
   // TODO: Remove in MUI v5.
   // https://stackoverflow.com/a/64135466
   unstable_createMuiStrictModeTheme as createMuiTheme,
 } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import useLocalStorageState from 'use-local-storage-state';
+import Loading from 'components/Loading';
+import Navigation from 'components/Navigation';
 
 const BacktestDashboard = lazy(() => import('pages/backtest/index'));
 const OptimizationDashboard = lazy(() => import('pages/optimization/index'));
+const OptimizationSession = lazy(() => import('pages/optimization/Session'));
+const OptimizationIndividual = lazy(() => import('pages/optimization/Individual'));
 
-const useStyles = makeStyles((theme) => ({
-  appBarItem: {
-    marginRight: theme.spacing(2),
+const styles = {
+  main: {
+    width: '100%',
+    minHeight: 'calc(100vh - 72px)',
+    backgroundImage: 'url(crystal-corner.png)',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: '100% 0',
+    backgroundSize: '450px 450px',
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-}));
+};
 
 export default function App() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const classes = useStyles();
+  const [darkMode, setDarkMode] = useLocalStorageState(
+    'darkMode',
+    useMediaQuery('(prefers-color-scheme: dark)'),
+  );
 
   const theme = useMemo(
     () =>
       createMuiTheme({
         palette: {
-          type: prefersDarkMode ? 'dark' : 'light',
+          type: darkMode ? 'dark' : 'light',
         },
       }),
-    [prefersDarkMode],
+    [darkMode],
   );
 
   return (
@@ -47,27 +52,21 @@ export default function App() {
       <CssBaseline />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router>
-          <AppBar className={classes.appBar}>
-            <Toolbar variant="dense">
-              <Link component={RouterLink} to="/backtest" className={classes.appBarItem}>
-                <Typography color="textPrimary" variant="h6">
-                  Backtest
-                </Typography>
-              </Link>
-              <Link component={RouterLink} to="/optimize" className={classes.appBarItem}>
-                <Typography color="textPrimary" variant="h6">
-                  Optimize
-                </Typography>
-              </Link>
-            </Toolbar>
-          </AppBar>
-
-          <Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              <Route path="/backtest" component={BacktestDashboard} />
-              <Route path="/" component={OptimizationDashboard} />
-            </Switch>
-          </Suspense>
+          <Navigation darkMode={darkMode} setDarkMode={setDarkMode}>
+            <Box component="main" style={styles.main} p={1}>
+              <Suspense fallback={<Loading />}>
+                <Switch>
+                  <Route path="/backtest" component={BacktestDashboard} />
+                  <Route
+                    path="/optimize/:session/:generation/:individual"
+                    component={OptimizationIndividual}
+                  />
+                  <Route path="/optimize/:session" component={OptimizationSession} />
+                  <Route path="/optimize" component={OptimizationDashboard} />
+                </Switch>
+              </Suspense>
+            </Box>
+          </Navigation>
         </Router>
       </MuiPickersUtilsProvider>
     </ThemeProvider>

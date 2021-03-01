@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import useLocalStorageState from 'use-local-storage-state';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSnack from 'components/ErrorSnack';
 import History, { HistoryItem } from 'components/History';
 import SplitPane from 'components/SplitPane';
@@ -33,7 +34,6 @@ export default function Dashboard() {
           start: args.start,
           end: args.end,
           trainingSymbols: args.symbols,
-          validationSymbols: [],
         },
         config: args.trading,
         symbolStats: result.symbolStats,
@@ -41,6 +41,7 @@ export default function Dashboard() {
       };
 
       const historyItem = {
+        id: uuidv4(),
         time: new Date().toISOString(),
         value: tradingResult,
       };

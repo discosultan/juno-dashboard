@@ -1,16 +1,31 @@
 import { ReactElement } from 'react';
 import Drawer from '@material-ui/core/Drawer';
-import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import Scroll from 'components/Scroll';
+import { Box } from '@material-ui/core';
 
-const drawerWidth = '20%';
+const leftWidth = '20%';
 const useStyles = makeStyles((_theme) => ({
   drawer: {
-    width: drawerWidth,
+    width: leftWidth,
+    marginLeft: '184px',
   },
-  main: {
-    marginLeft: drawerWidth,
+  left: {
+    width: leftWidth,
+    display: 'fixed',
+    height: '100%',
   },
+  right: {
+    flexGrow: 1,
+    // marginLeft: drawerWidth,
+    // position: 'relative',
+    // overflow: 'auto',
+  },
+  // toolbar: {
+  //   // Dense toolbar is always of that height.
+  //   minHeight: 48,
+  // },
 }));
 
 type SplitPaneProps = {
@@ -22,22 +37,26 @@ export default function SplitPane({ left, right }: SplitPaneProps) {
   const classes = useStyles();
 
   return (
-    <>
+    <Box display="flex">
+      {/* <Paper className={classes.left}>
+        <Scroll>
+          {left}
+        </Scroll>
+      </Paper> */}
       <Drawer
         variant="permanent"
         anchor="left"
         className={classes.drawer}
         classes={{ paper: classes.drawer }}
       >
-        {/* Dummy toolbar to add toolbar's worth of space to the top. Otherwise the
-                component will run under app bar. Same for the main section below. */}
-        <Toolbar variant="dense" />
-        {left}
+        {/* <div className={classes.toolbar} /> */}
+        <Scroll>{left}</Scroll>
+        {/* {left} */}
       </Drawer>
-      <main className={classes.main}>
-        <Toolbar variant="dense" />
-        {right}
-      </main>
-    </>
+
+      <Box m={1} className={classes.right}>
+        <Scroll>{right}</Scroll>
+      </Box>
+    </Box>
   );
 }
