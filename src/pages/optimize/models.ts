@@ -15,12 +15,7 @@ export type Generation = {
   hallOfFame: IndividualStats[];
 };
 
-export type EvolutionStats = {
-  generations: Generation[];
-  seed: number;
-};
-
-export type OptimizeParams = {
+export type OptimizeInput = {
   exchange: string;
   trainingSymbols: string[];
   validationSymbols: string[];
@@ -50,22 +45,22 @@ export type OptimizeParams = {
   };
 };
 
-export type GenerationsInfo = {
-  args: OptimizeParams & { seed: number };
-  gens: Generation[];
+export type OptimizeOutput = {
+  generations: Generation[];
+  seed: number;
 };
 
-export type TradingResult = {
-  args: {
-    exchange: string;
-    start: string;
-    end: string;
-    trainingSymbols: string[];
-    validationSymbols?: string[];
-  };
-  config: TradingParams;
-  symbolStats: {
-    [symbol: string]: Statistics;
-  };
-  title: string;
-};
+// export type TradingResult = {
+//   args: {
+//     exchange: string;
+//     start: string;
+//     end: string;
+//     trainingSymbols: string[];
+//     validationSymbols?: string[];
+//   };
+//   config: TradingParams;
+//   symbolStats: {
+//     [symbol: string]: Statistics;
+//   };
+//   title: string;
+// };

@@ -8,8 +8,8 @@ import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
 import TextArea from 'components/TextArea';
 import { Intervals, MissedCandlePolicies, Symbols } from 'info';
-import useOptimizeInfo from 'pages/optimization/useOptimizeInfo';
-import { OptimizeParams } from './models';
+import useOptimizeInfo from 'pages/optimize/useOptimizeInfo';
+import { OptimizeInput } from './models';
 
 function useLocalStorageState<T>(
   key: string,
@@ -19,7 +19,7 @@ function useLocalStorageState<T>(
 }
 
 type ControlsProps = {
-  onOptimize: (args: OptimizeParams) => void;
+  onOptimize: (args: OptimizeInput) => void;
 };
 
 export default function Controls({ onOptimize }: ControlsProps) {

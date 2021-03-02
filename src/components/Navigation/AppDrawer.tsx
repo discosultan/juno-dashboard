@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -24,6 +24,8 @@ type AppDrawerProps = {
 };
 
 export default function AppDrawer({ darkMode, setDarkMode }: AppDrawerProps) {
+  const location = useLocation();
+
   return (
     <Drawer variant="permanent" anchor="left" style={styles.drawer}>
       <Box p={1}>
@@ -33,13 +35,23 @@ export default function AppDrawer({ darkMode, setDarkMode }: AppDrawerProps) {
       <Divider />
 
       <List>
-        <ListItem button component={Link} to="/backtest">
+        <ListItem
+          button
+          component={Link}
+          to="/backtest"
+          selected={location.pathname.startsWith('/backtest')}
+        >
           <ListItemIcon>
             <FastRewindIcon />
           </ListItemIcon>
           <ListItemText primary="Backtest" />
         </ListItem>
-        <ListItem button component={Link} to="/optimize">
+        <ListItem
+          button
+          component={Link}
+          to="/optimize"
+          selected={location.pathname.startsWith('/optimize')}
+        >
           <ListItemIcon>
             <ExploreIcon />
           </ListItemIcon>

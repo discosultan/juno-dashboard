@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import useLocalStorageState from 'use-local-storage-state';
-import { Generation, GenerationsInfo, IndividualStats, OptimizeParams } from './models';
+import { Generation, IndividualStats, OptimizeInput, OptimizeOutput } from './models';
 import ContentBox from 'components/ContentBox';
 import { Session } from 'models';
 import Code from 'components/Code';
@@ -11,35 +11,31 @@ import TradingTable from 'components/TradingTable';
 
 export default function Individual() {
   const params = useParams<{ session: string; generation: string; individual: string }>();
-  const [sessions] = useLocalStorageState<Session<OptimizeParams, GenerationsInfo>[]>(
+  const [sessions] = useLocalStorageState<Session<OptimizeInput, OptimizeOutput>[]>(
     'optimization_dashboard_sessions',
     [],
   );
 
   const session = sessions.find((session) => session.id === params.session);
 
-  const generationsInfo = session?.output;
-  const generation = generationsInfo?.gens[parseInt(params.generation)];
+  const optimizeOutput = session?.output;
+  const generation = optimizeOutput?.generations[parseInt(params.generation)];
   const individual = generation?.hallOfFame[parseInt(params.individual)];
 
-  return generationsInfo && generation && individual ? (
-    <IndividualImpl
-      generationsInfo={generationsInfo}
-      generation={generation}
-      individual={individual}
-    />
+  return session && optimizeOutput && generation && individual ? (
+    <IndividualImpl input={session.input} generation={generation} individual={individual} />
   ) : (
     <NotFound />
   );
 }
 
 type IndividualImplProps = {
-  generationsInfo: GenerationsInfo;
+  input: OptimizeInput;
   generation: Generation;
   individual: IndividualStats;
 };
 
-function IndividualImpl({ generationsInfo, generation, individual }: IndividualImplProps) {
+function IndividualImpl({ input, generation, individual }: IndividualImplProps) {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
@@ -51,7 +47,7 @@ function IndividualImpl({ generationsInfo, generation, individual }: IndividualI
       <Grid item xs={12}>
         <ContentBox title="Individual Trading Results">
           <TradingTable
-            args={generationsInfo.args}
+            args={input}
             title={`gen ${generation.nr}`}
             symbolStats={individual.symbolStats}
           />
@@ -61,7 +57,7 @@ function IndividualImpl({ generationsInfo, generation, individual }: IndividualI
       <Grid item xs={12}>
         <ContentBox title="Individual Trading Charts">
           <TradingCharts
-            args={generationsInfo.args}
+            args={input}
             config={individual.individual.chromosome}
             symbolStats={individual.symbolStats}
           />

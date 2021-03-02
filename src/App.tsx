@@ -1,5 +1,5 @@
 import { Suspense, lazy, useMemo } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,11 +14,14 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import useLocalStorageState from 'use-local-storage-state';
 import Loading from 'components/Loading';
 import Navigation from 'components/Navigation';
+import NotFound from 'components/NotFound';
 
 const BacktestDashboard = lazy(() => import('pages/backtest/index'));
-const OptimizationDashboard = lazy(() => import('pages/optimization/index'));
-const OptimizationSession = lazy(() => import('pages/optimization/Session'));
-const OptimizationIndividual = lazy(() => import('pages/optimization/Individual'));
+const BacktestSession = lazy(() => import('pages/backtest/Session'));
+
+const OptimizationDashboard = lazy(() => import('pages/optimize/index'));
+const OptimizationSession = lazy(() => import('pages/optimize/Session'));
+const OptimizationIndividual = lazy(() => import('pages/optimize/Individual'));
 
 const styles = {
   main: {
@@ -56,13 +59,20 @@ export default function App() {
             <Box component="main" style={styles.main} p={1}>
               <Suspense fallback={<Loading />}>
                 <Switch>
-                  <Route path="/backtest" component={BacktestDashboard} />
+                  <Route exact path="/" render={() => <Redirect to="/optimize" />} />
+
+                  <Route exact path="/backtest" component={BacktestDashboard} />
+                  <Route exact path="/backtest/:session" component={BacktestSession} />
+
+                  <Route exact path="/optimize" component={OptimizationDashboard} />
+                  <Route exact path="/optimize/:session" component={OptimizationSession} />
                   <Route
+                    exact
                     path="/optimize/:session/:generation/:individual"
                     component={OptimizationIndividual}
                   />
-                  <Route path="/optimize/:session" component={OptimizationSession} />
-                  <Route path="/optimize" component={OptimizationDashboard} />
+
+                  <Route component={NotFound} />
                 </Switch>
               </Suspense>
             </Box>

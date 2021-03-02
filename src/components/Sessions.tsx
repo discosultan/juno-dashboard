@@ -16,7 +16,7 @@ export default function Sessions<TInput, TOutput>({
   onSelect,
   onFormat,
 }: SessionsProps<TInput, TOutput>) {
-  return (
+  return sessions.length ? (
     <Grid container spacing={1}>
       {sessions.map((item) => (
         <Grid item xs={12} key={item.id}>
@@ -35,5 +35,9 @@ export default function Sessions<TInput, TOutput>({
         </Grid>
       ))}
     </Grid>
+  ) : (
+    <Typography variant="body1" color="textSecondary">
+      It is quiet here.
+    </Typography>
   );
 }

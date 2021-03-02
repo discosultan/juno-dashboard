@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   right: {
     flexGrow: 1,
-  }
+  },
 }));
 
 type AppBarProps = {

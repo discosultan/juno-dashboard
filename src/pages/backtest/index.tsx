@@ -1,87 +1,72 @@
 import { useState } from 'react';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
+import { useHistory } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 import useLocalStorageState from 'use-local-storage-state';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSnack from 'components/ErrorSnack';
-import History, { HistoryItem } from 'components/History';
-import SplitPane from 'components/SplitPane';
-import TradingResult, { TradingResultValueProps } from 'components/TradingResult';
+import ContentBox from 'components/ContentBox';
+import Sessions from 'components/Sessions';
 import { fetchJson } from 'fetch';
 import Controls from './Controls';
-import { Statistics } from 'models';
-import { BacktestParams } from './models';
-
-type BacktestResult = {
-  symbolStats: { [symbol: string]: Statistics };
-};
+import { Session } from 'models';
+import { BacktestInput, BacktestOutput } from './models';
 
 export default function Dashboard() {
-  const [tradingResult, setTradingResult] = useState<TradingResultValueProps | null>(null);
-  const [history, setHistory] = useLocalStorageState<HistoryItem<TradingResultValueProps>[]>(
-    'backtest_dashboard_history',
+  const history = useHistory();
+  const [sessions, setSessions] = useLocalStorageState<Session<BacktestInput, BacktestOutput>[]>(
+    'backtest_dashboard_sessions',
     [],
   );
   const [error, setError] = useState<Error | null>(null);
 
-  async function backtest(args: BacktestParams): Promise<void> {
+  async function backtest(args: BacktestInput): Promise<void> {
+    const session: Session<BacktestInput, BacktestOutput> = {
+      id: uuidv4(),
+      start: new Date().toISOString(),
+      status: 'pending',
+      input: args,
+    };
+
     try {
-      const result = await fetchJson<BacktestResult>('POST', '/backtest', args);
-
-      const tradingResult: TradingResultValueProps = {
-        args: {
-          exchange: args.exchange,
-          start: args.start,
-          end: args.end,
-          trainingSymbols: args.symbols,
-        },
-        config: args.trading,
-        symbolStats: result.symbolStats,
-        title: args.trading.strategy.type,
-      };
-
-      const historyItem = {
-        id: uuidv4(),
-        time: new Date().toISOString(),
-        value: tradingResult,
-      };
-      if (history.length === 10) {
-        setHistory([historyItem, ...history.slice(0, history.length - 1)]);
-      } else {
-        setHistory([historyItem, ...history]);
+      if (sessions.length === 10) {
+        sessions.shift();
       }
+      sessions.push(session);
+      setSessions(sessions);
 
-      setTradingResult(tradingResult);
+      const result = await fetchJson<BacktestOutput>('POST', '/backtest', args);
+
+      session.status = 'fulfilled';
+      session.output = result;
+      setSessions(sessions);
     } catch (error) {
+      session.status = 'rejected';
+      setSessions(sessions);
+
       setError(error);
     }
   }
 
   return (
     <>
-      <SplitPane
-        left={
-          <>
-            <Box p={1}>
-              <History
-                id="backtest-history"
-                label="Backtest History"
-                value={tradingResult}
-                history={history}
-                format={(tradingResult) =>
-                  (tradingResult && tradingResult.config.strategy.type) || ''
-                }
-                onChange={(tradingResult) => setTradingResult(tradingResult)}
-              />
-            </Box>
-            <Divider />
-            <Box p={1}>
-              <Controls onBacktest={backtest} />
-            </Box>
-          </>
-        }
-        right={tradingResult && <TradingResult value={tradingResult} />}
-      />
+      <Grid container spacing={1}>
+        <Grid item xs={12} sm={4}>
+          <ContentBox title="Backtest Sessions">
+            <Sessions
+              sessions={sessions}
+              onFormat={(session) => session.input.trading.strategy?.type ?? 'Any'}
+              onSelect={(session) => history.push(`/backtest/${session.id}`)}
+            />
+          </ContentBox>
+        </Grid>
+
+        <Grid item xs={12} sm={8}>
+          <ContentBox title="Configure Backtest Args">
+            <Controls onBacktest={backtest} />
+          </ContentBox>
+        </Grid>
+      </Grid>
+
       <ErrorSnack error={error} setError={setError} />
     </>
   );

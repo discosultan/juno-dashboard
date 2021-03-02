@@ -1,9 +1,8 @@
-// import { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import useLocalStorageState from 'use-local-storage-state';
 import GenerationsTable from './GenerationsTable';
-import { GenerationsInfo, OptimizeParams } from './models';
+import { OptimizeOutput, OptimizeInput } from './models';
 import ContentBox from 'components/ContentBox';
 import { Session as SessionModel } from 'models';
 import Code from 'components/Code';
@@ -11,7 +10,7 @@ import NotFound from 'components/NotFound';
 
 export default function Session() {
   const params = useParams<{ session: string }>();
-  const [sessions] = useLocalStorageState<SessionModel<OptimizeParams, GenerationsInfo>[]>(
+  const [sessions] = useLocalStorageState<SessionModel<OptimizeInput, OptimizeOutput>[]>(
     'optimization_dashboard_sessions',
     [],
   );
@@ -19,7 +18,7 @@ export default function Session() {
   const session = sessions.find((session) => session.id === params.session);
 
   return session?.output ? (
-    <SessionImpl session={params.session} generationsInfo={session.output} />
+    <SessionImpl session={params.session} input={session.input} output={session.output} />
   ) : (
     <NotFound />
   );
@@ -27,24 +26,26 @@ export default function Session() {
 
 type SessionImplProps = {
   session: string;
-  generationsInfo: GenerationsInfo;
+  input: OptimizeInput;
+  output: OptimizeOutput;
 };
 
-function SessionImpl({ session, generationsInfo }: SessionImplProps) {
+function SessionImpl({ session, input, output }: SessionImplProps) {
   const history = useHistory();
 
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <ContentBox title="Optimization Input">
-          <Code code={JSON.stringify(generationsInfo.args, null, 4)} />
+          <Code code={JSON.stringify(input, null, 4)} />
         </ContentBox>
       </Grid>
 
       <Grid item xs={12}>
         <ContentBox title="Individuals">
           <GenerationsTable
-            generationsInfo={generationsInfo}
+            input={input}
+            output={output}
             onSelect={(generation, individual) =>
               history.push(`/optimize/${session}/${generation}/${individual}`)
             }

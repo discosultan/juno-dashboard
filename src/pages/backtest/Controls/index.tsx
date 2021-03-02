@@ -2,11 +2,10 @@ import { Dispatch, SetStateAction } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
 import { Intervals, MissedCandlePolicies, Symbols } from 'info';
-import { BacktestParams } from '../models';
+import { BacktestInput } from '../models';
 import TextArea from 'components/TextArea';
 
 function useLocalStorageState<T>(
@@ -17,7 +16,7 @@ function useLocalStorageState<T>(
 }
 
 type ControlsProps = {
-  onBacktest: (args: BacktestParams) => void;
+  onBacktest: (args: BacktestInput) => void;
 };
 
 export default function Controls({ onBacktest }: ControlsProps) {
@@ -51,10 +50,6 @@ export default function Controls({ onBacktest }: ControlsProps) {
 
   return (
     <form noValidate autoComplete="off">
-      <Typography variant="h6" gutterBottom>
-        Configure Backtest Args
-      </Typography>
-
       <TextField
         id="exchange"
         fullWidth

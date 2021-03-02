@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { fetchJson } from 'fetch';
 
 type OptimizeInfo = {
-  evaluationStatistics: string[],
-  evaluationAggregations: string[],
+  evaluationStatistics: string[];
+  evaluationAggregations: string[];
 };
 
 let optimizeInfoCache: OptimizeInfo | null = null;

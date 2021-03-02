@@ -6,21 +6,21 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSnack from 'components/ErrorSnack';
 import { fetchJson } from 'fetch';
 import Controls from './Controls';
-import { EvolutionStats, GenerationsInfo, OptimizeParams } from './models';
+import { OptimizeOutput, OptimizeInput } from './models';
 import ContentBox from 'components/ContentBox';
 import Sessions from 'components/Sessions';
 import { Session } from 'models';
 
 export default function Dashboard() {
   const history = useHistory();
-  const [sessions, setSessions] = useLocalStorageState<Session<OptimizeParams, GenerationsInfo>[]>(
+  const [sessions, setSessions] = useLocalStorageState<Session<OptimizeInput, OptimizeOutput>[]>(
     'optimization_dashboard_sessions',
     [],
   );
   const [error, setError] = useState<Error | null>(null);
 
-  async function optimize(args: OptimizeParams): Promise<void> {
-    const session: Session<OptimizeParams, GenerationsInfo> = {
+  async function optimize(args: OptimizeInput): Promise<void> {
+    const session: Session<OptimizeInput, OptimizeOutput> = {
       id: uuidv4(),
       start: new Date().toISOString(),
       status: 'pending',
@@ -34,17 +34,10 @@ export default function Dashboard() {
       sessions.push(session);
       setSessions(sessions);
 
-      const evolution = await fetchJson<EvolutionStats>('POST', '/optimize', args);
-      const gensInfo = {
-        args: {
-          ...args,
-          seed: evolution.seed,
-        },
-        gens: evolution.generations,
-      };
+      const result = await fetchJson<OptimizeOutput>('POST', '/optimize', args);
 
       session.status = 'fulfilled';
-      session.output = gensInfo;
+      session.output = result;
       setSessions(sessions);
     } catch (error) {
       session.status = 'rejected';
