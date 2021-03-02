@@ -3,31 +3,32 @@ import Chart from './Chart';
 import { Statistics, TradingParams } from 'models';
 
 type TradingChartsProps = {
-  args: {
+  input: {
     exchange: string;
     start: string;
     end: string;
     trainingSymbols: string[];
     validationSymbols?: string[];
+    trading: TradingParams;
   };
-  config: TradingParams;
-  symbolStats: {
-    [symbol: string]: Statistics;
+  output: {
+    symbolStats: { [symbol: string]: Statistics };
   };
 };
 
-export default function TradingCharts({ args, config, symbolStats }: TradingChartsProps) {
+export default function TradingCharts({ input, output }: TradingChartsProps) {
   const symbolCandles = useSymbolCandles({
-    exchange: args.exchange,
-    start: args.start,
-    end: args.end,
-    symbols: args.trainingSymbols.concat(args.validationSymbols ?? []),
-    interval: config.trader.interval,
+    exchange: input.exchange,
+    start: input.start,
+    end: input.end,
+    symbols: input.trainingSymbols.concat(input.validationSymbols ?? []),
+    interval: input.trading.trader.interval,
   });
+  const symbolStats = output.symbolStats;
 
   return (
     <>
-      {args.trainingSymbols
+      {input.trainingSymbols
         .filter((symbol) => symbol in symbolCandles)
         .map((symbol) => (
           <Chart
@@ -39,7 +40,7 @@ export default function TradingCharts({ args, config, symbolStats }: TradingChar
           />
         ))
         .concat(
-          (args.validationSymbols ?? [])
+          (input.validationSymbols ?? [])
             .filter((symbol) => symbol in symbolCandles)
             .map((symbol) => (
               <Chart

@@ -10,17 +10,19 @@ import { CoreStatistics, ExtendedStatistics, Statistics } from 'models';
 type FlattenedStatistics = CoreStatistics & ExtendedStatistics;
 
 type TradingTableProps = {
-  args: {
+  title: string;
+  input: {
     trainingSymbols: string[];
     validationSymbols?: string[];
   };
-  symbolStats: {
-    [symbol: string]: Statistics;
+  output: {
+    symbolStats: { [symbol: string]: Statistics };
   };
-  title: string;
 };
 
-export default function TradingTable({ args, symbolStats, title }: TradingTableProps) {
+export default function TradingTable({ title, input, output }: TradingTableProps) {
+  const symbolStats = output.symbolStats;
+
   // Flatten a complex statistics object.
   const flatSymbolStats = Object.entries(symbolStats).reduce((acc, [symbol, stats]) => {
     acc[symbol] = {
@@ -31,7 +33,7 @@ export default function TradingTable({ args, symbolStats, title }: TradingTableP
   }, {} as { [symbol: string]: FlattenedStatistics });
   const ignoreKeys = ['positions', 'gReturns'];
 
-  const symbols = args.trainingSymbols.concat(args.validationSymbols ?? []);
+  const symbols = input.trainingSymbols.concat(input.validationSymbols ?? []);
 
   const stats = Object.values(flatSymbolStats);
 
@@ -69,12 +71,12 @@ export default function TradingTable({ args, symbolStats, title }: TradingTableP
         <TableHead>
           <TableRow>
             <TableCell>{title}</TableCell>
-            {args.trainingSymbols.map((symbol) => (
+            {input.trainingSymbols.map((symbol) => (
               <TableCell key={symbol} align="right">
                 {symbol}
               </TableCell>
             ))}
-            {(args.validationSymbols ?? []).map((symbol) => (
+            {(input.validationSymbols ?? []).map((symbol) => (
               <TableCell key={symbol} align="right">
                 {symbol} (v)
               </TableCell>

@@ -41,11 +41,11 @@ function SessionImpl({ input, output }: SessionImplProps) {
       <Grid item xs={12}>
         <ContentBox title="Backtest Trading Results">
           <TradingTable
-            args={{
+            title={input.trading.strategy.type}
+            input={{
               trainingSymbols: input.symbols,
             }}
-            title={input.trading.strategy.type}
-            symbolStats={output.symbolStats}
+            output={output}
           />
         </ContentBox>
       </Grid>
@@ -53,12 +53,11 @@ function SessionImpl({ input, output }: SessionImplProps) {
       <Grid item xs={12}>
         <ContentBox title="Backtest Trading Charts">
           <TradingCharts
-            args={{
+            input={{
               trainingSymbols: input.symbols,
               ...input,
             }}
-            config={input.trading}
-            symbolStats={output.symbolStats}
+            output={output}
           />
         </ContentBox>
       </Grid>

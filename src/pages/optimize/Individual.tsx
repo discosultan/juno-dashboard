@@ -47,9 +47,9 @@ function IndividualImpl({ input, generation, individual }: IndividualImplProps) 
       <Grid item xs={12}>
         <ContentBox title="Individual Trading Results">
           <TradingTable
-            args={input}
             title={`gen ${generation.nr}`}
-            symbolStats={individual.symbolStats}
+            input={input}
+            output={individual}
           />
         </ContentBox>
       </Grid>
@@ -57,9 +57,11 @@ function IndividualImpl({ input, generation, individual }: IndividualImplProps) 
       <Grid item xs={12}>
         <ContentBox title="Individual Trading Charts">
           <TradingCharts
-            args={input}
-            config={individual.individual.chromosome}
-            symbolStats={individual.symbolStats}
+            input={{
+              trading: individual.individual.chromosome,
+              ...input,
+            }}
+            output={individual}
           />
         </ContentBox>
       </Grid>
