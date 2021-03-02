@@ -4,13 +4,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
 import TextArea from 'components/TextArea';
 import { Intervals, MissedCandlePolicies, Symbols } from 'info';
-import useOptimizeInfo from 'pages/optimization/useOptimizeInfo';
-import { OptimizeParams } from './models';
+import useOptimizeInfo from 'pages/optimize/useOptimizeInfo';
+import { OptimizeInput } from './models';
 
 function useLocalStorageState<T>(
   key: string,
@@ -20,7 +19,7 @@ function useLocalStorageState<T>(
 }
 
 type ControlsProps = {
-  onOptimize: (args: OptimizeParams) => void;
+  onOptimize: (args: OptimizeInput) => void;
 };
 
 export default function Controls({ onOptimize }: ControlsProps) {
@@ -65,10 +64,6 @@ export default function Controls({ onOptimize }: ControlsProps) {
 
   return (
     <form noValidate autoComplete="off">
-      <Typography variant="h6" gutterBottom>
-        Configure Optimization Args
-      </Typography>
-
       <TextArea
         label="Strategy Context"
         value={strategyContext}

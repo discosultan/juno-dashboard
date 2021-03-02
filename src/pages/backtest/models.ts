@@ -1,10 +1,14 @@
-import { TradingParams } from "models";
+import { Statistics, TradingParams } from 'models';
 
-export type BacktestParams = {
-  trading: TradingParams,
+export type BacktestInput = {
+  trading: TradingParams;
   exchange: string;
   symbols: string[];
   start: string;
   end: string;
   quote: number;
+};
+
+export type BacktestOutput = {
+  symbolStats: { [symbol: string]: Statistics };
 };

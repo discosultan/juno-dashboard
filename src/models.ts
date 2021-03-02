@@ -69,3 +69,11 @@ export type TradingParams = {
     missedCandlePolicy: string;
   };
 };
+
+export type Session<TInput, TOutput> = {
+  id: string;
+  start: string;
+  status: 'pending' | 'fulfilled' | 'rejected';
+  input: TInput;
+  output?: TOutput;
+};
