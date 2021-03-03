@@ -29,9 +29,9 @@ export default function Dashboard() {
 
     try {
       if (sessions.length === 10) {
-        sessions.shift();
+        sessions.pop();
       }
-      sessions.push(session);
+      sessions.unshift(session);
       setSessions(sessions);
 
       const result = await fetchJson<OptimizeOutput>('POST', '/optimize', args);

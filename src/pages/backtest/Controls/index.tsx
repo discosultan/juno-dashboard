@@ -1,151 +1,73 @@
-import { Dispatch, SetStateAction } from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import useLocalStorageStateImpl from 'use-local-storage-state';
-import DatePicker from 'components/DatePicker';
-import { Intervals, MissedCandlePolicies, Symbols } from 'info';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import useLocalStorageState from 'use-local-storage-state';
 import { BacktestInput } from '../models';
-import TextArea from 'components/TextArea';
-
-function useLocalStorageState<T>(
-  key: string,
-  defaultValue: T,
-): [T, Dispatch<SetStateAction<T>>, boolean] {
-  return useLocalStorageStateImpl(`backtest_controls_${key}`, defaultValue);
-}
+import Friendly from './Friendly';
+import Raw from './Raw';
 
 type ControlsProps = {
   onBacktest: (args: BacktestInput) => void;
 };
 
 export default function Controls({ onBacktest }: ControlsProps) {
-  const [exchange, setExchange] = useLocalStorageState('exchange', 'binance');
-  const [symbols, setSymbols] = useLocalStorageState('symbols', [
-    'eth-btc',
-    'ltc-btc',
-    'xrp-btc',
-    'xmr-btc',
-    'ada-btc',
-  ]);
-  const [interval, setInterval] = useLocalStorageState('interval', '1d');
-  const [start, setStart] = useLocalStorageState('start', '2018-01-01');
-  const [end, setEnd] = useLocalStorageState('end', '2021-01-01');
-  const [missedCandlePolicy, setMissedCandlePolicy] = useLocalStorageState(
-    'missedCandlePolicy',
-    MissedCandlePolicies[0],
-  );
-  const [strategy, setStrategy] = useLocalStorageState(
-    'strategyParams',
-    '{\n  "type": "FourWeekRule",\n  "period": 28,\n  "ma": "kama",\n  "maPeriod": 14\n}',
-  );
-  const [stopLoss, setStopLoss] = useLocalStorageState(
-    'stopLossParams',
-    '{\n  "type": "Basic",\n  "upThreshold": 0.1,\n  "downThreshold": 0.1\n}',
-  );
-  const [takeProfit, setTakeProfit] = useLocalStorageState(
-    'takeProfitParams',
-    '{\n  "type": "Basic",\n  "upThreshold": 0.1,\n  "downThreshold": 0.1\n}',
-  );
+  const [input, setInput] = useLocalStorageState<BacktestInput>('backtest_controls_input', {
+    trading: {
+      trader: {
+        interval: '1d',
+        missedCandlePolicy: 'Ignore',
+      },
+      strategy: {
+        type: 'FourWeekRule',
+        period: 28,
+        ma: {
+          type: 'Ema',
+          period: 14,
+        },
+      },
+      stopLoss: {
+        type: 'Basic',
+        upThreshold: 0.1,
+        downThreshold: 0.1,
+      },
+      takeProfit: {
+        type: 'Basic',
+        upThreshold: 0.1,
+        downThreshold: 0.1,
+      },
+    },
+    exchange: 'binance',
+    symbols: ['eth-btc', 'ltc-btc', 'xrp-btc', 'xmr-btc', 'ada-btc'],
+    start: '2018-01-01',
+    end: '2021-01-01',
+    quote: 1.0,
+  });
+  const [activeTab, setActiveTab] = useLocalStorageState<0 | 1>('backtest_controls_tab', 0);
 
   return (
-    <form noValidate autoComplete="off">
-      <TextField
-        id="exchange"
-        fullWidth
-        select
-        label="Exchange"
-        value={exchange}
-        onChange={(e) => setExchange(e.target.value)}
+    <>
+      <Tabs
+        value={activeTab}
+        onChange={(_, tab) => setActiveTab(tab)}
+        aria-label="configuration mode"
       >
-        <MenuItem value={'binance'}>Binance</MenuItem>
-      </TextField>
+        <Tab label="Friendly" id="controls-tab-0" />
+        <Tab label="Raw" id="controls-tab-1" />
+      </Tabs>
 
-      <TextField
-        id="symbols"
-        label="Symbols"
-        fullWidth
-        select
-        SelectProps={{
-          multiple: true,
-          value: symbols,
-          onChange: (e) => setSymbols(e.target.value as string[]),
-        }}
-      >
-        {Symbols.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
-
-      <DatePicker label="Start" value={start} onChange={(e: any) => setStart(e.target.value)} />
-      <DatePicker label="End" value={end} onChange={(e: any) => setEnd(e.target.value)} />
-
-      <TextArea label="Strategy" value={strategy} onChange={(e) => setStrategy(e.target.value)} />
-      <TextArea label="Stop Loss" value={stopLoss} onChange={(e) => setStopLoss(e.target.value)} />
-      <TextArea
-        label="Take Profit"
-        value={takeProfit}
-        onChange={(e) => setTakeProfit(e.target.value)}
-      />
-
-      <TextField
-        id="interval"
-        fullWidth
-        select
-        label="Interval"
-        value={interval}
-        onChange={(e) => setInterval(e.target.value)}
-      >
-        {Intervals.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
-
-      <TextField
-        id="missedCandlePolicy"
-        fullWidth
-        select
-        label="Missed Candle Policy"
-        value={missedCandlePolicy}
-        onChange={(e) => setMissedCandlePolicy(e.target.value)}
-      >
-        {MissedCandlePolicies.map((policy) => (
-          <MenuItem key={policy} value={policy}>
-            {policy}
-          </MenuItem>
-        ))}
-      </TextField>
-
-      <br />
-      <br />
-      <Button
-        fullWidth
-        variant="contained"
-        onClick={() =>
-          onBacktest({
-            trading: {
-              trader: {
-                interval,
-                missedCandlePolicy,
-              },
-              strategy: JSON.parse(strategy),
-              stopLoss: JSON.parse(stopLoss),
-              takeProfit: JSON.parse(takeProfit),
-            },
-            exchange,
-            symbols,
-            start,
-            end,
-            quote: 1.0,
-          })
-        }
-      >
-        Backtest
-      </Button>
-    </form>
+      <form noValidate autoComplete="off">
+        <br />
+        {activeTab === 0 ? (
+          <Friendly input={input} setInput={setInput} />
+        ) : (
+          <Raw input={input} setInput={setInput} />
+        )}
+        <br />
+        <br />
+        <Button fullWidth variant="contained" onClick={() => onBacktest(input)}>
+          Backtest
+        </Button>
+      </form>
+    </>
   );
 }

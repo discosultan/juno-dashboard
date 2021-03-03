@@ -29,9 +29,9 @@ export default function Dashboard() {
 
     try {
       if (sessions.length === 10) {
-        sessions.shift();
+        sessions.pop();
       }
-      sessions.push(session);
+      sessions.unshift(session);
       setSessions(sessions);
 
       const result = await fetchJson<BacktestOutput>('POST', '/backtest', args);
@@ -51,7 +51,7 @@ export default function Dashboard() {
     <>
       <Grid container spacing={1}>
         <Grid item xs={12} sm={4}>
-          <ContentBox title="Backtest Sessions">
+          <ContentBox title="Backtesting Sessions">
             <Sessions
               sessions={sessions}
               onFormat={(session) => session.input.trading.strategy?.type ?? 'Any'}
@@ -61,7 +61,7 @@ export default function Dashboard() {
         </Grid>
 
         <Grid item xs={12} sm={8}>
-          <ContentBox title="Configure Backtest Args">
+          <ContentBox title="Configure Backtest Input">
             <Controls onBacktest={backtest} />
           </ContentBox>
         </Grid>

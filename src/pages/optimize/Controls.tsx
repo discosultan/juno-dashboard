@@ -53,12 +53,9 @@ export default function Controls({ onOptimize }: ControlsProps) {
   const [hallOfFameSize, setHallOfFameSize] = useLocalStorageState('hallOfFameSize', 1);
   const [randomizeSeed, setRandomizeSeed] = useLocalStorageState('randomizeSeed', true);
   const [seed, setSeed] = useLocalStorageState('seed', 0);
-  const [strategyContext, setStrategyContext] = useLocalStorageState('strategyContext', '{\n}');
-  const [stopLossContext, setStopLossContext] = useLocalStorageState('stopLossContext', '{\n}');
-  const [takeProfitContext, setTakeProfitContext] = useLocalStorageState(
-    'takeProfitContext',
-    '{\n}',
-  );
+  const [strategyContext, setStrategyContext] = useLocalStorageState('strategyContext', '');
+  const [stopLossContext, setStopLossContext] = useLocalStorageState('stopLossContext', '');
+  const [takeProfitContext, setTakeProfitContext] = useLocalStorageState('takeProfitContext', '');
 
   const optimizeInfo = useOptimizeInfo();
 

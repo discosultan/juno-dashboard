@@ -57,12 +57,15 @@ export type Statistics = {
 export type TradingParams = {
   strategy: {
     type: string;
+    [key: string]: any;
   };
   stopLoss: {
     type: string;
+    [key: string]: any;
   };
   takeProfit: {
     type: string;
+    [key: string]: any;
   };
   trader: {
     interval: string;
