@@ -9,7 +9,7 @@ type RawProps = {
 };
 
 export default function Raw({ input, setInput }: RawProps) {
-  const [rawInput, setRawInput] = useState(JSON.stringify(input, null, 4));
+  const [rawInput, setRawInput] = useState(JSON.stringify(input, null, 2));
 
   return (
     <TextArea label="Input" value={rawInput} onChange={onTextAreaChange(setRawInput, setInput)} />

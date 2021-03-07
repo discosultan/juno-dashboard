@@ -34,7 +34,7 @@ function SessionImpl({ input, output }: SessionImplProps) {
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <ContentBox title="Backtest Input">
-          <Code code={JSON.stringify(input, null, 4)} />
+          <Code code={JSON.stringify(input, null, 2)} />
         </ContentBox>
       </Grid>
 

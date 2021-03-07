@@ -37,7 +37,7 @@ function SessionImpl({ session, input, output }: SessionImplProps) {
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <ContentBox title="Optimization Input">
-          <Code code={JSON.stringify(input, null, 4)} />
+          <Code code={JSON.stringify(input, null, 2)} />
         </ContentBox>
       </Grid>
 

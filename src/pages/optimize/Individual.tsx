@@ -40,7 +40,7 @@ function IndividualImpl({ input, generation, individual }: IndividualImplProps) 
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <ContentBox title="Individual Input">
-          <Code code={JSON.stringify(individual.individual.chromosome, null, 4)} />
+          <Code code={JSON.stringify(individual.individual.chromosome, null, 2)} />
         </ContentBox>
       </Grid>
 

@@ -13,9 +13,9 @@ type FriendlyProps = {
 };
 
 export default function Friendly({ input, setInput }: FriendlyProps) {
-  const [strategy, setStrategy] = useState(JSON.stringify(input.trading.strategy, null, 4));
-  const [stopLoss, setStopLoss] = useState(JSON.stringify(input.trading.stopLoss, null, 4));
-  const [takeProfit, setTakeProfit] = useState(JSON.stringify(input.trading.takeProfit, null, 4));
+  const [strategy, setStrategy] = useState(JSON.stringify(input.trading.strategy, null, 2));
+  const [stopLoss, setStopLoss] = useState(JSON.stringify(input.trading.stopLoss, null, 2));
+  const [takeProfit, setTakeProfit] = useState(JSON.stringify(input.trading.takeProfit, null, 2));
 
   return (
     <>
