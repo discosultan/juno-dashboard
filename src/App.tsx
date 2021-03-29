@@ -12,6 +12,8 @@ import {
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import useLocalStorageState from 'use-local-storage-state';
+
+import background from 'assets/crystal-corner.png';
 import Loading from 'components/Loading';
 import Navigation from 'components/Navigation';
 import NotFound from 'components/NotFound';
@@ -27,7 +29,7 @@ const styles = {
   main: {
     width: '100%',
     minHeight: 'calc(100vh - 72px)',
-    backgroundImage: 'url(crystal-corner.png)',
+    backgroundImage: `url(${background})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '100% 0',
     backgroundSize: '450px 450px',
