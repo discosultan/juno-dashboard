@@ -17,6 +17,7 @@ import background from 'assets/crystal-corner.png';
 import Loading from 'components/Loading';
 import Navigation from 'components/Navigation';
 import NotFound from 'components/NotFound';
+import ErrorProvider from 'components/ErrorProvider';
 
 const BacktestDashboard = lazy(() => import('pages/backtest/index'));
 const BacktestSession = lazy(() => import('pages/backtest/Session'));
@@ -56,30 +57,32 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Router>
-          <Navigation darkMode={darkMode} setDarkMode={setDarkMode}>
-            <Box component="main" style={styles.main} p={1}>
-              <Suspense fallback={<Loading />}>
-                <Switch>
-                  <Route exact path="/" render={() => <Redirect to="/optimize" />} />
+        <ErrorProvider>
+          <Router>
+            <Navigation darkMode={darkMode} setDarkMode={setDarkMode}>
+              <Box component="main" style={styles.main} p={1}>
+                <Suspense fallback={<Loading />}>
+                  <Switch>
+                    <Route exact path="/" render={() => <Redirect to="/optimize" />} />
 
-                  <Route exact path="/backtest" component={BacktestDashboard} />
-                  <Route exact path="/backtest/:session" component={BacktestSession} />
+                    <Route exact path="/backtest" component={BacktestDashboard} />
+                    <Route exact path="/backtest/:session" component={BacktestSession} />
 
-                  <Route exact path="/optimize" component={OptimizationDashboard} />
-                  <Route exact path="/optimize/:session" component={OptimizationSession} />
-                  <Route
-                    exact
-                    path="/optimize/:session/:generation/:individual"
-                    component={OptimizationIndividual}
-                  />
+                    <Route exact path="/optimize" component={OptimizationDashboard} />
+                    <Route exact path="/optimize/:session" component={OptimizationSession} />
+                    <Route
+                      exact
+                      path="/optimize/:session/:generation/:individual"
+                      component={OptimizationIndividual}
+                    />
 
-                  <Route component={NotFound} />
-                </Switch>
-              </Suspense>
-            </Box>
-          </Navigation>
-        </Router>
+                    <Route component={NotFound} />
+                  </Switch>
+                </Suspense>
+              </Box>
+            </Navigation>
+          </Router>
+        </ErrorProvider>
       </MuiPickersUtilsProvider>
     </ThemeProvider>
   );

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { fetchJson } from 'fetch';
 import { Candle } from 'models';
+import { fetchJson } from 'fetch';
+import { useError } from 'error';
+import { BASE_URL } from 'api';
 
 const candleCache: { [key: string]: Candle[] } = {};
 
@@ -17,17 +19,28 @@ type SymbolCandles = { [symbol: string]: Candle[] };
 
 export default function useSymbolCandles(args: SymbolCandleParams): SymbolCandles {
   const [symbolCandles, setSymbolCandles] = useState({});
+  const [, setError] = useError();
 
   useDeepCompareEffect(() => {
     const abortController = new AbortController();
-    (async () => setSymbolCandles(await fetchCandles(args, abortController.signal)))();
+    (async () => {
+      try {
+        setSymbolCandles(await fetchCandles(args, abortController.signal));
+      } catch (error) {
+        console.error(error);
+        setError(error);
+      }
+    })();
     return () => abortController.abort();
-  }, [args]);
+  }, [args, setError]);
 
   return symbolCandles;
 }
 
-async function fetchCandles(args: SymbolCandleParams, signal: AbortSignal): Promise<SymbolCandles> {
+async function fetchCandles(
+  args: SymbolCandleParams,
+  signal: AbortSignal,
+): Promise<SymbolCandles> {
   const result: SymbolCandles = {};
   const missingSymbols: string[] = [];
 
@@ -43,7 +56,7 @@ async function fetchCandles(args: SymbolCandleParams, signal: AbortSignal): Prom
   if (missingSymbols.length > 0) {
     const missingCandles = await fetchJson<SymbolCandles>(
       'POST',
-      '/candles',
+      BASE_URL + '/candles',
       {
         exchange: args.exchange,
         interval: args.interval,

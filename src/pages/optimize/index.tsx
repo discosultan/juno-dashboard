@@ -1,15 +1,13 @@
-import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import useLocalStorageState from 'use-local-storage-state';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSnack from 'components/ErrorSnack';
-import { fetchJson } from 'fetch';
 import Controls from './Controls';
 import { OptimizeOutput, OptimizeInput } from './models';
 import ContentBox from 'components/ContentBox';
 import Sessions from 'components/Sessions';
 import { Session } from 'models';
+import { useApi } from 'api';
 
 export default function Dashboard() {
   const history = useHistory();
@@ -17,7 +15,7 @@ export default function Dashboard() {
     'optimization_dashboard_sessions',
     [],
   );
-  const [error, setError] = useState<Error | null>(null);
+  const { fetchApi } = useApi();
 
   async function optimize(args: OptimizeInput): Promise<void> {
     const session: Session<OptimizeInput, OptimizeOutput> = {
@@ -34,7 +32,7 @@ export default function Dashboard() {
       sessions.unshift(session);
       setSessions(sessions);
 
-      const result = await fetchJson<OptimizeOutput>('POST', '/optimize', args);
+      const result = await fetchApi<OptimizeOutput>('POST', '/optimize', args);
 
       session.status = 'fulfilled';
       session.output = result;
@@ -42,32 +40,26 @@ export default function Dashboard() {
     } catch (error) {
       session.status = 'rejected';
       setSessions(sessions);
-
-      setError(error);
     }
   }
 
   return (
-    <>
-      <Grid container spacing={1}>
-        <Grid item xs={12} sm={4}>
-          <ContentBox title="Optimization Sessions">
-            <Sessions
-              sessions={sessions}
-              onFormat={(session) => session.input.context.strategy?.type ?? 'Any'}
-              onSelect={(session) => history.push(`/optimize/${session.id}`)}
-            />
-          </ContentBox>
-        </Grid>
-
-        <Grid item xs={12} sm={8}>
-          <ContentBox title="Configure Optimization Args">
-            <Controls onOptimize={optimize} />
-          </ContentBox>
-        </Grid>
+    <Grid container spacing={1}>
+      <Grid item xs={12} sm={4}>
+        <ContentBox title="Optimization Sessions">
+          <Sessions
+            sessions={sessions}
+            onFormat={(session) => session.input.context.strategy?.type ?? 'Any'}
+            onSelect={(session) => history.push(`/optimize/${session.id}`)}
+          />
+        </ContentBox>
       </Grid>
 
-      <ErrorSnack error={error} setError={setError} />
-    </>
+      <Grid item xs={12} sm={8}>
+        <ContentBox title="Configure Optimization Args">
+          <Controls onOptimize={optimize} />
+        </ContentBox>
+      </Grid>
+    </Grid>
   );
 }
