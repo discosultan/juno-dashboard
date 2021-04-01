@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
 import DatePicker from 'components/DatePicker';
-import { Intervals, MissedCandlePolicies, Symbols } from 'info';
-import { BacktestInput } from '../models';
+import Select from 'components/Select';
 import TextArea from 'components/TextArea';
+import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from 'info';
+import { BacktestInput } from '../models';
 import { onTextAreaChange } from './utils';
 
 type FriendlyProps = {
@@ -19,43 +18,31 @@ export default function Friendly({ input, setInput }: FriendlyProps) {
 
   return (
     <>
-      <TextField
-        id="exchange"
-        fullWidth
-        select
+      <Select
         label="Exchange"
+        options={Exchanges}
         value={input.exchange}
-        onChange={(e) =>
+        onChange={(_, v) =>
           setInput({
             ...input,
-            exchange: e.target.value,
+            exchange: v,
           })
         }
-      >
-        <MenuItem value={'binance'}>Binance</MenuItem>
-      </TextField>
+      />
 
-      <TextField
-        id="symbols"
+      <Select
+        multiple
+        autocomplete
         label="Symbols"
-        fullWidth
-        select
-        SelectProps={{
-          multiple: true,
-          value: input.symbols,
-          onChange: (e) =>
-            setInput({
-              ...input,
-              symbols: e.target.value as string[],
-            }),
-        }}
-      >
-        {Symbols.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
+        options={Symbols}
+        value={input.symbols}
+        onChange={(_, v) =>
+          setInput({
+            ...input,
+            symbols: v,
+          })
+        }
+      />
 
       <DatePicker
         label="Start"
@@ -118,57 +105,41 @@ export default function Friendly({ input, setInput }: FriendlyProps) {
         )}
       />
 
-      <TextField
-        id="interval"
-        fullWidth
-        select
+      <Select
         label="Interval"
+        options={Intervals}
         value={input.trading.trader.interval}
-        onChange={(e) =>
+        onChange={(_, v) =>
           setInput({
             ...input,
             trading: {
               ...input.trading,
               trader: {
                 ...input.trading.trader,
-                interval: e.target.value,
+                interval: v,
               },
             },
           })
         }
-      >
-        {Intervals.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
+      />
 
-      <TextField
-        id="missedCandlePolicy"
-        fullWidth
-        select
+      <Select
         label="Missed Candle Policy"
+        options={MissedCandlePolicies}
         value={input.trading.trader.missedCandlePolicy}
-        onChange={(e) =>
+        onChange={(_, v) =>
           setInput({
             ...input,
             trading: {
               ...input.trading,
               trader: {
                 ...input.trading.trader,
-                missedCandlePolicy: e.target.value,
+                missedCandlePolicy: v,
               },
             },
           })
         }
-      >
-        {MissedCandlePolicies.map((policy) => (
-          <MenuItem key={policy} value={policy}>
-            {policy}
-          </MenuItem>
-        ))}
-      </TextField>
+      />
     </>
   );
 }

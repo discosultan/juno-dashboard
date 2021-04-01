@@ -23,6 +23,9 @@
 //   'trending',
 //   // 'legacy',
 // ];
+export const Exchanges = [
+  'binance',
+];
 export const Symbols = [
   'ada-btc',
   'dash-btc',

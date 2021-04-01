@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import useLocalStorageStateImpl from 'use-local-storage-state';
 import DatePicker from 'components/DatePicker';
+import Select from 'components/Select';
 import TextArea from 'components/TextArea';
-import { Intervals, MissedCandlePolicies, Symbols } from 'info';
+import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from 'info';
 import useOptimizeInfo from 'pages/optimize/useOptimizeInfo';
 import { OptimizeInput } from './models';
 
@@ -40,11 +40,11 @@ export default function Controls({ onOptimize }: ControlsProps) {
   ] = useLocalStorageState('missedCandlePolicies', [MissedCandlePolicies[0]]);
   const [start, setStart] = useLocalStorageState('start', '2018-01-01');
   const [end, setEnd] = useLocalStorageState('end', '2021-01-01');
-  const [evaluationStatistic, setEvaluastionStatistic] = useLocalStorageState(
+  const [evaluationStatistic, setEvaluationStatistic] = useLocalStorageState(
     'evaluationStatistic',
     'Profit',
   );
-  const [evaluationAggregation, setEvaluastionAggregation] = useLocalStorageState(
+  const [evaluationAggregation, setEvaluationAggregation] = useLocalStorageState(
     'evaluationAggregation',
     'Linear',
   );
@@ -77,122 +77,64 @@ export default function Controls({ onOptimize }: ControlsProps) {
         onChange={(e) => setTakeProfitContext(e.target.value)}
       />
 
-      <TextField
-        id="exchange"
-        fullWidth
-        select
+      <Select
         label="Exchange"
+        options={Exchanges}
         value={exchange}
-        onChange={(e) => setExchange(e.target.value)}
-      >
-        <MenuItem value={'binance'}>Binance</MenuItem>
-      </TextField>
+        onChange={(_, v) => setExchange(v)}
+      />
 
-      <TextField
-        id="training-symbols"
+      <Select
+        multiple
+        autocomplete
         label="Training Symbols"
-        fullWidth
-        select
-        SelectProps={{
-          multiple: true,
-          value: trainingSymbols,
-          onChange: (e) => setTrainingSymbols(e.target.value as string[]),
-        }}
-      >
-        {Symbols.map((symbol) => (
-          <MenuItem key={symbol} value={symbol}>
-            {symbol}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
-        id="validation-symbols"
+        options={Symbols}
+        value={trainingSymbols}
+        onChange={(_, v) => setTrainingSymbols(v)}
+      />
+      <Select
+        multiple
+        autocomplete
         label="Validation Symbols"
-        fullWidth
-        select
-        SelectProps={{
-          multiple: true,
-          value: validationSymbols,
-          onChange: (e) => setValidationSymbols(e.target.value as string[]),
-        }}
-      >
-        {Symbols.map((symbol) => (
-          <MenuItem key={symbol} value={symbol}>
-            {symbol}
-          </MenuItem>
-        ))}
-      </TextField>
+        options={Symbols}
+        value={validationSymbols}
+        onChange={(_, v) => setValidationSymbols(v)}
+      />
 
-      <TextField
-        id="intervals"
+      <Select
+        multiple
         label="Intervals"
-        fullWidth
-        select
-        SelectProps={{
-          multiple: true,
-          value: intervals,
-          onChange: (e) => setIntervals(e.target.value as string[]),
-        }}
-      >
-        {Intervals.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
+        options={Intervals}
+        value={intervals}
+        onChange={(_, v) => setIntervals(v)}
+      />
 
-      <TextField
-        id="missedCandlePolicies"
+      <Select
+        multiple
         label="Missed Candle Policies"
-        fullWidth
-        select
-        SelectProps={{
-          multiple: true,
-          value: missedCandlePolicies,
-          onChange: (e) => setMissedCandlePolicies(e.target.value as string[]),
-        }}
-      >
-        {MissedCandlePolicies.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
+        options={MissedCandlePolicies}
+        value={missedCandlePolicies}
+        onChange={(_, v) => setMissedCandlePolicies(v)}
+      />
 
       <DatePicker label="Start" value={start} onChange={(e: any) => setStart(e.target.value)} />
       <DatePicker label="End" value={end} onChange={(e: any) => setEnd(e.target.value)} />
 
       {optimizeInfo?.evaluationStatistics && (
-        <TextField
-          id="evaluationStatistic"
-          fullWidth
-          select
+        <Select
           label="Evaluation Statistic"
+          options={optimizeInfo.evaluationStatistics}
           value={evaluationStatistic}
-          onChange={(e) => setEvaluastionStatistic(e.target.value)}
-        >
-          {optimizeInfo.evaluationStatistics.map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </TextField>
+          onChange={(_, v) => setEvaluationStatistic(v)}
+        />
       )}
       {optimizeInfo?.evaluationAggregations && (
-        <TextField
-          id="evaluationAggregation"
-          fullWidth
-          select
+        <Select
           label="Evaluation Aggregation"
+          options={optimizeInfo.evaluationAggregations}
           value={evaluationAggregation}
-          onChange={(e) => setEvaluastionAggregation(e.target.value)}
-        >
-          {optimizeInfo.evaluationAggregations.map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </TextField>
+          onChange={(_, v) => setEvaluationAggregation(v)}
+        />
       )}
 
       <TextField
