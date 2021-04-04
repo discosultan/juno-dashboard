@@ -3,7 +3,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { Candle } from 'models';
 import { fetchJson } from 'fetch';
 import { useError } from 'error';
-import { BASE_URL } from 'api';
+import { RUST_API_URL } from 'api';
 
 const candleCache: { [key: string]: Candle[] } = {};
 
@@ -56,7 +56,7 @@ async function fetchCandles(
   if (missingSymbols.length > 0) {
     const missingCandles = await fetchJson<SymbolCandles>(
       'POST',
-      BASE_URL + '/candles',
+      RUST_API_URL + '/candles',
       {
         exchange: args.exchange,
         interval: args.interval,

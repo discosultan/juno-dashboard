@@ -6,7 +6,7 @@ import ContentBox from 'components/ContentBox';
 import Sessions from 'components/Sessions';
 import Controls from './Controls';
 import { Session } from 'models';
-import { useApi } from 'api';
+import { useRustApi } from 'api';
 import { BacktestInput, BacktestOutput } from './models';
 
 export default function Dashboard() {
@@ -15,7 +15,7 @@ export default function Dashboard() {
     'backtest_dashboard_sessions',
     [],
   );
-  const { fetchApi } = useApi();
+  const { fetchApi } = useRustApi();
 
   async function backtest(args: BacktestInput): Promise<void> {
     const session: Session<BacktestInput, BacktestOutput> = {

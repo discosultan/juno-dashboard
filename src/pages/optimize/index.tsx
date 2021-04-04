@@ -7,7 +7,7 @@ import { OptimizeOutput, OptimizeInput } from './models';
 import ContentBox from 'components/ContentBox';
 import Sessions from 'components/Sessions';
 import { Session } from 'models';
-import { useApi } from 'api';
+import { useRustApi } from 'api';
 
 export default function Dashboard() {
   const history = useHistory();
@@ -15,7 +15,7 @@ export default function Dashboard() {
     'optimization_dashboard_sessions',
     [],
   );
-  const { fetchApi } = useApi();
+  const { fetchApi } = useRustApi();
 
   async function optimize(args: OptimizeInput): Promise<void> {
     const session: Session<OptimizeInput, OptimizeOutput> = {

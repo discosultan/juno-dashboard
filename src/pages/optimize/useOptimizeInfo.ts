@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BASE_URL } from 'api';
+import { RUST_API_URL } from 'api';
 import { useError } from 'error';
 import { fetchJson } from 'fetch';
 
@@ -34,7 +34,7 @@ async function fetchOptimizeInfo(signal: AbortSignal): Promise<OptimizeInfo> {
   if (optimizeInfoCache === null) {
     optimizeInfoCache = await fetchJson<OptimizeInfo>(
       'GET',
-      BASE_URL + '/optimize',
+      RUST_API_URL + '/optimize',
       undefined,
       signal,
     );
