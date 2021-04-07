@@ -63,7 +63,7 @@ export default function App() {
               <Box component="main" style={styles.main} p={1}>
                 <Suspense fallback={<Loading />}>
                   <Switch>
-                    <Route exact path="/" render={() => <Redirect to="/optimize" />} />
+                    <Route exact path="/" render={() => <Redirect to="/backtest" />} />
 
                     <Route exact path="/backtest" component={BacktestDashboard} />
                     <Route exact path="/backtest/:session" component={BacktestSession} />
