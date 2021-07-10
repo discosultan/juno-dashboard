@@ -31,7 +31,7 @@ export default function TextArea({ label, value, onChange }: TextAreaProps) {
         id={id}
         className={classes.textarea}
         aria-label={label}
-        rowsMin={3}
+        minRows={3}
         value={value}
         onChange={onChange}
       />
