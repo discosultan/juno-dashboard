@@ -1,6 +1,6 @@
-import useSymbolCandles from 'components/useSymbolCandles';
-import Chart from './Chart';
-import { Statistics, TradingParams } from 'models';
+import useSymbolCandles from "components/useSymbolCandles";
+import Chart from "./Chart";
+import { Statistics, TradingParams } from "models";
 
 type TradingChartsProps = {
   input: {

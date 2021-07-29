@@ -1,9 +1,9 @@
-import Box from '@material-ui/core/Box';
-import { useMediaQuery } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-import { ReactNode } from 'react';
-import AppBar from './AppBar';
-import AppDrawer from './AppDrawer';
+import Box from "@material-ui/core/Box";
+import { useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
+import { ReactNode } from "react";
+import AppBar from "./AppBar";
+import AppDrawer from "./AppDrawer";
 
 type NavigationProps = {
   darkMode: boolean;
@@ -13,7 +13,7 @@ type NavigationProps = {
 
 export default function Navigation({ darkMode, setDarkMode, children }: NavigationProps) {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   return isDesktop ? (
     <Box display="flex" flexDirection="row">

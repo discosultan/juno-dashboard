@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction, SyntheticEvent } from 'react';
-import Snackbar, { SnackbarCloseReason } from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+import { Dispatch, SetStateAction, SyntheticEvent } from "react";
+import Snackbar, { SnackbarCloseReason } from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 type ErrorProps = {
   error: Error | null;
@@ -9,7 +9,7 @@ type ErrorProps = {
 
 export default function ErrorSnack({ error, setError }: ErrorProps) {
   const handleClose = (_: SyntheticEvent, reason?: SnackbarCloseReason): void => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 

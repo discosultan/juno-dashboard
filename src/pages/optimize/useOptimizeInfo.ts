@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { RUST_API_URL } from 'api';
-import { useError } from 'error';
-import { fetchJson } from 'fetch';
+import { useEffect, useState } from "react";
+import { RUST_API_URL } from "api";
+import { useError } from "error";
+import { fetchJson } from "fetch";
 
 type OptimizeInfo = {
   evaluationStatistics: string[];
@@ -33,8 +33,8 @@ export default function useOptimizeInfo(): OptimizeInfo | null {
 async function fetchOptimizeInfo(signal: AbortSignal): Promise<OptimizeInfo> {
   if (optimizeInfoCache === null) {
     optimizeInfoCache = await fetchJson<OptimizeInfo>(
-      'GET',
-      RUST_API_URL + '/optimize',
+      "GET",
+      RUST_API_URL + "/optimize",
       undefined,
       signal,
     );

@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties } from "react";
 
 const styles: { [key: string]: CSSProperties } = {
   logo: {
@@ -12,19 +12,19 @@ const styles: { [key: string]: CSSProperties } = {
 export default function Logo() {
   return (
     <p style={styles.logo}>🚀</p>
-//     <pre style={styles.logo}>{`            |
-//            / \\
-//           / _ \\
-//          |.o '.|
-//          |'._.'|
-//          |     |
-//        .'|  |  |'.
-//       /  |  |  |  \\
-//       |.-'--|--'-.|
-//      _                   
-//     | |_   _ _ __   ___  
-//  _  | | | | | '_ \\ / _ \\ 
-// | |_| | |_| | | | | (_) |
-//  \\___/ \\__,_|_| |_|\\___/`}</pre>
+    //     <pre style={styles.logo}>{`            |
+    //            / \\
+    //           / _ \\
+    //          |.o '.|
+    //          |'._.'|
+    //          |     |
+    //        .'|  |  |'.
+    //       /  |  |  |  \\
+    //       |.-'--|--'-.|
+    //      _
+    //     | |_   _ _ __   ___
+    //  _  | | | | | '_ \\ / _ \\
+    // | |_| | |_| | | | | (_) |
+    //  \\___/ \\__,_|_| |_|\\___/`}</pre>
   );
 }

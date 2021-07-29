@@ -7,19 +7,19 @@ export const MONTH_MS = 2_629_746_000;
 export const YEAR_MS = 31_556_952_000;
 
 const INTERVAL_FACTORS: [string, number][] = [
-  ['y', YEAR_MS],
-  ['M', MONTH_MS],
-  ['w', WEEK_MS],
-  ['d', DAY_MS],
-  ['h', HOUR_MS],
-  ['m', MIN_MS],
-  ['s', SEC_MS],
-  ['ms', 1],
+  ["y", YEAR_MS],
+  ["M", MONTH_MS],
+  ["w", WEEK_MS],
+  ["d", DAY_MS],
+  ["h", HOUR_MS],
+  ["m", MIN_MS],
+  ["s", SEC_MS],
+  ["ms", 1],
 ];
 const INTERVAL_FACTORS_MAP = Object.fromEntries(INTERVAL_FACTORS);
 
 export function strfinterval(interval: number): string {
-  let result = '';
+  let result = "";
 
   let remainder = interval;
   for (const [letter, factor] of INTERVAL_FACTORS) {
@@ -33,7 +33,7 @@ export function strfinterval(interval: number): string {
     }
   }
 
-  return result.length === 0 ? '0ms' : result;
+  return result.length === 0 ? "0ms" : result;
 }
 
 export function strpinterval(repr: string): number {
@@ -45,12 +45,12 @@ export function strpinterval(repr: string): number {
 }
 
 function calcIntervalGroup(group: string): number {
-    for (let i = 1; i < group.length; i++) {
-        if (isAlpha(group[i])) {
-            return Number(group.substring(0, i)) * INTERVAL_FACTORS_MAP[group.substring(i)];
-        }
+  for (let i = 1; i < group.length; i++) {
+    if (isAlpha(group[i])) {
+      return Number(group.substring(0, i)) * INTERVAL_FACTORS_MAP[group.substring(i)];
     }
-    throw new Error(`Invalid interval group: ${group}`);
+  }
+  throw new Error(`Invalid interval group: ${group}`);
 }
 
 function isAlpha(c: string) {

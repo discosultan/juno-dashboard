@@ -1,17 +1,17 @@
-import { useLayoutEffect, useRef, useState } from 'react';
-import Box from '@material-ui/core/Box';
-import { useTheme } from '@material-ui/core/styles';
+import { useLayoutEffect, useRef, useState } from "react";
+import Box from "@material-ui/core/Box";
+import { useTheme } from "@material-ui/core/styles";
 import {
   PriceScaleMode,
   createChart,
   IChartApi,
   HistogramData,
   LineData,
-} from 'lightweight-charts';
-import useResizeObserver from 'use-resize-observer';
-import { Candle, CoreStatistics, PositionStatistics } from 'models';
-import MarkerTooltip from './MarkerTooltip';
-import useHoldKeyToScroll from './useHoldKeyToScroll';
+} from "lightweight-charts";
+import useResizeObserver from "use-resize-observer";
+import { Candle, CoreStatistics, PositionStatistics } from "models";
+import MarkerTooltip from "./MarkerTooltip";
+import useHoldKeyToScroll from "./useHoldKeyToScroll";
 
 function timestamp(value: string): number {
   return new Date(value).getTime() / 1000;
@@ -47,7 +47,7 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
         textColor: palette.text.primary,
       },
       localization: {
-        dateFormat: 'yyyy-MM-dd',
+        dateFormat: "yyyy-MM-dd",
       },
       timeScale: {
         timeVisible: true,
@@ -64,8 +64,8 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
       watermark: {
         visible: true,
         text: symbol,
-        vertAlign: 'top',
-        horzAlign: 'left',
+        vertAlign: "top",
+        horzAlign: "left",
         color: palette.text.primary,
         fontSize: 20,
       },
@@ -75,7 +75,7 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
     const candleSeries = newChart.addCandlestickSeries({
       // TODO: Calculate dynamically.
       priceFormat: {
-        type: 'price',
+        type: "price",
         precision: 8,
         minMove: 0.0000001,
       },
@@ -92,21 +92,21 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
     );
     candleSeries.setMarkers(
       positions.flatMap((pos, i) => {
-        const shape = pos.type === 'Long' ? 'arrowUp' : 'arrowDown';
+        const shape = pos.type === "Long" ? "arrowUp" : "arrowDown";
         const id = i + 1;
         return [
           {
             // We keep the id 1-based to distinguish between open and pos (neg and pos).
             id: -id as any,
             time: timestamp(pos.openTime) as any,
-            position: 'aboveBar',
+            position: "aboveBar",
             shape,
             color: palette.info[palette.type],
           },
           {
             id: +id as any,
             time: timestamp(pos.closeTime) as any,
-            position: 'aboveBar',
+            position: "aboveBar",
             shape,
             color: palette.warning[palette.type],
           },
@@ -117,34 +117,33 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
     // Volume.
     const volumeSeries = newChart.addHistogramSeries({
       priceFormat: {
-        type: 'volume',
+        type: "volume",
       },
-      priceScaleId: '',
+      priceScaleId: "",
       scaleMargins: {
         top: 0.8,
         bottom: 0,
       },
     });
     volumeSeries.setData(
-      nonEmptyCandles
-        .reduce(
-          ([prevClose, volume], candle) => {
-            const color = candle.close >= prevClose ? '#26a69a80' : '#ef535080';
-            volume.push({
-              time: timestamp(candle.time) as any,
-              value: candle.volume,
-              color,
-            });
-            return [candle.close, volume] as [number, HistogramData[]];
-          },
-          [0, []] as [number, HistogramData[]],
-        )[1],
+      nonEmptyCandles.reduce(
+        ([prevClose, volume], candle) => {
+          const color = candle.close >= prevClose ? "#26a69a80" : "#ef535080";
+          volume.push({
+            time: timestamp(candle.time) as any,
+            value: candle.volume,
+            color,
+          });
+          return [candle.close, volume] as [number, HistogramData[]];
+        },
+        [0, []] as [number, HistogramData[]],
+      )[1],
     );
 
     // Line graph for running balance.
     newChart
       .addLineSeries({
-        priceScaleId: 'left',
+        priceScaleId: "left",
         // @ts-ignore
         lineWidth: 1.2,
       })
@@ -178,11 +177,11 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
     return () => newChart.remove();
   }, [symbol, candles, stats, positions, palette]);
 
-  useHoldKeyToScroll(chart, 'ControlLeft');
+  useHoldKeyToScroll(chart, "ControlLeft");
 
   return (
-    <Box my={1} style={{ position: 'relative' }}>
-      <div ref={containerRef} style={{ width: '100%' }} />
+    <Box my={1} style={{ position: "relative" }}>
+      <div ref={containerRef} style={{ width: "100%" }} />
       {chart && <MarkerTooltip chart={chart} positions={positions} />}
     </Box>
   );

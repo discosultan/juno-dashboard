@@ -1,8 +1,8 @@
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Underline from 'components/Underline';
-import ContentBox from 'components/ContentBox';
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Underline from "components/Underline";
+import ContentBox from "components/ContentBox";
 
 export default function NotFound() {
   return (

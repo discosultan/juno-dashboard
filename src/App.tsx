@@ -1,53 +1,53 @@
-import { Suspense, lazy, useMemo } from 'react';
-import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
-import DateFnsUtils from '@date-io/date-fns';
-import Box from '@material-ui/core/Box';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { Suspense, lazy, useMemo } from "react";
+import { BrowserRouter as Router, Switch, Redirect, Route } from "react-router-dom";
+import DateFnsUtils from "@date-io/date-fns";
+import Box from "@material-ui/core/Box";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   ThemeProvider,
   // TODO: Remove in MUI v5.
   // https://stackoverflow.com/a/64135466
   unstable_createMuiStrictModeTheme as createMuiTheme,
-} from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import useLocalStorageState from 'use-local-storage-state';
+} from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import useLocalStorageState from "use-local-storage-state";
 
-import background from 'assets/crystal-corner.png';
-import Loading from 'components/Loading';
-import Navigation from 'components/Navigation';
-import NotFound from 'components/NotFound';
-import ErrorProvider from 'components/ErrorProvider';
+import background from "assets/crystal-corner.png";
+import Loading from "components/Loading";
+import Navigation from "components/Navigation";
+import NotFound from "components/NotFound";
+import ErrorProvider from "components/ErrorProvider";
 
-const BacktestDashboard = lazy(() => import('pages/backtest/index'));
-const BacktestSession = lazy(() => import('pages/backtest/Session'));
+const BacktestDashboard = lazy(() => import("pages/backtest/index"));
+const BacktestSession = lazy(() => import("pages/backtest/Session"));
 
-const OptimizationDashboard = lazy(() => import('pages/optimize/index'));
-const OptimizationSession = lazy(() => import('pages/optimize/Session'));
-const OptimizationIndividual = lazy(() => import('pages/optimize/Individual'));
+const OptimizationDashboard = lazy(() => import("pages/optimize/index"));
+const OptimizationSession = lazy(() => import("pages/optimize/Session"));
+const OptimizationIndividual = lazy(() => import("pages/optimize/Individual"));
 
 const styles = {
   main: {
-    width: '100%',
-    minHeight: 'calc(100vh - 72px)',
+    width: "100%",
+    minHeight: "calc(100vh - 72px)",
     backgroundImage: `url(${background})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: '100% 0',
-    backgroundSize: '450px 450px',
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "100% 0",
+    backgroundSize: "450px 450px",
   },
 };
 
 export default function App() {
   const [darkMode, setDarkMode] = useLocalStorageState(
-    'darkMode',
-    useMediaQuery('(prefers-color-scheme: dark)'),
+    "darkMode",
+    useMediaQuery("(prefers-color-scheme: dark)"),
   );
 
   const theme = useMemo(
     () =>
       createMuiTheme({
         palette: {
-          type: darkMode ? 'dark' : 'light',
+          type: darkMode ? "dark" : "light",
         },
       }),
     [darkMode],

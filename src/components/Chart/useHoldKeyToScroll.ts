@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { IChartApi } from 'lightweight-charts';
+import { useEffect } from "react";
+import { IChartApi } from "lightweight-charts";
 
 export default function useHoldKeyToScroll(chart: IChartApi | null, key: string): void {
   useEffect(() => {
@@ -22,22 +22,22 @@ export default function useHoldKeyToScroll(chart: IChartApi | null, key: string)
       }
     }
 
-    window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('keyup', onKeyUp);
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
     return () => {
-      window.removeEventListener('keyup', onKeyUp);
-      window.removeEventListener('keydown', onKeyDown);
-    }
+      window.removeEventListener("keyup", onKeyUp);
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [chart, key]);
 }
 
 function setMouseWheelEnabled(chart: IChartApi, value: boolean): void {
   chart.applyOptions({
     handleScroll: {
-        mouseWheel: value,
+      mouseWheel: value,
     },
     handleScale: {
-        mouseWheel: value,
+      mouseWheel: value,
     },
   });
 }

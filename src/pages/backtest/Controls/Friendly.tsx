@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import DatePicker from 'components/DatePicker';
-import Select from 'components/Select';
-import TextArea from 'components/TextArea';
-import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from 'info';
-import { BacktestInput } from '../models';
-import { onTextAreaChange } from './utils';
+import { useState } from "react";
+import DatePicker from "components/DatePicker";
+import Select from "components/Select";
+import TextArea from "components/TextArea";
+import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from "info";
+import { BacktestInput } from "../models";
+import { onTextAreaChange } from "./utils";
 
 type FriendlyProps = {
   input: BacktestInput;

@@ -1,18 +1,18 @@
-import { useParams } from 'react-router';
-import Grid from '@material-ui/core/Grid';
-import useLocalStorageState from 'use-local-storage-state';
-import { BacktestInput, BacktestOutput } from './models';
-import ContentBox from 'components/ContentBox';
-import { Session as SessionModel } from 'models';
-import Code from 'components/Code';
-import NotFound from 'components/NotFound';
-import TradingCharts from 'components/TradingCharts';
-import TradingTable from 'components/TradingTable';
+import { useParams } from "react-router";
+import Grid from "@material-ui/core/Grid";
+import useLocalStorageState from "use-local-storage-state";
+import { BacktestInput, BacktestOutput } from "./models";
+import ContentBox from "components/ContentBox";
+import { Session as SessionModel } from "models";
+import Code from "components/Code";
+import NotFound from "components/NotFound";
+import TradingCharts from "components/TradingCharts";
+import TradingTable from "components/TradingTable";
 
 export default function Session() {
   const params = useParams<{ session: string }>();
   const [sessions] = useLocalStorageState<SessionModel<BacktestInput, BacktestOutput>[]>(
-    'backtest_dashboard_sessions',
+    "backtest_dashboard_sessions",
     [],
   );
 

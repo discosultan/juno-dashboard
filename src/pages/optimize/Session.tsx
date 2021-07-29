@@ -1,17 +1,17 @@
-import { useHistory, useParams } from 'react-router';
-import Grid from '@material-ui/core/Grid';
-import useLocalStorageState from 'use-local-storage-state';
-import GenerationsTable from './GenerationsTable';
-import { OptimizeOutput, OptimizeInput } from './models';
-import ContentBox from 'components/ContentBox';
-import { Session as SessionModel } from 'models';
-import Code from 'components/Code';
-import NotFound from 'components/NotFound';
+import { useHistory, useParams } from "react-router";
+import Grid from "@material-ui/core/Grid";
+import useLocalStorageState from "use-local-storage-state";
+import GenerationsTable from "./GenerationsTable";
+import { OptimizeOutput, OptimizeInput } from "./models";
+import ContentBox from "components/ContentBox";
+import { Session as SessionModel } from "models";
+import Code from "components/Code";
+import NotFound from "components/NotFound";
 
 export default function Session() {
   const params = useParams<{ session: string }>();
   const [sessions] = useLocalStorageState<SessionModel<OptimizeInput, OptimizeOutput>[]>(
-    'optimization_dashboard_sessions',
+    "optimization_dashboard_sessions",
     [],
   );
 

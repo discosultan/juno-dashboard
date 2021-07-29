@@ -1,15 +1,15 @@
-import { Dispatch, SetStateAction } from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import useLocalStorageStateImpl from 'use-local-storage-state';
-import DatePicker from 'components/DatePicker';
-import Select from 'components/Select';
-import TextArea from 'components/TextArea';
-import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from 'info';
-import useOptimizeInfo from 'pages/optimize/useOptimizeInfo';
-import { OptimizeInput } from './models';
+import { Dispatch, SetStateAction } from "react";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import useLocalStorageStateImpl from "use-local-storage-state";
+import DatePicker from "components/DatePicker";
+import Select from "components/Select";
+import TextArea from "components/TextArea";
+import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from "info";
+import useOptimizeInfo from "pages/optimize/useOptimizeInfo";
+import { OptimizeInput } from "./models";
 
 function useLocalStorageState<T>(
   key: string,
@@ -23,39 +23,39 @@ type ControlsProps = {
 };
 
 export default function Controls({ onOptimize }: ControlsProps) {
-  const [exchange, setExchange] = useLocalStorageState('exchange', 'binance');
-  const [trainingSymbols, setTrainingSymbols] = useLocalStorageState('trainingSymbols', [
-    'eth-btc',
-    'ltc-btc',
-    'xrp-btc',
-    'xmr-btc',
+  const [exchange, setExchange] = useLocalStorageState("exchange", "binance");
+  const [trainingSymbols, setTrainingSymbols] = useLocalStorageState("trainingSymbols", [
+    "eth-btc",
+    "ltc-btc",
+    "xrp-btc",
+    "xmr-btc",
   ]);
-  const [validationSymbols, setValidationSymbols] = useLocalStorageState('validationSymbols', [
-    'ada-btc',
+  const [validationSymbols, setValidationSymbols] = useLocalStorageState("validationSymbols", [
+    "ada-btc",
   ]);
-  const [intervals, setIntervals] = useLocalStorageState('intervals', ['1d']);
-  const [
-    missedCandlePolicies,
-    setMissedCandlePolicies,
-  ] = useLocalStorageState('missedCandlePolicies', [MissedCandlePolicies[0]]);
-  const [start, setStart] = useLocalStorageState('start', '2018-01-01');
-  const [end, setEnd] = useLocalStorageState('end', '2021-01-01');
+  const [intervals, setIntervals] = useLocalStorageState("intervals", ["1d"]);
+  const [missedCandlePolicies, setMissedCandlePolicies] = useLocalStorageState(
+    "missedCandlePolicies",
+    [MissedCandlePolicies[0]],
+  );
+  const [start, setStart] = useLocalStorageState("start", "2018-01-01");
+  const [end, setEnd] = useLocalStorageState("end", "2021-01-01");
   const [evaluationStatistic, setEvaluationStatistic] = useLocalStorageState(
-    'evaluationStatistic',
-    'Profit',
+    "evaluationStatistic",
+    "Profit",
   );
   const [evaluationAggregation, setEvaluationAggregation] = useLocalStorageState(
-    'evaluationAggregation',
-    'Linear',
+    "evaluationAggregation",
+    "Linear",
   );
-  const [generations, setGenerations] = useLocalStorageState('generations', 32);
-  const [populationSize, setPopulationSize] = useLocalStorageState('populationSize', 32);
-  const [hallOfFameSize, setHallOfFameSize] = useLocalStorageState('hallOfFameSize', 1);
-  const [randomizeSeed, setRandomizeSeed] = useLocalStorageState('randomizeSeed', true);
-  const [seed, setSeed] = useLocalStorageState('seed', 0);
-  const [strategyContext, setStrategyContext] = useLocalStorageState('strategyContext', '');
-  const [stopLossContext, setStopLossContext] = useLocalStorageState('stopLossContext', '');
-  const [takeProfitContext, setTakeProfitContext] = useLocalStorageState('takeProfitContext', '');
+  const [generations, setGenerations] = useLocalStorageState("generations", 32);
+  const [populationSize, setPopulationSize] = useLocalStorageState("populationSize", 32);
+  const [hallOfFameSize, setHallOfFameSize] = useLocalStorageState("hallOfFameSize", 1);
+  const [randomizeSeed, setRandomizeSeed] = useLocalStorageState("randomizeSeed", true);
+  const [seed, setSeed] = useLocalStorageState("seed", 0);
+  const [strategyContext, setStrategyContext] = useLocalStorageState("strategyContext", "");
+  const [stopLossContext, setStopLossContext] = useLocalStorageState("stopLossContext", "");
+  const [takeProfitContext, setTakeProfitContext] = useLocalStorageState("takeProfitContext", "");
 
   const optimizeInfo = useOptimizeInfo();
 
@@ -211,10 +211,10 @@ export default function Controls({ onOptimize }: ControlsProps) {
                 intervals,
                 missedCandlePolicies,
               },
-              strategy: strategyContext.trim() === '' ? undefined : JSON.parse(strategyContext),
-              stopLoss: stopLossContext.trim() === '' ? undefined : JSON.parse(stopLossContext),
+              strategy: strategyContext.trim() === "" ? undefined : JSON.parse(strategyContext),
+              stopLoss: stopLossContext.trim() === "" ? undefined : JSON.parse(stopLossContext),
               takeProfit:
-                takeProfitContext.trim() === '' ? undefined : JSON.parse(takeProfitContext),
+                takeProfitContext.trim() === "" ? undefined : JSON.parse(takeProfitContext),
             },
           })
         }

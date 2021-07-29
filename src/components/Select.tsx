@@ -1,6 +1,6 @@
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 type Props = {
   multiple?: boolean;
@@ -22,7 +22,7 @@ export default function Select({ multiple, autocomplete, label, options, value, 
   if (!multiple && !autocomplete) {
     return SingleRegular({ id, label, options, value, onChange });
   }
-  throw Error('Not implemented');
+  throw Error("Not implemented");
 }
 
 type SubProps = {

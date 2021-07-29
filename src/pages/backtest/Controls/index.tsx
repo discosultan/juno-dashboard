@@ -1,48 +1,48 @@
-import Button from '@material-ui/core/Button';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import useLocalStorageState from 'use-local-storage-state';
-import { BacktestInput } from '../models';
-import Friendly from './Friendly';
-import Raw from './Raw';
+import Button from "@material-ui/core/Button";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import useLocalStorageState from "use-local-storage-state";
+import { BacktestInput } from "../models";
+import Friendly from "./Friendly";
+import Raw from "./Raw";
 
 type ControlsProps = {
   onBacktest: (args: BacktestInput) => void;
 };
 
 export default function Controls({ onBacktest }: ControlsProps) {
-  const [input, setInput] = useLocalStorageState<BacktestInput>('backtest_controls_input', {
+  const [input, setInput] = useLocalStorageState<BacktestInput>("backtest_controls_input", {
     trading: {
       trader: {
-        interval: '1d',
-        missedCandlePolicy: 'Ignore',
+        interval: "1d",
+        missedCandlePolicy: "Ignore",
       },
       strategy: {
-        type: 'FourWeekRule',
+        type: "FourWeekRule",
         period: 28,
         ma: {
-          type: 'Ema',
+          type: "Ema",
           period: 14,
         },
       },
       stopLoss: {
-        type: 'Basic',
+        type: "Basic",
         upThreshold: 0.1,
         downThreshold: 0.1,
       },
       takeProfit: {
-        type: 'Basic',
+        type: "Basic",
         upThreshold: 0.1,
         downThreshold: 0.1,
       },
     },
-    exchange: 'binance',
-    symbols: ['eth-btc', 'ltc-btc', 'xrp-btc', 'xmr-btc', 'ada-btc'],
-    start: '2018-01-01',
-    end: '2021-01-01',
+    exchange: "binance",
+    symbols: ["eth-btc", "ltc-btc", "xrp-btc", "xmr-btc", "ada-btc"],
+    start: "2018-01-01",
+    end: "2021-01-01",
     quote: 1.0,
   });
-  const [activeTab, setActiveTab] = useLocalStorageState<0 | 1>('backtest_controls_tab', 0);
+  const [activeTab, setActiveTab] = useLocalStorageState<0 | 1>("backtest_controls_tab", 0);
 
   return (
     <>

@@ -1,12 +1,12 @@
-import { Link as RouterLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import MuiAppBar from '@material-ui/core/AppBar';
-import Link from '@material-ui/core/Link';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Switch from '@material-ui/core/Switch';
-import Brightness4OutlinedIcon from '@material-ui/icons/Brightness4Outlined';
-import Brightness5TwoToneIcon from '@material-ui/icons/Brightness5TwoTone';
+import { Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import MuiAppBar from "@material-ui/core/AppBar";
+import Link from "@material-ui/core/Link";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Switch from "@material-ui/core/Switch";
+import Brightness4OutlinedIcon from "@material-ui/icons/Brightness4Outlined";
+import Brightness5TwoToneIcon from "@material-ui/icons/Brightness5TwoTone";
 
 const useStyles = makeStyles((theme) => ({
   appBarItem: {
@@ -55,7 +55,7 @@ export default function AppBar({ darkMode, setDarkMode }: AppBarProps) {
             onChange={(event) => setDarkMode(event.target.checked)}
             color="default"
             name="darkMode"
-            inputProps={{ 'aria-label': 'toggle dark mode' }}
+            inputProps={{ "aria-label": "toggle dark mode" }}
           />
         </Toolbar>
       </MuiAppBar>

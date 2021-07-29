@@ -1,20 +1,20 @@
-import { CSSProperties, useState } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
-import Snackbar from '@material-ui/core/Snackbar';
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import { CSSProperties, useState } from "react";
+import IconButton from "@material-ui/core/IconButton";
+import Paper from "@material-ui/core/Paper";
+import Snackbar from "@material-ui/core/Snackbar";
+import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 
 const styles: { [key: string]: CSSProperties } = {
   code: {
-    position: 'relative',
-    padding: '5px',
+    position: "relative",
+    padding: "5px",
     margin: 0,
   },
   copy: {
-    position: 'absolute',
+    position: "absolute",
     right: 0,
-    padding: '10px',
-    margin: '5px',
+    padding: "10px",
+    margin: "5px",
     bottom: 0,
   },
 };
@@ -44,8 +44,8 @@ export default function Code({ code }: CodeProps) {
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
+          vertical: "bottom",
+          horizontal: "center",
         }}
         open={copiedSnackOpen}
         autoHideDuration={1200}

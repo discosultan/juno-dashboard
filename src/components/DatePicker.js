@@ -1,6 +1,6 @@
-import React from 'react';
-import DateFnsUtils from '@date-io/date-fns';
-import { DatePicker as MuiDatePicker } from '@material-ui/pickers';
+import React from "react";
+import DateFnsUtils from "@date-io/date-fns";
+import { DatePicker as MuiDatePicker } from "@material-ui/pickers";
 
 /*
  * Beware workarounds involving bugs in material-ui-pickers' design.
@@ -27,12 +27,12 @@ function jsDateToLocalISO8601DateString(date) {
     String(date.getFullYear()),
     String(101 + date.getMonth()).substring(1),
     String(100 + date.getDate()).substring(1),
-  ].join('-');
+  ].join("-");
 }
 
 function dateStringToLocalDate(s) {
   if (!s) return null;
-  return new DateFnsUtils().parse(s, 'yyyy-MM-dd');
+  return new DateFnsUtils().parse(s, "yyyy-MM-dd");
 }
 
 export default function DatePicker({ label, value, onChange }) {

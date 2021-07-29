@@ -1,8 +1,8 @@
-import { useError } from 'error';
-import { fetchJson } from 'fetch';
+import { useError } from "error";
+import { fetchJson } from "fetch";
 
-export const PYTHON_API_URL = process.env.REACT_APP_PYTHON_API_URL || 'http://localhost:8080';
-export const RUST_API_URL = process.env.REACT_APP_RUST_API_URL || 'http://localhost:3030';
+export const PYTHON_API_URL = process.env.REACT_APP_PYTHON_API_URL || "http://localhost:8080";
+export const RUST_API_URL = process.env.REACT_APP_RUST_API_URL || "http://localhost:3030";
 
 export function usePythonApi() {
   return useApi(PYTHON_API_URL);

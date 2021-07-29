@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { BacktestInput } from '../models';
-import TextArea from 'components/TextArea';
-import { onTextAreaChange } from './utils';
+import { useState } from "react";
+import { BacktestInput } from "../models";
+import TextArea from "components/TextArea";
+import { onTextAreaChange } from "./utils";
 
 type RawProps = {
   input: BacktestInput;

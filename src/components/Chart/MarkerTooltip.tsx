@@ -1,45 +1,45 @@
-import { useEffect, useRef, useState } from 'react';
-import Typography from '@material-ui/core/Typography';
-import { useTheme } from '@material-ui/core/styles';
-import { IChartApi, MouseEventParams } from 'lightweight-charts';
-import { PositionStatistics } from 'models';
+import { useEffect, useRef, useState } from "react";
+import Typography from "@material-ui/core/Typography";
+import { useTheme } from "@material-ui/core/styles";
+import { IChartApi, MouseEventParams } from "lightweight-charts";
+import { PositionStatistics } from "models";
 
 function fmtPct(value: number): string {
-  return value.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 });
+  return value.toLocaleString(undefined, { style: "percent", minimumFractionDigits: 2 });
 }
 
 type MarkerTooltipProps = {
-  chart: IChartApi,
-  positions: PositionStatistics[],
+  chart: IChartApi;
+  positions: PositionStatistics[];
 };
 
 export default function MarkerTooltip({ chart, positions }: MarkerTooltipProps) {
   const { palette } = useTheme();
   const [tooltipStyle, setTooltipStyle] = useState({
-    position: 'absolute' as 'absolute',
-    display: 'none',
-    padding: '8px',
+    position: "absolute" as "absolute",
+    display: "none",
+    padding: "8px",
     zIndex: 1000,
-    border: '1px solid',
+    border: "1px solid",
     backgroundColor: palette.background.paper,
-    whiteSpace: 'pre-line' as 'pre-line',
+    whiteSpace: "pre-line" as "pre-line",
   });
-  const [tooltipText, setTooltipText] = useState('');
+  const [tooltipText, setTooltipText] = useState("");
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function onCrosshairMove(event: MouseEventParams): void {
       const { hoveredMarkerId, point } = event;
-      if (typeof hoveredMarkerId === 'number' && point) {
+      if (typeof hoveredMarkerId === "number" && point) {
         const yOffset = 5;
         const x = Math.round(point.x);
         const y = Math.round(point.y) + yOffset;
 
         const newStyle = {
-          display: 'block',
+          display: "block",
           left: `${x}px`,
           top: `${y}px`,
-          borderColor: '#26a69a',
+          borderColor: "#26a69a",
         };
         if (hoveredMarkerId < 0) {
           // open
@@ -49,7 +49,7 @@ export default function MarkerTooltip({ chart, positions }: MarkerTooltipProps) 
           // close
           const pos = positions[hoveredMarkerId - 1];
           if (pos.roi < 0) {
-            newStyle.borderColor = '#ef5350';
+            newStyle.borderColor = "#ef5350";
           }
           setTooltipText(
             `time: ${pos.closeTime}\n` +
@@ -62,8 +62,8 @@ export default function MarkerTooltip({ chart, positions }: MarkerTooltipProps) 
           );
         }
         setTooltipStyle((style) => ({ ...style, ...newStyle }));
-      } else if (tooltipRef.current && tooltipRef.current.style.display !== 'none') {
-        setTooltipStyle((style) => ({ ...style, display: 'none' }));
+      } else if (tooltipRef.current && tooltipRef.current.style.display !== "none") {
+        setTooltipStyle((style) => ({ ...style, display: "none" }));
       }
     }
     chart.subscribeCrosshairMove(onCrosshairMove);

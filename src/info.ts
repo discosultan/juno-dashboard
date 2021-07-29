@@ -23,32 +23,30 @@
 //   'trending',
 //   // 'legacy',
 // ];
-export const Exchanges = [
-  'binance',
-];
+export const Exchanges = ["binance"];
 export const Symbols = [
-  'ada-btc',
-  'dash-btc',
-  'eos-btc',
-  'eth-btc',
-  'link-btc',
-  'ltc-btc',
-  'xmr-btc',
-  'xrp-btc',
+  "ada-btc",
+  "dash-btc",
+  "eos-btc",
+  "eth-btc",
+  "link-btc",
+  "ltc-btc",
+  "xmr-btc",
+  "xrp-btc",
 ];
 export const Intervals = [
-  '1m',
-  '5m',
-  '15m',
-  '30m',
-  '1h',
-  '2h',
-  '4h',
-  '6h',
-  '8h',
-  '12h',
-  '1d',
-  '3d',
-  '1w',
+  "1m",
+  "5m",
+  "15m",
+  "30m",
+  "1h",
+  "2h",
+  "4h",
+  "6h",
+  "8h",
+  "12h",
+  "1d",
+  "3d",
+  "1w",
 ];
-export const MissedCandlePolicies = ['Ignore', 'Restart', 'Last'];
+export const MissedCandlePolicies = ["Ignore", "Restart", "Last"];

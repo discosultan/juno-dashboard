@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import useDeepCompareEffect from 'use-deep-compare-effect';
-import { Candle } from 'models';
-import { fetchJson } from 'fetch';
-import { useError } from 'error';
-import { RUST_API_URL } from 'api';
+import { useState } from "react";
+import useDeepCompareEffect from "use-deep-compare-effect";
+import { Candle } from "models";
+import { fetchJson } from "fetch";
+import { useError } from "error";
+import { RUST_API_URL } from "api";
 
 const candleCache: { [key: string]: Candle[] } = {};
 
@@ -37,10 +37,7 @@ export default function useSymbolCandles(args: SymbolCandleParams): SymbolCandle
   return symbolCandles;
 }
 
-async function fetchCandles(
-  args: SymbolCandleParams,
-  signal: AbortSignal,
-): Promise<SymbolCandles> {
+async function fetchCandles(args: SymbolCandleParams, signal: AbortSignal): Promise<SymbolCandles> {
   const result: SymbolCandles = {};
   const missingSymbols: string[] = [];
 
@@ -55,8 +52,8 @@ async function fetchCandles(
 
   if (missingSymbols.length > 0) {
     const missingCandles = await fetchJson<SymbolCandles>(
-      'POST',
-      RUST_API_URL + '/candles',
+      "POST",
+      RUST_API_URL + "/candles",
       {
         exchange: args.exchange,
         interval: args.interval,

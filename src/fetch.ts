@@ -11,7 +11,7 @@ export async function fetchJson<T>(
   const response = await fetch(url, {
     method,
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
     body: JSON.stringify(body, camelToSnakeReplacer),
     signal,
@@ -27,10 +27,10 @@ export async function fetchJson<T>(
 }
 
 function camelToSnakeReplacer(_key: string, value: any): any {
-  if (value && typeof value === 'object' && !Array.isArray(value)) {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
     const replacement: any = {};
     for (const [objKey, objValue] of Object.entries(value)) {
-      replacement[objKey.replace(/([A-Z])/g, '_$1').toLowerCase()] = objValue;
+      replacement[objKey.replace(/([A-Z])/g, "_$1").toLowerCase()] = objValue;
     }
     return replacement;
   }
@@ -38,7 +38,7 @@ function camelToSnakeReplacer(_key: string, value: any): any {
 }
 
 function snakeToCamelReviver(_key: string, value: any): any {
-  if (value && typeof value === 'object' && !Array.isArray(value)) {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
     const replacement: any = {};
     for (const [objKey, objValue] of Object.entries(value)) {
       replacement[objKey.replace(/(_\w)/g, (k) => k[1].toUpperCase())] = objValue;

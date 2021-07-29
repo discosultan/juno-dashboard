@@ -1,20 +1,20 @@
-import { Link, useLocation } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ExploreIcon from '@material-ui/icons/Explore';
-import FastRewindIcon from '@material-ui/icons/FastRewind';
-import Switch from '@material-ui/core/Switch';
-import Brightness4Icon from '@material-ui/icons/Brightness4';
-import Logo from 'components/Logo';
+import { Link, useLocation } from "react-router-dom";
+import Box from "@material-ui/core/Box";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ExploreIcon from "@material-ui/icons/Explore";
+import FastRewindIcon from "@material-ui/icons/FastRewind";
+import Switch from "@material-ui/core/Switch";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Logo from "components/Logo";
 
 const styles = {
   drawer: {
-    width: '184px',
+    width: "184px",
   },
 };
 
@@ -39,7 +39,7 @@ export default function AppDrawer({ darkMode, setDarkMode }: AppDrawerProps) {
           button
           component={Link}
           to="/backtest"
-          selected={location.pathname.startsWith('/backtest')}
+          selected={location.pathname.startsWith("/backtest")}
         >
           <ListItemIcon>
             <FastRewindIcon />
@@ -50,7 +50,7 @@ export default function AppDrawer({ darkMode, setDarkMode }: AppDrawerProps) {
           button
           component={Link}
           to="/optimize"
-          selected={location.pathname.startsWith('/optimize')}
+          selected={location.pathname.startsWith("/optimize")}
         >
           <ListItemIcon>
             <ExploreIcon />
@@ -73,9 +73,9 @@ export default function AppDrawer({ darkMode, setDarkMode }: AppDrawerProps) {
             onChange={(event) => setDarkMode(event.target.checked)}
             color="default"
             name="darkMode"
-            inputProps={{ 'aria-label': 'toggle dark mode' }}
+            inputProps={{ "aria-label": "toggle dark mode" }}
           />
-          {darkMode ? 'Dark' : 'Light'} Mode
+          {darkMode ? "Dark" : "Light"} Mode
         </ListItem>
       </List>
     </Drawer>

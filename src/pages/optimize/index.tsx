@@ -1,18 +1,18 @@
-import { useHistory } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import useLocalStorageState from 'use-local-storage-state';
-import { v4 as uuidv4 } from 'uuid';
-import Controls from './Controls';
-import { OptimizeOutput, OptimizeInput } from './models';
-import ContentBox from 'components/ContentBox';
-import Sessions from 'components/Sessions';
-import { Session } from 'models';
-import { useRustApi } from 'api';
+import { useHistory } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import useLocalStorageState from "use-local-storage-state";
+import { v4 as uuidv4 } from "uuid";
+import Controls from "./Controls";
+import { OptimizeOutput, OptimizeInput } from "./models";
+import ContentBox from "components/ContentBox";
+import Sessions from "components/Sessions";
+import { Session } from "models";
+import { useRustApi } from "api";
 
 export default function Dashboard() {
   const history = useHistory();
   const [sessions, setSessions] = useLocalStorageState<Session<OptimizeInput, OptimizeOutput>[]>(
-    'optimization_dashboard_sessions',
+    "optimization_dashboard_sessions",
     [],
   );
   const { fetchApi } = useRustApi();
@@ -21,7 +21,7 @@ export default function Dashboard() {
     const session: Session<OptimizeInput, OptimizeOutput> = {
       id: uuidv4(),
       start: new Date().toISOString(),
-      status: 'pending',
+      status: "pending",
       input: args,
     };
 
@@ -32,13 +32,13 @@ export default function Dashboard() {
       sessions.unshift(session);
       setSessions(sessions);
 
-      const result = await fetchApi<OptimizeOutput>('POST', '/optimize', args);
+      const result = await fetchApi<OptimizeOutput>("POST", "/optimize", args);
 
-      session.status = 'fulfilled';
+      session.status = "fulfilled";
       session.output = result;
       setSessions(sessions);
     } catch (error) {
-      session.status = 'rejected';
+      session.status = "rejected";
       setSessions(sessions);
     }
   }
@@ -49,7 +49,7 @@ export default function Dashboard() {
         <ContentBox title="Optimization Sessions">
           <Sessions
             sessions={sessions}
-            onFormat={(session) => session.input.context.strategy?.type ?? 'Any'}
+            onFormat={(session) => session.input.context.strategy?.type ?? "Any"}
             onSelect={(session) => history.push(`/optimize/${session.id}`)}
           />
         </ContentBox>

@@ -1,11 +1,11 @@
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import { CoreStatistics, ExtendedStatistics, Statistics } from 'models';
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import { CoreStatistics, ExtendedStatistics, Statistics } from "models";
 
 type FlattenedStatistics = CoreStatistics & ExtendedStatistics;
 
@@ -31,7 +31,7 @@ export default function TradingTable({ title, input, output }: TradingTableProps
     };
     return acc;
   }, {} as { [symbol: string]: FlattenedStatistics });
-  const ignoreKeys = ['positions', 'gReturns'];
+  const ignoreKeys = ["positions", "gReturns"];
 
   const symbols = input.trainingSymbols.concat(input.validationSymbols ?? []);
 
@@ -46,7 +46,7 @@ export default function TradingTable({ title, input, output }: TradingTableProps
     const keyTotals = keys.map((key) =>
       symbols.reduce((acc, symbol) => {
         const value = flatSymbolStats[symbol][key];
-        return typeof value === 'number' ? acc + value : acc;
+        return typeof value === "number" ? acc + value : acc;
       }, 0),
     );
 
@@ -91,10 +91,10 @@ export default function TradingTable({ title, input, output }: TradingTableProps
 }
 
 function fmtUnknown(value: any): string {
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     return value;
   }
-  if (typeof value === 'number') {
+  if (typeof value === "number") {
     return Number.isInteger(value) ? value.toString() : value.toFixed(8);
   }
   throw new Error(`Not implemented for ${value}.`);

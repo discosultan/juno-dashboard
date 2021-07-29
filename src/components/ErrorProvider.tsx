@@ -1,6 +1,6 @@
-import { useState, ReactNode } from 'react';
-import ErrorSnack from 'components/ErrorSnack';
-import { ErrorContext } from 'error';
+import { useState, ReactNode } from "react";
+import ErrorSnack from "components/ErrorSnack";
+import { ErrorContext } from "error";
 
 type Props = {
   children: ReactNode;

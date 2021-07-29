@@ -1,18 +1,18 @@
-import { useParams } from 'react-router';
-import Grid from '@material-ui/core/Grid';
-import useLocalStorageState from 'use-local-storage-state';
-import { Generation, IndividualStats, OptimizeInput, OptimizeOutput } from './models';
-import ContentBox from 'components/ContentBox';
-import { Session } from 'models';
-import Code from 'components/Code';
-import NotFound from 'components/NotFound';
-import TradingCharts from 'components/TradingCharts';
-import TradingTable from 'components/TradingTable';
+import { useParams } from "react-router";
+import Grid from "@material-ui/core/Grid";
+import useLocalStorageState from "use-local-storage-state";
+import { Generation, IndividualStats, OptimizeInput, OptimizeOutput } from "./models";
+import ContentBox from "components/ContentBox";
+import { Session } from "models";
+import Code from "components/Code";
+import NotFound from "components/NotFound";
+import TradingCharts from "components/TradingCharts";
+import TradingTable from "components/TradingTable";
 
 export default function Individual() {
   const params = useParams<{ session: string; generation: string; individual: string }>();
   const [sessions] = useLocalStorageState<Session<OptimizeInput, OptimizeOutput>[]>(
-    'optimization_dashboard_sessions',
+    "optimization_dashboard_sessions",
     [],
   );
 
@@ -46,11 +46,7 @@ function IndividualImpl({ input, generation, individual }: IndividualImplProps) 
 
       <Grid item xs={12}>
         <ContentBox title="Individual Trading Results">
-          <TradingTable
-            title={`gen ${generation.nr}`}
-            input={input}
-            output={individual}
-          />
+          <TradingTable title={`gen ${generation.nr}`} input={input} output={individual} />
         </ContentBox>
       </Grid>
 

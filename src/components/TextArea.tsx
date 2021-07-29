@@ -1,14 +1,14 @@
-import { ChangeEvent } from 'react';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { makeStyles } from '@material-ui/core/styles';
+import { ChangeEvent } from "react";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((_theme) => ({
   textarea: {
-    resize: 'vertical',
-    width: '100%',
+    resize: "vertical",
+    width: "100%",
   },
   label: {
-    display: 'block',
+    display: "block",
   },
 }));
 
@@ -24,7 +24,7 @@ export default function TextArea({ label, value, onChange }: TextAreaProps) {
 
   return (
     <>
-      <label className={classes.label + ' MuiFormLabel-root MuiInputLabel-shrink'} htmlFor={id}>
+      <label className={classes.label + " MuiFormLabel-root MuiInputLabel-shrink"} htmlFor={id}>
         {label}
       </label>
       <TextareaAutosize

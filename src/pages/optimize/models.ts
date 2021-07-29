@@ -1,4 +1,4 @@
-import { Statistics, TradingParams } from 'models';
+import { Statistics, TradingParams } from "models";
 
 export type Individual = {
   chromosome: TradingParams;

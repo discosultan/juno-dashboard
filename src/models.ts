@@ -8,7 +8,7 @@ export type Candle = {
 };
 
 export type PositionStatistics = {
-  type: 'Long' | 'Short';
+  type: "Long" | "Short";
   openTime: string;
   closeTime: string;
   cost: number;
@@ -17,7 +17,7 @@ export type PositionStatistics = {
   duration: string;
   roi: number;
   annualizedRoi: number;
-  closeReason: 'Strategy' | 'Cancelled' | 'StopLoss' | 'TakeProfit';
+  closeReason: "Strategy" | "Cancelled" | "StopLoss" | "TakeProfit";
 };
 
 export type CoreStatistics = {
@@ -76,7 +76,7 @@ export type TradingParams = {
 export type Session<TInput, TOutput> = {
   id: string;
   start: string;
-  status: 'pending' | 'fulfilled' | 'rejected';
+  status: "pending" | "fulfilled" | "rejected";
   input: TInput;
   output?: TOutput;
 };

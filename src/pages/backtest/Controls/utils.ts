@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent } from "react";
 
 export function onTextAreaChange(action1: (str: string) => void, action2: (obj: any) => void) {
   return function (e: ChangeEvent<HTMLTextAreaElement>): void {
