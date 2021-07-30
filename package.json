@@ -9,7 +9,7 @@
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@material-ui/pickers": "^3.3.10",
     "@types/jest": "^26.0.24",
-    "@types/node": "^16.4.6",
+    "@types/node": "^16.4.7",
     "@types/overlayscrollbars": "^1.12.1",
     "@types/react": "^17.0.15",
     "@types/react-dom": "^17.0.9",
