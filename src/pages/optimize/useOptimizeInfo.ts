@@ -19,7 +19,7 @@ export default function useOptimizeInfo(): OptimizeInfo | null {
     (async () => {
       try {
         setOptimizeInfo(await fetchOptimizeInfo(abortController.signal));
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
         setError(error);
       }

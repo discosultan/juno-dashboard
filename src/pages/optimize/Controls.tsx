@@ -14,7 +14,7 @@ import { OptimizeInput } from "./models";
 function useLocalStorageState<T>(
   key: string,
   defaultValue: T,
-): [T, Dispatch<SetStateAction<T>>, boolean] {
+): [T, Dispatch<SetStateAction<T>>, object] {
   return useLocalStorageStateImpl(`optimization_controls_${key}`, defaultValue);
 }
 

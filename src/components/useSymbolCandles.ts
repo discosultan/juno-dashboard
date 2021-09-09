@@ -26,7 +26,7 @@ export default function useSymbolCandles(args: SymbolCandleParams): SymbolCandle
     (async () => {
       try {
         setSymbolCandles(await fetchCandles(args, abortController.signal));
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
         setError(error);
       }

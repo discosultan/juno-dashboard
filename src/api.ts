@@ -23,7 +23,7 @@ function useApi(baseUrl: string) {
   ): Promise<T> {
     try {
       return await fetchJson(method, baseUrl + url, body, signal);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       setError(error);
       throw error;
