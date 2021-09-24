@@ -1,7 +1,6 @@
-import { makeStyles } from '@mui/styles';
-import { Theme } from '@mui/system';
+import { styled } from "@mui/material/styles";
 
-const useStyles = makeStyles<Theme>((theme) => ({
+const Root = styled("span")(({ theme }) => ({
   underline: {
     width: "73px",
     height: "4px",
@@ -12,7 +11,5 @@ const useStyles = makeStyles<Theme>((theme) => ({
 }));
 
 export default function Underline() {
-  const classes = useStyles();
-
-  return <span className={classes.underline}></span>;
+  return <Root />;
 }

@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import Typography from '@mui/material/Typography';
-import { useTheme } from "@mui/styles";
+import { useTheme } from "@mui/material/styles";
 import { IChartApi, MouseEventParams } from "lightweight-charts";
 import { PositionStatistics } from "models";
-import { Theme } from "@mui/system";
 
 function fmtPct(value: number): string {
   return value.toLocaleString(undefined, { style: "percent", minimumFractionDigits: 2 });
@@ -15,7 +14,7 @@ type MarkerTooltipProps = {
 };
 
 export default function MarkerTooltip({ chart, positions }: MarkerTooltipProps) {
-  const { palette } = useTheme<Theme>();
+  const { palette } = useTheme();
   const [tooltipStyle, setTooltipStyle] = useState({
     position: "absolute" as "absolute",
     display: "none",

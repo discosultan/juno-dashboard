@@ -1,7 +1,7 @@
 import { Theme } from "@mui/material";
 import Box from "@mui/material/Box";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from "@mui/styles";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { ReactNode } from "react";
 import AppBar from "./AppBar";
 import AppDrawer from "./AppDrawer";

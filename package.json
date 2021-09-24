@@ -9,7 +9,6 @@
     "@mui/icons-material": "^5.0.1",
     "@mui/lab": "^5.0.0-alpha.48",
     "@mui/material": "^5.0.1",
-    "@mui/styles": "^5.0.1",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.9.6",
     "@types/overlayscrollbars": "^1.12.1",
