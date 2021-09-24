@@ -1,6 +1,7 @@
-import Box from "@material-ui/core/Box";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material";
+import Box from "@mui/material/Box";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from "@mui/styles";
 import { ReactNode } from "react";
 import AppBar from "./AppBar";
 import AppDrawer from "./AppDrawer";
@@ -12,7 +13,7 @@ type NavigationProps = {
 };
 
 export default function Navigation({ darkMode, setDarkMode, children }: NavigationProps) {
-  const theme = useTheme();
+  const theme = useTheme<Theme>();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   return isDesktop ? (

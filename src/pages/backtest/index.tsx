@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import useLocalStorageState from "use-local-storage-state";
 import { v4 as uuidv4 } from "uuid";
 import ContentBox from "components/ContentBox";

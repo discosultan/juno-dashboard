@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import Box from "@material-ui/core/Box";
-import { useTheme } from "@material-ui/core/styles";
+import Box from "@mui/material/Box";
+import { useTheme } from "@mui/styles";
 import {
   PriceScaleMode,
   createChart,
@@ -12,6 +12,7 @@ import useResizeObserver from "use-resize-observer";
 import { Candle, CoreStatistics, PositionStatistics } from "models";
 import MarkerTooltip from "./MarkerTooltip";
 import useHoldKeyToScroll from "./useHoldKeyToScroll";
+import { Theme } from "@mui/material";
 
 function timestamp(value: string): number {
   return new Date(value).getTime() / 1000;
@@ -25,7 +26,7 @@ type ChartProps = {
 };
 
 export default function Chart({ symbol, candles, stats, positions }: ChartProps) {
-  const { palette } = useTheme();
+  const { palette } = useTheme<Theme>();
   const [chart, setChart] = useState<IChartApi | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -101,14 +102,14 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
             time: timestamp(pos.openTime) as any,
             position: "aboveBar",
             shape,
-            color: palette.info[palette.type],
+            color: palette.info[palette.mode],
           },
           {
             id: +id as any,
             time: timestamp(pos.closeTime) as any,
             position: "aboveBar",
             shape,
-            color: palette.warning[palette.type],
+            color: palette.warning[palette.mode],
           },
         ];
       }),

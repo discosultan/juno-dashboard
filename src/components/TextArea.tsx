@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { makeStyles } from "@material-ui/core/styles";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((_theme) => ({
   textarea: {

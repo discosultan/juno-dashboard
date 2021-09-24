@@ -1,6 +1,7 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@mui/styles';
+import { Theme } from '@mui/system';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles<Theme>((theme) => ({
   underline: {
     width: "73px",
     height: "4px",

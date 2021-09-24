@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import useLocalStorageStateImpl from "use-local-storage-state";
-import DatePicker from "components/DatePicker";
+import DatePicker from "@mui/lab/DatePicker";
 import Select from "components/Select";
 import TextArea from "components/TextArea";
 import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from "info";
@@ -117,8 +117,18 @@ export default function Controls({ onOptimize }: ControlsProps) {
         onChange={(_, v) => setMissedCandlePolicies(v)}
       />
 
-      <DatePicker label="Start" value={start} onChange={(e: any) => setStart(e.target.value)} />
-      <DatePicker label="End" value={end} onChange={(e: any) => setEnd(e.target.value)} />
+      <DatePicker
+        label="Start"
+        value={start}
+        renderInput={(params) => <TextField {...params} />}
+        onChange={(e: any) => setStart(e.target.value)}
+      />
+      <DatePicker
+        label="End"
+        value={end}
+        renderInput={(params) => <TextField {...params} />}
+        onChange={(e: any) => setEnd(e.target.value)}
+      />
 
       {optimizeInfo?.evaluationStatistics && (
         <Select

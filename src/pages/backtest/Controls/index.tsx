@@ -1,6 +1,6 @@
-import Button from "@material-ui/core/Button";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import Button from "@mui/material/Button";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import useLocalStorageState from "use-local-storage-state";
 import { BacktestInput } from "../models";
 import Friendly from "./Friendly";

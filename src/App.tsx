@@ -1,16 +1,12 @@
 import { Suspense, lazy, useMemo } from "react";
 import { BrowserRouter as Router, Switch, Redirect, Route } from "react-router-dom";
-import DateFnsUtils from "@date-io/date-fns";
-import Box from "@material-ui/core/Box";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import {
-  ThemeProvider,
-  // TODO: Remove in MUI v5.
-  // https://stackoverflow.com/a/64135466
-  unstable_createMuiStrictModeTheme as createMuiTheme,
-} from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+
 import useLocalStorageState from "use-local-storage-state";
 
 import background from "assets/crystal-corner.png";
@@ -45,9 +41,9 @@ export default function App() {
 
   const theme = useMemo(
     () =>
-      createMuiTheme({
+      createTheme({
         palette: {
-          type: darkMode ? "dark" : "light",
+          mode: darkMode ? "dark" : "light",
         },
       }),
     [darkMode],
@@ -56,7 +52,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ErrorProvider>
           <Router>
             <Navigation darkMode={darkMode} setDarkMode={setDarkMode}>
@@ -83,7 +79,7 @@ export default function App() {
             </Navigation>
           </Router>
         </ErrorProvider>
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }

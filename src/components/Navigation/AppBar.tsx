@@ -1,19 +1,21 @@
 import { Link as RouterLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import MuiAppBar from "@material-ui/core/AppBar";
-import Link from "@material-ui/core/Link";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Switch from "@material-ui/core/Switch";
-import Brightness4OutlinedIcon from "@material-ui/icons/Brightness4Outlined";
-import Brightness5TwoToneIcon from "@material-ui/icons/Brightness5TwoTone";
+import { makeStyles } from '@mui/styles';
+import MuiAppBar from "@mui/material/AppBar";
+import Link from "@mui/material/Link";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from '@mui/material/Typography';
+import Switch from "@mui/material/Switch";
+import Brightness4OutlinedIcon from "@mui/icons-material/Brightness4Outlined";
+import Brightness5TwoToneIcon from "@mui/icons-material/Brightness5TwoTone";
+import { Theme } from "@mui/system";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles<Theme>((theme) => ({
   appBarItem: {
     marginRight: theme.spacing(2),
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    // TODO: improve typing.
+    zIndex: (theme!.zIndex as any).drawer + 1,
   },
   toolbar: {
     // Dense toolbar is always of that height.

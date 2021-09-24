@@ -1,8 +1,8 @@
 import { CSSProperties, useState } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
-import Snackbar from "@material-ui/core/Snackbar";
-import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import Snackbar from "@mui/material/Snackbar";
+import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 
 const styles: { [key: string]: CSSProperties } = {
   code: {
