@@ -4,8 +4,8 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 
 import useLocalStorageState from "use-local-storage-state";
 
@@ -44,6 +44,13 @@ export default function App() {
       createTheme({
         palette: {
           mode: darkMode ? "dark" : "light",
+        },
+        components: {
+          MuiTextField: {
+            defaultProps: {
+              variant: "standard",
+            },
+          },
         },
       }),
     [darkMode],

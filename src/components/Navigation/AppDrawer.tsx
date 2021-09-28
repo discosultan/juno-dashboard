@@ -12,9 +12,16 @@ import FastRewindIcon from "@mui/icons-material/FastRewind";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Logo from "components/Logo";
 
+const drawerWidth = 200;
+
 const styles = {
   drawer: {
-    width: "184px",
+    width: drawerWidth,
+    flexShrink: 0,
+    "& .MuiDrawer-paper": {
+      width: drawerWidth,
+      boxSizing: "border-box",
+    },
   },
 };
 
@@ -27,7 +34,7 @@ export default function AppDrawer({ darkMode, setDarkMode }: AppDrawerProps) {
   const location = useLocation();
 
   return (
-    <Drawer variant="permanent" anchor="left" style={styles.drawer}>
+    <Drawer variant="permanent" anchor="left" sx={styles.drawer}>
       <Box p={1}>
         <Logo />
       </Box>
