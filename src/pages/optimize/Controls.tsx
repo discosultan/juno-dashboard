@@ -1,10 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 import useLocalStorageStateImpl from "use-local-storage-state";
-import DatePicker from "components/DatePicker";
+import DatePicker from "@mui/lab/DatePicker";
 import Select from "components/Select";
 import TextArea from "components/TextArea";
 import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from "info";
@@ -61,166 +62,183 @@ export default function Controls({ onOptimize }: ControlsProps) {
 
   return (
     <form noValidate autoComplete="off">
-      <TextArea
-        label="Strategy Context"
-        value={strategyContext}
-        onChange={(e) => setStrategyContext(e.target.value)}
-      />
-      <TextArea
-        label="Stop Loss Context"
-        value={stopLossContext}
-        onChange={(e) => setStopLossContext(e.target.value)}
-      />
-      <TextArea
-        label="Take Profit Context"
-        value={takeProfitContext}
-        onChange={(e) => setTakeProfitContext(e.target.value)}
-      />
-
-      <Select
-        label="Exchange"
-        options={Exchanges}
-        value={exchange}
-        onChange={(_, v) => setExchange(v)}
-      />
-
-      <Select
-        multiple
-        autocomplete
-        label="Training Symbols"
-        options={Symbols}
-        value={trainingSymbols}
-        onChange={(_, v) => setTrainingSymbols(v)}
-      />
-      <Select
-        multiple
-        autocomplete
-        label="Validation Symbols"
-        options={Symbols}
-        value={validationSymbols}
-        onChange={(_, v) => setValidationSymbols(v)}
-      />
-
-      <Select
-        multiple
-        label="Intervals"
-        options={Intervals}
-        value={intervals}
-        onChange={(_, v) => setIntervals(v)}
-      />
-
-      <Select
-        multiple
-        label="Missed Candle Policies"
-        options={MissedCandlePolicies}
-        value={missedCandlePolicies}
-        onChange={(_, v) => setMissedCandlePolicies(v)}
-      />
-
-      <DatePicker label="Start" value={start} onChange={(e: any) => setStart(e.target.value)} />
-      <DatePicker label="End" value={end} onChange={(e: any) => setEnd(e.target.value)} />
-
-      {optimizeInfo?.evaluationStatistics && (
-        <Select
-          label="Evaluation Statistic"
-          options={optimizeInfo.evaluationStatistics}
-          value={evaluationStatistic}
-          onChange={(_, v) => setEvaluationStatistic(v)}
+      <Stack direction="column" spacing={1}>
+        <TextArea
+          label="Strategy Context"
+          value={strategyContext}
+          onChange={(e) => setStrategyContext(e.target.value)}
         />
-      )}
-      {optimizeInfo?.evaluationAggregations && (
-        <Select
-          label="Evaluation Aggregation"
-          options={optimizeInfo.evaluationAggregations}
-          value={evaluationAggregation}
-          onChange={(_, v) => setEvaluationAggregation(v)}
+        <TextArea
+          label="Stop Loss Context"
+          value={stopLossContext}
+          onChange={(e) => setStopLossContext(e.target.value)}
         />
-      )}
+        <TextArea
+          label="Take Profit Context"
+          value={takeProfitContext}
+          onChange={(e) => setTakeProfitContext(e.target.value)}
+        />
 
-      <TextField
-        id="generations"
-        fullWidth
-        label="Number Of Generations"
-        type="number"
-        inputProps={{ min: 0 }}
-        value={generations}
-        onChange={(e) => setGenerations(parseInt(e.target.value))}
-      />
-      <TextField
-        id="populationSize"
-        fullWidth
-        label="Population Size"
-        type="number"
-        inputProps={{ min: 2 }}
-        value={populationSize}
-        onChange={(e) => setPopulationSize(parseInt(e.target.value))}
-      />
-      <TextField
-        id="hallOfFameSize"
-        fullWidth
-        label="Hall of Fame Size"
-        type="number"
-        inputProps={{ min: 1 }}
-        value={hallOfFameSize}
-        onChange={(e) => setHallOfFameSize(parseInt(e.target.value))}
-      />
+        <Select
+          label="Exchange"
+          options={Exchanges}
+          value={exchange}
+          onChange={(_, v) => setExchange(v)}
+        />
 
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={randomizeSeed}
-            onChange={(e) => setRandomizeSeed(e.target.checked)}
-            name="randomizeSeed"
-            color="primary"
+        <Select
+          multiple
+          autocomplete
+          label="Training Symbols"
+          options={Symbols}
+          value={trainingSymbols}
+          onChange={(_, v) => setTrainingSymbols(v)}
+        />
+        <Select
+          multiple
+          autocomplete
+          label="Validation Symbols"
+          options={Symbols}
+          value={validationSymbols}
+          onChange={(_, v) => setValidationSymbols(v)}
+        />
+
+        <Select
+          multiple
+          label="Intervals"
+          options={Intervals}
+          value={intervals}
+          onChange={(_, v) => setIntervals(v)}
+        />
+
+        <Select
+          multiple
+          label="Missed Candle Policies"
+          options={MissedCandlePolicies}
+          value={missedCandlePolicies}
+          onChange={(_, v) => setMissedCandlePolicies(v)}
+        />
+
+        <Stack direction="row" spacing={1}>
+          <DatePicker
+            label="Start"
+            value={start}
+            renderInput={(params) => <TextField {...params} />}
+            onChange={(e: any) => setStart(e.target.value)}
           />
-        }
-        label="Randomize Seed"
-      />
-      <TextField
-        id="seed"
-        disabled={randomizeSeed}
-        fullWidth
-        label="Seed"
-        type="number"
-        inputProps={{ min: 0 }}
-        value={seed}
-        onChange={(e) => setSeed(parseInt(e.target.value))}
-      />
+          <DatePicker
+            label="End"
+            value={end}
+            renderInput={(params) => <TextField {...params} />}
+            onChange={(e: any) => setEnd(e.target.value)}
+          />
+        </Stack>
 
-      <br />
-      <br />
-      <Button
-        fullWidth
-        variant="contained"
-        onClick={() =>
-          onOptimize({
-            exchange,
-            trainingSymbols,
-            validationSymbols,
-            start,
-            end,
-            quote: 1.0,
-            evaluationStatistic,
-            evaluationAggregation,
-            populationSize,
-            generations,
-            hallOfFameSize,
-            seed: randomizeSeed ? null : seed,
-            context: {
-              trader: {
-                intervals,
-                missedCandlePolicies,
+        {optimizeInfo?.evaluationStatistics && (
+          <Select
+            label="Evaluation Statistic"
+            options={optimizeInfo.evaluationStatistics}
+            value={evaluationStatistic}
+            onChange={(_, v) => setEvaluationStatistic(v)}
+          />
+        )}
+        {optimizeInfo?.evaluationAggregations && (
+          <Select
+            label="Evaluation Aggregation"
+            options={optimizeInfo.evaluationAggregations}
+            value={evaluationAggregation}
+            onChange={(_, v) => setEvaluationAggregation(v)}
+          />
+        )}
+
+        <TextField
+          id="generations"
+          fullWidth
+          label="Number Of Generations"
+          type="number"
+          inputProps={{ min: 0 }}
+          value={generations}
+          onChange={(e) => setGenerations(parseInt(e.target.value))}
+        />
+        <TextField
+          id="populationSize"
+          fullWidth
+          label="Population Size"
+          type="number"
+          inputProps={{ min: 2 }}
+          value={populationSize}
+          onChange={(e) => setPopulationSize(parseInt(e.target.value))}
+        />
+        <TextField
+          id="hallOfFameSize"
+          fullWidth
+          label="Hall of Fame Size"
+          type="number"
+          inputProps={{ min: 1 }}
+          value={hallOfFameSize}
+          onChange={(e) => setHallOfFameSize(parseInt(e.target.value))}
+        />
+
+        <Stack direction="row" spacing={0}>
+          <FormControlLabel
+          sx={{ width: "200px" }}
+            control={
+              <Checkbox
+                checked={randomizeSeed}
+                onChange={(e) => setRandomizeSeed(e.target.checked)}
+                name="randomizeSeed"
+                color="primary"
+              />
+            }
+            label="Randomize Seed"
+          />
+          <TextField
+            id="seed"
+            disabled={randomizeSeed}
+            fullWidth
+            label="Seed"
+            type="number"
+            inputProps={{ min: 0 }}
+            value={seed}
+            onChange={(e) => setSeed(parseInt(e.target.value))}
+          />
+        </Stack>
+
+        <br />
+        <br />
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={() =>
+            onOptimize({
+              exchange,
+              trainingSymbols,
+              validationSymbols,
+              start,
+              end,
+              quote: 1.0,
+              evaluationStatistic,
+              evaluationAggregation,
+              populationSize,
+              generations,
+              hallOfFameSize,
+              seed: randomizeSeed ? null : seed,
+              context: {
+                trader: {
+                  intervals,
+                  missedCandlePolicies,
+                },
+                strategy: strategyContext.trim() === "" ? undefined : JSON.parse(strategyContext),
+                stopLoss: stopLossContext.trim() === "" ? undefined : JSON.parse(stopLossContext),
+                takeProfit:
+                  takeProfitContext.trim() === "" ? undefined : JSON.parse(takeProfitContext),
               },
-              strategy: strategyContext.trim() === "" ? undefined : JSON.parse(strategyContext),
-              stopLoss: stopLossContext.trim() === "" ? undefined : JSON.parse(stopLossContext),
-              takeProfit:
-                takeProfitContext.trim() === "" ? undefined : JSON.parse(takeProfitContext),
-            },
-          })
-        }
-      >
-        Optimize
-      </Button>
+            })
+          }
+        >
+          Optimize
+        </Button>
+      </Stack>
     </form>
   );
 }

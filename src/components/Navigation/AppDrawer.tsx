@@ -1,20 +1,27 @@
 import { Link, useLocation } from "react-router-dom";
-import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import ExploreIcon from "@material-ui/icons/Explore";
-import FastRewindIcon from "@material-ui/icons/FastRewind";
-import Switch from "@material-ui/core/Switch";
-import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Switch from "@mui/material/Switch";
+import ExploreIcon from "@mui/icons-material/Explore";
+import FastRewindIcon from "@mui/icons-material/FastRewind";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Logo from "components/Logo";
+
+const drawerWidth = 200;
 
 const styles = {
   drawer: {
-    width: "184px",
+    width: drawerWidth,
+    flexShrink: 0,
+    "& .MuiDrawer-paper": {
+      width: drawerWidth,
+      boxSizing: "border-box",
+    },
   },
 };
 
@@ -27,7 +34,7 @@ export default function AppDrawer({ darkMode, setDarkMode }: AppDrawerProps) {
   const location = useLocation();
 
   return (
-    <Drawer variant="permanent" anchor="left" style={styles.drawer}>
+    <Drawer variant="permanent" anchor="left" sx={styles.drawer}>
       <Box p={1}>
         <Logo />
       </Box>

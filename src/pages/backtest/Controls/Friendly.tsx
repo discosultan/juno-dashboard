@@ -1,5 +1,7 @@
 import { useState } from "react";
-import DatePicker from "components/DatePicker";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import DatePicker from "@mui/lab/DatePicker";
 import Select from "components/Select";
 import TextArea from "components/TextArea";
 import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from "info";
@@ -17,7 +19,7 @@ export default function Friendly({ input, setInput }: FriendlyProps) {
   const [takeProfit, setTakeProfit] = useState(JSON.stringify(input.trading.takeProfit, null, 2));
 
   return (
-    <>
+    <Stack spacing={1} direction="column">
       <Select
         label="Exchange"
         options={Exchanges}
@@ -44,26 +46,30 @@ export default function Friendly({ input, setInput }: FriendlyProps) {
         }
       />
 
-      <DatePicker
-        label="Start"
-        value={input.start}
-        onChange={(e: any) =>
-          setInput({
-            ...input,
-            start: e.target.value,
-          })
-        }
-      />
-      <DatePicker
-        label="End"
-        value={input.end}
-        onChange={(e: any) =>
-          setInput({
-            ...input,
-            end: e.target.value,
-          })
-        }
-      />
+      <Stack direction="row" spacing={1}>
+        <DatePicker
+          label="Start"
+          value={input.start}
+          renderInput={(params) => <TextField {...params} />}
+          onChange={(e: any) =>
+            setInput({
+              ...input,
+              start: e.target.value,
+            })
+          }
+        />
+        <DatePicker
+          label="End"
+          value={input.end}
+          renderInput={(params) => <TextField {...params} />}
+          onChange={(e: any) =>
+            setInput({
+              ...input,
+              end: e.target.value,
+            })
+          }
+        />
+      </Stack>
 
       <TextArea
         label="Strategy"
@@ -78,6 +84,7 @@ export default function Friendly({ input, setInput }: FriendlyProps) {
           }),
         )}
       />
+
       <TextArea
         label="Stop Loss"
         value={stopLoss}
@@ -91,6 +98,7 @@ export default function Friendly({ input, setInput }: FriendlyProps) {
           }),
         )}
       />
+
       <TextArea
         label="Take Profit"
         value={takeProfit}
@@ -140,6 +148,6 @@ export default function Friendly({ input, setInput }: FriendlyProps) {
           })
         }
       />
-    </>
+    </Stack>
   );
 }

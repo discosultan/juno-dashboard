@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import useLocalStorageState from "use-local-storage-state";
 import { BacktestInput, BacktestOutput } from "./models";
 import ContentBox from "components/ContentBox";

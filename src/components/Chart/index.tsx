@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import Box from "@material-ui/core/Box";
-import { useTheme } from "@material-ui/core/styles";
+import Box from "@mui/material/Box";
+import { useTheme } from '@mui/material/styles'
 import {
   PriceScaleMode,
   createChart,
@@ -101,14 +101,14 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
             time: timestamp(pos.openTime) as any,
             position: "aboveBar",
             shape,
-            color: palette.info[palette.type],
+            color: palette.info[palette.mode],
           },
           {
             id: +id as any,
             time: timestamp(pos.closeTime) as any,
             position: "aboveBar",
             shape,
-            color: palette.warning[palette.type],
+            color: palette.warning[palette.mode],
           },
         ];
       }),

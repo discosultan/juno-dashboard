@@ -1,28 +1,23 @@
 import { Link as RouterLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import MuiAppBar from "@material-ui/core/AppBar";
-import Link from "@material-ui/core/Link";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Switch from "@material-ui/core/Switch";
-import Brightness4OutlinedIcon from "@material-ui/icons/Brightness4Outlined";
-import Brightness5TwoToneIcon from "@material-ui/icons/Brightness5TwoTone";
+import MuiAppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Switch from "@mui/material/Switch";
+import Brightness4OutlinedIcon from "@mui/icons-material/Brightness4Outlined";
+import Brightness5TwoToneIcon from "@mui/icons-material/Brightness5TwoTone";
 
-const useStyles = makeStyles((theme) => ({
-  appBarItem: {
-    marginRight: theme.spacing(2),
+const links = [
+  {
+    to: "/backtest",
+    label: "Backtest",
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+  {
+    to: "/optimize",
+    label: "Optimize",
   },
-  toolbar: {
-    // Dense toolbar is always of that height.
-    minHeight: 48,
-  },
-  right: {
-    flexGrow: 1,
-  },
-}));
+];
 
 type AppBarProps = {
   darkMode: boolean;
@@ -30,24 +25,19 @@ type AppBarProps = {
 };
 
 export default function AppBar({ darkMode, setDarkMode }: AppBarProps) {
-  const classes = useStyles();
-
   return (
     <>
-      <MuiAppBar className={classes.appBar}>
+      <MuiAppBar position="static">
         <Toolbar variant="dense">
-          <Link component={RouterLink} to="/backtest" className={classes.appBarItem}>
-            <Typography color="textPrimary" variant="h6">
-              Backtest
-            </Typography>
-          </Link>
-          <Link component={RouterLink} to="/optimize" className={classes.appBarItem}>
-            <Typography color="textPrimary" variant="h6">
-              Optimize
-            </Typography>
-          </Link>
+          {links.map((link) => (
+            <Link key={link.to} component={RouterLink} to={link.to} sx={{ marginRight: 2 }}>
+              <Typography color="textPrimary" variant="h6">
+                {link.label}
+              </Typography>
+            </Link>
+          ))}
 
-          <div className={classes.right}></div>
+          <Box flexGrow={1} />
 
           {darkMode ? <Brightness4OutlinedIcon /> : <Brightness5TwoToneIcon />}
           <Switch
@@ -59,9 +49,6 @@ export default function AppBar({ darkMode, setDarkMode }: AppBarProps) {
           />
         </Toolbar>
       </MuiAppBar>
-
-      {/* Dummy toolbar to add toolbar's worth of space to the top. */}
-      <div className={classes.toolbar} />
     </>
   );
 }

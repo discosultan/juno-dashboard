@@ -1,19 +1,18 @@
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 import { OptimizeInput, OptimizeOutput } from "./models";
 import { Statistics } from "models";
 
-const useStyles = makeStyles((_theme) => ({
+const styles = {
   row: {
     cursor: "pointer",
   },
-}));
+};
 
 type GenerationsTableProps = {
   input: OptimizeInput;
@@ -22,7 +21,6 @@ type GenerationsTableProps = {
 };
 
 export default function GenerationsTable({ input, output, onSelect }: GenerationsTableProps) {
-  const classes = useStyles();
   const symbols = input.trainingSymbols.concat(input.validationSymbols);
 
   return (
@@ -54,7 +52,7 @@ export default function GenerationsTable({ input, output, onSelect }: Generation
                 <TableRow
                   key={i * input.hallOfFameSize + j}
                   hover
-                  className={classes.row}
+                  style={styles.row}
                   onClick={() => onSelect(i, j)}
                 >
                   <TableCell component="th" scope="row">

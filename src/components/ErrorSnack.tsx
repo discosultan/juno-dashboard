@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, SyntheticEvent } from "react";
-import Snackbar, { SnackbarCloseReason } from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
+import Alert from "@mui/material/Alert";
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 
 type ErrorProps = {
   error: Error | null;
@@ -18,9 +18,9 @@ export default function ErrorSnack({ error, setError }: ErrorProps) {
 
   return (
     <Snackbar open={error !== null} autoHideDuration={6000} onClose={handleClose}>
-      <MuiAlert elevation={6} variant="filled" onClose={handleClose} severity="error">
+      <Alert elevation={6} variant="filled" onClose={handleClose} severity="error">
         {error?.message}
-      </MuiAlert>
+      </Alert>
     </Snackbar>
   );
 }
