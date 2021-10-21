@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BacktestInput } from "../models";
-import TextArea from "components/TextArea";
+import TextArea from "components/controls/TextArea";
 import { onTextAreaChange } from "./utils";
 
 type RawProps = {

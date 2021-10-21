@@ -1,5 +1,5 @@
 export type Candle = {
-  time: string;
+  time: number;
   open: number;
   high: number;
   low: number;
@@ -9,28 +9,28 @@ export type Candle = {
 
 export type PositionStatistics = {
   type: "Long" | "Short";
-  openTime: string;
-  closeTime: string;
+  openTime: number;
+  closeTime: number;
   cost: number;
   gain: number;
   profit: number;
-  duration: string;
+  duration: number;
   roi: number;
   annualizedRoi: number;
   closeReason: "Strategy" | "Cancelled" | "StopLoss" | "TakeProfit";
 };
 
 export type CoreStatistics = {
-  start: string;
-  end: string;
-  duration: string;
+  start: number;
+  end: number;
+  duration: number;
   cost: number;
   gain: number;
   profit: number;
   roi: number;
   annualizedRoi: number;
   meanPositionProfit: number;
-  meanPositionDuration: string;
+  meanPositionDuration: number;
   maxDrawdown: number;
   meanDrawdown: number;
   returnOverMaxDrawdown: number;
@@ -68,14 +68,14 @@ export type TradingParams = {
     [key: string]: any;
   };
   trader: {
-    interval: string;
+    interval: number;
     missedCandlePolicy: string;
   };
 };
 
 export type Session<TInput, TOutput> = {
   id: string;
-  start: string;
+  start: number;
   status: "pending" | "fulfilled" | "rejected";
   input: TInput;
   output?: TOutput;

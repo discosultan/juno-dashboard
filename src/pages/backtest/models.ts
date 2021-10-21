@@ -4,8 +4,8 @@ export type BacktestInput = {
   trading: TradingParams;
   exchange: string;
   symbols: string[];
-  start: string;
-  end: string;
+  start: number;
+  end: number;
   quote: number;
 };
 

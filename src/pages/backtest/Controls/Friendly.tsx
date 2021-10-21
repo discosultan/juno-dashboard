@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import DatePicker from "@mui/lab/DatePicker";
-import Select from "components/Select";
-import TextArea from "components/TextArea";
+import Select from "components/controls/Select";
+import TextArea from "components/controls/TextArea";
 import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from "info";
 import { BacktestInput } from "../models";
 import { onTextAreaChange } from "./utils";
+import TimestampPicker from "components/controls/TimestampPicker";
+import IntervalSelect from "components/controls/IntervalSelect";
 
 type FriendlyProps = {
   input: BacktestInput;
@@ -47,25 +47,23 @@ export default function Friendly({ input, setInput }: FriendlyProps) {
       />
 
       <Stack direction="row" spacing={1}>
-        <DatePicker
+        <TimestampPicker
           label="Start"
           value={input.start}
-          renderInput={(params) => <TextField {...params} />}
-          onChange={(e: any) =>
+          onChange={(value) =>
             setInput({
               ...input,
-              start: e.target.value,
+              start: value,
             })
           }
         />
-        <DatePicker
+        <TimestampPicker
           label="End"
           value={input.end}
-          renderInput={(params) => <TextField {...params} />}
-          onChange={(e: any) =>
+          onChange={(value) =>
             setInput({
               ...input,
-              end: e.target.value,
+              end: value,
             })
           }
         />
@@ -113,18 +111,18 @@ export default function Friendly({ input, setInput }: FriendlyProps) {
         )}
       />
 
-      <Select
+      <IntervalSelect
         label="Interval"
         options={Intervals}
         value={input.trading.trader.interval}
-        onChange={(_, v) =>
+        onChange={(value) =>
           setInput({
             ...input,
             trading: {
               ...input.trading,
               trader: {
                 ...input.trading.trader,
-                interval: v,
+                interval: value,
               },
             },
           })

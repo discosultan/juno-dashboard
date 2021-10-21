@@ -19,8 +19,8 @@ export type OptimizeInput = {
   exchange: string;
   trainingSymbols: string[];
   validationSymbols: string[];
-  start: string;
-  end: string;
+  start: number;
+  end: number;
   quote: number;
   evaluationStatistic: string;
   evaluationAggregation: string;
@@ -30,7 +30,7 @@ export type OptimizeInput = {
   seed: number | null;
   context: {
     trader: {
-      intervals: string[];
+      intervals: number[];
       missedCandlePolicies: string[];
     };
     strategy?: {

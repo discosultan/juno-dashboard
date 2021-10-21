@@ -5,6 +5,7 @@ import useLocalStorageState from "use-local-storage-state";
 import { BacktestInput } from "../models";
 import Friendly from "./Friendly";
 import Raw from "./Raw";
+import { strpinterval, strptimestamp } from "../../../time";
 
 type ControlsProps = {
   onBacktest: (args: BacktestInput) => void;
@@ -14,7 +15,7 @@ export default function Controls({ onBacktest }: ControlsProps) {
   const [input, setInput] = useLocalStorageState<BacktestInput>("backtest_controls_input", {
     trading: {
       trader: {
-        interval: "1d",
+        interval: strpinterval("1d"),
         missedCandlePolicy: "Ignore",
       },
       strategy: {
@@ -38,8 +39,8 @@ export default function Controls({ onBacktest }: ControlsProps) {
     },
     exchange: "binance",
     symbols: ["eth-btc", "ltc-btc", "xrp-btc", "xmr-btc", "ada-btc"],
-    start: "2018-01-01",
-    end: "2021-01-01",
+    start: strptimestamp("2018-01-01"),
+    end: strptimestamp("2021-01-01"),
     quote: 1.0,
   });
   const [activeTab, setActiveTab] = useLocalStorageState<0 | 1>("backtest_controls_tab", 0);

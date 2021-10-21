@@ -22,6 +22,9 @@
 //   'basic',
 //   'trending',
 //   // 'legacy',
+
+import { strpinterval } from "time";
+
 // ];
 export const Exchanges = ["binance"];
 export const Symbols = [
@@ -48,5 +51,5 @@ export const Intervals = [
   "1d",
   "3d",
   "1w",
-];
+].map(strpinterval);
 export const MissedCandlePolicies = ["Ignore", "Restart", "Last"];

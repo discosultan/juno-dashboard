@@ -5,12 +5,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import useLocalStorageStateImpl from "use-local-storage-state";
-import DatePicker from "@mui/lab/DatePicker";
-import Select from "components/Select";
-import TextArea from "components/TextArea";
+import Select from "components/controls/Select";
+import TextArea from "components/controls/TextArea";
 import { Exchanges, Intervals, MissedCandlePolicies, Symbols } from "info";
 import useOptimizeInfo from "pages/optimize/useOptimizeInfo";
 import { OptimizeInput } from "./models";
+import { strpinterval, strptimestamp } from "time";
+import IntervalSelectMulti from "components/controls/IntervalSelectMulti";
+import TimestampPicker from "components/controls/TimestampPicker";
 
 function useLocalStorageState<T>(
   key: string,
@@ -34,13 +36,13 @@ export default function Controls({ onOptimize }: ControlsProps) {
   const [validationSymbols, setValidationSymbols] = useLocalStorageState("validationSymbols", [
     "ada-btc",
   ]);
-  const [intervals, setIntervals] = useLocalStorageState("intervals", ["1d"]);
+  const [intervals, setIntervals] = useLocalStorageState("intervals", [strpinterval("1d")]);
   const [missedCandlePolicies, setMissedCandlePolicies] = useLocalStorageState(
     "missedCandlePolicies",
     [MissedCandlePolicies[0]],
   );
-  const [start, setStart] = useLocalStorageState("start", "2018-01-01");
-  const [end, setEnd] = useLocalStorageState("end", "2021-01-01");
+  const [start, setStart] = useLocalStorageState("start", strptimestamp("2018-01-01"));
+  const [end, setEnd] = useLocalStorageState("end", strptimestamp("2021-01-01"));
   const [evaluationStatistic, setEvaluationStatistic] = useLocalStorageState(
     "evaluationStatistic",
     "Profit",
@@ -103,12 +105,11 @@ export default function Controls({ onOptimize }: ControlsProps) {
           onChange={(_, v) => setValidationSymbols(v)}
         />
 
-        <Select
-          multiple
+        <IntervalSelectMulti
           label="Intervals"
           options={Intervals}
           value={intervals}
-          onChange={(_, v) => setIntervals(v)}
+          onChange={(value) => setIntervals(value)}
         />
 
         <Select
@@ -120,18 +121,8 @@ export default function Controls({ onOptimize }: ControlsProps) {
         />
 
         <Stack direction="row" spacing={1}>
-          <DatePicker
-            label="Start"
-            value={start}
-            renderInput={(params) => <TextField {...params} />}
-            onChange={(e: any) => setStart(e.target.value)}
-          />
-          <DatePicker
-            label="End"
-            value={end}
-            renderInput={(params) => <TextField {...params} />}
-            onChange={(e: any) => setEnd(e.target.value)}
-          />
+          <TimestampPicker label="Start" value={start} onChange={(value) => setStart(value)} />
+          <TimestampPicker label="End" value={end} onChange={(value) => setEnd(value)} />
         </Stack>
 
         {optimizeInfo?.evaluationStatistics && (
@@ -181,7 +172,7 @@ export default function Controls({ onOptimize }: ControlsProps) {
 
         <Stack direction="row" spacing={0}>
           <FormControlLabel
-          sx={{ width: "200px" }}
+            sx={{ width: "200px" }}
             control={
               <Checkbox
                 checked={randomizeSeed}

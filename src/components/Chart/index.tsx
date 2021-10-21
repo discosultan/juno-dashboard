@@ -13,8 +13,8 @@ import { Candle, CoreStatistics, PositionStatistics } from "models";
 import MarkerTooltip from "./MarkerTooltip";
 import useHoldKeyToScroll from "./useHoldKeyToScroll";
 
-function timestamp(value: string): number {
-  return new Date(value).getTime() / 1000;
+function timestamp(value: number): number {
+  return value / 1000;
 }
 
 type ChartProps = {

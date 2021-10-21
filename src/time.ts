@@ -65,3 +65,7 @@ export function strftimestamp(timestamp: number): string {
 export function strptimestamp(repr: string): number {
   return new Date(repr).getTime();
 }
+
+export function timeMs(): number {
+  return Date.now();
+}

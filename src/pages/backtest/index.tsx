@@ -8,6 +8,7 @@ import Controls from "./Controls";
 import { Session } from "models";
 import { useRustApi } from "api";
 import { BacktestInput, BacktestOutput } from "./models";
+import { timeMs } from "time";
 
 export default function Dashboard() {
   const history = useHistory();
@@ -20,7 +21,7 @@ export default function Dashboard() {
   async function backtest(args: BacktestInput): Promise<void> {
     const session: Session<BacktestInput, BacktestOutput> = {
       id: uuidv4(),
-      start: new Date().toISOString(),
+      start: timeMs(),
       status: "pending",
       input: args,
     };
@@ -32,7 +33,7 @@ export default function Dashboard() {
       sessions.unshift(session);
       setSessions(sessions);
 
-      const result = await fetchApi<BacktestOutput>("POST", "/backtest", args);
+      const result = await fetchApi<BacktestOutput>("POST", "/backtest", undefined, args);
 
       session.status = "fulfilled";
       session.output = result;

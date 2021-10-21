@@ -3,15 +3,15 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import { Candle } from "models";
 import { fetchJson } from "fetch";
 import { useError } from "error";
-import { RUST_API_URL } from "api";
+import { PYTHON_API_URL } from "api";
 
 const candleCache: { [key: string]: Candle[] } = {};
 
 type SymbolCandleParams = {
   exchange: string;
-  interval: string;
-  start: string;
-  end: string;
+  interval: number;
+  start: number;
+  end: number;
   symbols: string[];
 };
 
@@ -51,25 +51,40 @@ async function fetchCandles(args: SymbolCandleParams, signal: AbortSignal): Prom
   }
 
   if (missingSymbols.length > 0) {
-    const missingCandles = await fetchJson<SymbolCandles>(
-      "POST",
-      RUST_API_URL + "/candles",
-      {
-        exchange: args.exchange,
-        interval: args.interval,
-        start: args.start,
-        end: args.end,
-        symbols: missingSymbols,
-      },
-      signal,
-    );
-    for (const [symbol, candles] of Object.entries(missingCandles)) {
+    const tasks = [];
+    for (const missingSymbol of missingSymbols) {
+      tasks.push(fetchSymbolCandles(args, missingSymbol, signal));
+    }
+    const missingCandles = await Promise.all(tasks);
+    for (let i = 0; i < missingSymbols.length; i++) {
+      const symbol = missingSymbols[i];
+      const candles = missingCandles[i];
       result[symbol] = candles;
       candleCache[composeKey(args, symbol)] = candles;
     }
   }
 
   return result;
+}
+
+async function fetchSymbolCandles(
+  args: SymbolCandleParams,
+  symbol: string,
+  signal: AbortSignal,
+): Promise<Candle[]> {
+  return await fetchJson<Candle[]>(
+    "GET",
+    PYTHON_API_URL + "/candles",
+    {
+      exchange: args.exchange,
+      interval: args.interval,
+      start: args.start,
+      end: args.end,
+      symbol,
+    },
+    undefined,
+    signal,
+  );
 }
 
 function composeKey(args: SymbolCandleParams, symbol: string): string {

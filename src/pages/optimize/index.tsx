@@ -8,6 +8,7 @@ import ContentBox from "components/ContentBox";
 import Sessions from "components/Sessions";
 import { Session } from "models";
 import { useRustApi } from "api";
+import { timeMs } from "time";
 
 export default function Dashboard() {
   const history = useHistory();
@@ -20,7 +21,7 @@ export default function Dashboard() {
   async function optimize(args: OptimizeInput): Promise<void> {
     const session: Session<OptimizeInput, OptimizeOutput> = {
       id: uuidv4(),
-      start: new Date().toISOString(),
+      start: timeMs(),
       status: "pending",
       input: args,
     };
@@ -32,7 +33,7 @@ export default function Dashboard() {
       sessions.unshift(session);
       setSessions(sessions);
 
-      const result = await fetchApi<OptimizeOutput>("POST", "/optimize", args);
+      const result = await fetchApi<OptimizeOutput>("POST", "/optimize", undefined, args);
 
       session.status = "fulfilled";
       session.output = result;

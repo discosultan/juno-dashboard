@@ -5,10 +5,16 @@ type ErrorResponse = {
 export async function fetchJson<T>(
   method: string,
   url: string,
-  body?: {},
+  params?: Record<string, any>,
+  body?: object,
   signal?: AbortSignal,
 ): Promise<T> {
-  const response = await fetch(url, {
+  const finalUrl = new URL(url);
+  if (params) {
+    finalUrl.search = new URLSearchParams(params).toString();
+  }
+
+  const response = await fetch(finalUrl.toString(), {
     method,
     headers: {
       "content-type": "application/json",
@@ -17,6 +23,7 @@ export async function fetchJson<T>(
     signal,
   });
   const text = await response.text();
+
   if (response.ok) {
     const result: T = JSON.parse(text, snakeToCamelReviver);
     return result;

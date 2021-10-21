@@ -5,8 +5,8 @@ import { Statistics, TradingParams } from "models";
 type TradingChartsProps = {
   input: {
     exchange: string;
-    start: string;
-    end: string;
+    start: number;
+    end: number;
     trainingSymbols: string[];
     validationSymbols?: string[];
     trading: TradingParams;

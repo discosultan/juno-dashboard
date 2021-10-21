@@ -36,6 +36,7 @@ async function fetchOptimizeInfo(signal: AbortSignal): Promise<OptimizeInfo> {
       "GET",
       RUST_API_URL + "/optimize",
       undefined,
+      undefined,
       signal,
     );
   }
