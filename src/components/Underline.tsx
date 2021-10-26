@@ -1,6 +1,6 @@
-import { styled } from "@mui/material/styles";
+import { styled, Theme } from "@mui/material/styles";
 
-const Root = styled("span")(({ theme }) => ({
+const Root = styled("span")(({ theme }: { theme: Theme }) => ({
   underline: {
     width: "73px",
     height: "4px",
