@@ -1,4 +1,4 @@
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Grid from "@mui/material/Grid";
 import useLocalStorageState from "use-local-storage-state";
 import GenerationsTable from "./GenerationsTable";
@@ -9,7 +9,11 @@ import Code from "components/Code";
 import NotFound from "components/NotFound";
 
 export default function Session() {
-  const params = useParams<{ session: string }>();
+  const params = useParams();
+  if (!params.session) {
+    throw new Error("Missing session param.");
+  }
+
   const [sessions] = useLocalStorageState<SessionModel<OptimizeInput, OptimizeOutput>[]>(
     "optimization_dashboard_sessions",
     [],
@@ -31,7 +35,7 @@ type SessionImplProps = {
 };
 
 function SessionImpl({ session, input, output }: SessionImplProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Grid container spacing={1}>
@@ -47,7 +51,7 @@ function SessionImpl({ session, input, output }: SessionImplProps) {
             input={input}
             output={output}
             onSelect={(generation, individual) =>
-              history.push(`/optimize/${session}/${generation}/${individual}`)
+              navigate(`/optimize/${session}/${generation}/${individual}`)
             }
           />
         </ContentBox>

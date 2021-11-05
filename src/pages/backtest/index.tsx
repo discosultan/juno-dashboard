@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import useLocalStorageState from "use-local-storage-state";
 import { v4 as uuidv4 } from "uuid";
@@ -11,7 +11,7 @@ import { BacktestInput, BacktestOutput } from "./models";
 import { timeMs } from "time";
 
 export default function Dashboard() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [sessions, setSessions] = useLocalStorageState<Session<BacktestInput, BacktestOutput>[]>(
     "backtest_dashboard_sessions",
     [],
@@ -51,7 +51,7 @@ export default function Dashboard() {
           <Sessions
             sessions={sessions}
             onFormat={(session) => session.input.trading.strategy?.type ?? "Any"}
-            onSelect={(session) => history.push(`/backtest/${session.id}`)}
+            onSelect={(session) => navigate(`/backtest/${session.id}`)}
           />
         </ContentBox>
       </Grid>

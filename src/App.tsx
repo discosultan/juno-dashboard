@@ -1,5 +1,5 @@
 import { Suspense, lazy, useMemo } from "react";
-import { BrowserRouter as Router, Switch, Redirect, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -65,22 +65,21 @@ export default function App() {
             <Navigation darkMode={darkMode} setDarkMode={setDarkMode}>
               <Box component="main" style={styles.main} p={1}>
                 <Suspense fallback={<Loading />}>
-                  <Switch>
-                    <Route exact path="/" render={() => <Redirect to="/backtest" />} />
+                  <Routes>
+                    <Route path="/" element={<BacktestDashboard />} />
 
-                    <Route exact path="/backtest" component={BacktestDashboard} />
-                    <Route exact path="/backtest/:session" component={BacktestSession} />
+                    <Route path="/backtest" element={<BacktestDashboard />} />
+                    <Route path="/backtest/:session" element={<BacktestSession />} />
 
-                    <Route exact path="/optimize" component={OptimizationDashboard} />
-                    <Route exact path="/optimize/:session" component={OptimizationSession} />
+                    <Route path="/optimize" element={<OptimizationDashboard />} />
+                    <Route path="/optimize/:session" element={<OptimizationSession />} />
                     <Route
-                      exact
                       path="/optimize/:session/:generation/:individual"
-                      component={OptimizationIndividual}
+                      element={<OptimizationIndividual />}
                     />
 
-                    <Route component={NotFound} />
-                  </Switch>
+                    <Route element={<NotFound />} />
+                  </Routes>
                 </Suspense>
               </Box>
             </Navigation>

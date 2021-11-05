@@ -10,7 +10,11 @@ import TradingCharts from "components/TradingCharts";
 import TradingTable from "components/TradingTable";
 
 export default function Individual() {
-  const params = useParams<{ session: string; generation: string; individual: string }>();
+  const params = useParams();
+  if (!params.session || !params.generation || !params.individual) {
+    throw new Error("Missing session and/or generation and/or individual param(s).");
+  }
+
   const [sessions] = useLocalStorageState<Session<OptimizeInput, OptimizeOutput>[]>(
     "optimization_dashboard_sessions",
     [],

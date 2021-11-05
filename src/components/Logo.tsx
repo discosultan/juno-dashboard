@@ -1,6 +1,10 @@
 import { CSSProperties } from "react";
+import { Link } from "react-router-dom";
 
 const styles: { [key: string]: CSSProperties } = {
+  link: {
+    textDecoration: "none",
+  },
   logo: {
     textAlign: "center",
     fontSize: 64,
@@ -11,20 +15,8 @@ const styles: { [key: string]: CSSProperties } = {
 
 export default function Logo() {
   return (
-    <p style={styles.logo}>🚀</p>
-    //     <pre style={styles.logo}>{`            |
-    //            / \\
-    //           / _ \\
-    //          |.o '.|
-    //          |'._.'|
-    //          |     |
-    //        .'|  |  |'.
-    //       /  |  |  |  \\
-    //       |.-'--|--'-.|
-    //      _
-    //     | |_   _ _ __   ___
-    //  _  | | | | | '_ \\ / _ \\
-    // | |_| | |_| | | | | (_) |
-    //  \\___/ \\__,_|_| |_|\\___/`}</pre>
+    <Link style={styles.link} to="/" >
+      <p style={styles.logo}>🚀</p>
+    </Link>
   );
 }

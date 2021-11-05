@@ -10,7 +10,11 @@ import TradingCharts from "components/TradingCharts";
 import TradingTable from "components/TradingTable";
 
 export default function Session() {
-  const params = useParams<{ session: string }>();
+  const params = useParams();
+  if (!params.session) {
+    throw new Error("Missing session param.");
+  }
+
   const [sessions] = useLocalStorageState<SessionModel<BacktestInput, BacktestOutput>[]>(
     "backtest_dashboard_sessions",
     [],
