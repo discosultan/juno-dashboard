@@ -8,7 +8,7 @@ type ErrorProps = {
 };
 
 export default function ErrorSnack({ error, setError }: ErrorProps) {
-  const handleClose = (_: SyntheticEvent, reason?: SnackbarCloseReason): void => {
+  const handleClose = (_: Event | SyntheticEvent, reason?: SnackbarCloseReason): void => {
     if (reason === "clickaway") {
       return;
     }
