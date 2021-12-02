@@ -69,3 +69,5 @@ export function strptimestamp(repr: string): number {
 export function timeMs(): number {
   return Date.now();
 }
+
+// To convert a Date to timestamp, use `Date.getTime(this)`.

@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import DatePicker from "@mui/lab/DatePicker";
-import { strftimestamp, strptimestamp } from "time";
+import { strftimestamp } from "time";
 
 type Props = {
   label: string;
@@ -14,7 +14,7 @@ export default function TimestampPicker({ label, value, onChange }: Props) {
       label={label}
       value={strftimestamp(value)}
       renderInput={(params) => <TextField {...params} />}
-      onChange={(e: any) => onChange(strptimestamp(e.target.value))}
+      onChange={(e: any) => onChange(e.getTime())}
     />
   );
 }
