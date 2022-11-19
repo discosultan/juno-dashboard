@@ -1,18 +1,14 @@
-import "overlayscrollbars/css/OverlayScrollbars.css";
+import "overlayscrollbars/overlayscrollbars.css";
 import { StrictMode } from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import App from "./App";
-import OverlayScrollbars from "overlayscrollbars";
+import { OverlayScrollbars } from "overlayscrollbars";
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(
   <StrictMode>
     <App />
   </StrictMode>,
-  document.getElementById("root"),
 );
 
-OverlayScrollbars(document.body, {
-  nativeScrollbarsOverlaid: {
-    initialize: false,
-  },
-});
+OverlayScrollbars(document.body, {});

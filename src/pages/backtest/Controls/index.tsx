@@ -1,18 +1,26 @@
+import { Dispatch, SetStateAction } from "react";
 import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import useLocalStorageState from "use-local-storage-state";
+import useLocalStorageStateImpl from "use-local-storage-state";
 import { BacktestInput } from "../models";
 import Friendly from "./Friendly";
 import Raw from "./Raw";
 import { strpinterval, strptimestamp } from "../../../time";
+
+function useLocalStorageState<T>(
+  key: string,
+  defaultValue: T,
+): [T, Dispatch<SetStateAction<T>>, object] {
+  return useLocalStorageStateImpl(`backtest_controls_${key}`, { defaultValue });
+}
 
 type ControlsProps = {
   onBacktest: (args: BacktestInput) => void;
 };
 
 export default function Controls({ onBacktest }: ControlsProps) {
-  const [input, setInput] = useLocalStorageState<BacktestInput>("backtest_controls_input", {
+  const [input, setInput] = useLocalStorageState<BacktestInput>("input", {
     trading: {
       trader: {
         interval: strpinterval("1d"),
@@ -43,7 +51,7 @@ export default function Controls({ onBacktest }: ControlsProps) {
     end: strptimestamp("2021-01-01"),
     quote: 1.0,
   });
-  const [activeTab, setActiveTab] = useLocalStorageState<0 | 1>("backtest_controls_tab", 0);
+  const [activeTab, setActiveTab] = useLocalStorageState<0 | 1>("tab", 0);
 
   return (
     <>

@@ -16,7 +16,7 @@ export default function Session() {
 
   const [sessions] = useLocalStorageState<SessionModel<OptimizeInput, OptimizeOutput>[]>(
     "optimization_dashboard_sessions",
-    [],
+    { defaultValue: [] },
   );
 
   const session = sessions.find((session) => session.id === params.session);

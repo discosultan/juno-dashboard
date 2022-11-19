@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import DatePicker from "@mui/lab/DatePicker";
+import { DatePicker } from "@mui/x-date-pickers";
 import { strftimestamp } from "time";
 
 type Props = {

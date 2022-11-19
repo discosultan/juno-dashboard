@@ -4,9 +4,8 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import useLocalStorageState from "use-local-storage-state";
 
 import background from "assets/crystal-corner.png";
@@ -34,10 +33,9 @@ const styles = {
 };
 
 export default function App() {
-  const [darkMode, setDarkMode] = useLocalStorageState(
-    "darkMode",
-    useMediaQuery("(prefers-color-scheme: dark)"),
-  );
+  const [darkMode, setDarkMode] = useLocalStorageState("darkMode", {
+    defaultValue: useMediaQuery("(prefers-color-scheme: dark)"),
+  });
 
   const theme = useMemo(
     () =>

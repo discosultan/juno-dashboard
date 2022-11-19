@@ -14,7 +14,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [sessions, setSessions] = useLocalStorageState<Session<BacktestInput, BacktestOutput>[]>(
     "backtest_dashboard_sessions",
-    [],
+    { defaultValue: [] },
   );
   const { fetchApi } = useRustApi();
 
