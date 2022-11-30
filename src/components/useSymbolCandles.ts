@@ -73,8 +73,9 @@ async function fetchSymbolCandles(
   signal: AbortSignal,
 ): Promise<Candle[]> {
   return await fetchJson<Candle[]>(
-    "GET",
+    "POST",
     PYTHON_API_URL + "/candles",
+    undefined,
     {
       exchange: args.exchange,
       interval: args.interval,
@@ -82,7 +83,6 @@ async function fetchSymbolCandles(
       end: args.end,
       symbol,
     },
-    undefined,
     signal,
   );
 }

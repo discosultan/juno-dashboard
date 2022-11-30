@@ -25,8 +25,11 @@ function useApi(baseUrl: string) {
     try {
       return await fetchJson(method, baseUrl + url, params, body, signal);
     } catch (error: any) {
-      console.error(error);
-      setError(error);
+      // DOMException is raised when the request is aborted through signal.
+      if (!(error instanceof DOMException)) {
+        console.error(error);
+        setError(error);
+      }
       throw error;
     }
   }
