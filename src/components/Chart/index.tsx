@@ -7,6 +7,7 @@ import {
   IChartApi,
   HistogramData,
   LineData,
+  ColorType,
 } from "lightweight-charts";
 import useResizeObserver from "use-resize-observer";
 import { Candle, CoreStatistics, PositionStatistics } from "models";
@@ -43,7 +44,10 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
       width: containerRef.current.clientWidth,
       height: 360,
       layout: {
-        backgroundColor: palette.background.paper,
+        background: {
+          type: ColorType.Solid,
+          color: palette.background.paper,
+        },
         textColor: palette.text.primary,
       },
       localization: {
@@ -120,11 +124,13 @@ export default function Chart({ symbol, candles, stats, positions }: ChartProps)
         type: "volume",
       },
       priceScaleId: "",
+    });
+    volumeSeries.priceScale().applyOptions({
       scaleMargins: {
         top: 0.8,
         bottom: 0,
       },
-    });
+    })
     volumeSeries.setData(
       nonEmptyCandles.reduce(
         ([prevClose, volume], candle) => {

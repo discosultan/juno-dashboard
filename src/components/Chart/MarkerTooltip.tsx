@@ -29,8 +29,8 @@ export default function MarkerTooltip({ chart, positions }: MarkerTooltipProps) 
 
   useEffect(() => {
     function onCrosshairMove(event: MouseEventParams): void {
-      const { hoveredMarkerId, point } = event;
-      if (typeof hoveredMarkerId === "number" && point) {
+      const { hoveredObjectId, point } = event;
+      if (typeof hoveredObjectId === "number" && point) {
         const yOffset = 5;
         const x = Math.round(point.x);
         const y = Math.round(point.y) + yOffset;
@@ -41,13 +41,13 @@ export default function MarkerTooltip({ chart, positions }: MarkerTooltipProps) 
           top: `${y}px`,
           borderColor: "#26a69a",
         };
-        if (hoveredMarkerId < 0) {
+        if (hoveredObjectId < 0) {
           // open
-          const pos = positions[-hoveredMarkerId - 1];
+          const pos = positions[-hoveredObjectId - 1];
           setTooltipText(`time: ${pos.openTime}\ncost: ${pos.cost.toFixed(8)}`);
         } else {
           // close
-          const pos = positions[hoveredMarkerId - 1];
+          const pos = positions[hoveredObjectId - 1];
           if (pos.roi < 0) {
             newStyle.borderColor = "#ef5350";
           }
